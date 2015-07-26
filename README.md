@@ -1,2 +1,2 @@
-# YAHW
-YAHW - Yet Another Hardware Monitor
+# YAHW - Yet Another Hardware Monitor
+
