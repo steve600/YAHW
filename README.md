@@ -45,3 +45,13 @@ Die Applikation selbst befindet sich noch in einer sehr frühen Entwicklungsphas
 ### S.M.A.R.T Informationen zu den verbauten Festplatten
 
 ![S.M.A.R.T Informationen zu den verbauten Festplatten](http://csharp-blog.de/wp-content/uploads/2015/07/YAHW_091.png)
+
+Aktuell sind noch nicht alle Dialoge fertig bzw. werden bestehende Dialoge nochmal überarbeitet. Zur Zeit gibt es noch die folgenden ToDos:
+
+* Speichern der Anwendungseinstellungen (Farbschema, Sprache, ...)
+* Logging im Fehlerfall
+* Lüftersteuerung
+* Alarme bei Überschreitung bestimmter Schwellwerte
+* Tray-Icon
+* Autostart
+* ...
