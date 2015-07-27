@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="YAHW.UserControls.CPUInformationUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+             xmlns:Providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+             xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+             Engine:LocalizeDictionary.DesignCulture="de-DE"
+             Providers:ResxLocalizationProvider.DefaultAssembly="YAHW"
+             Providers:ResxLocalizationProvider.DefaultDictionary="Resources"
+             x:Name="layoutRoot"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <Grid DataContext="{Binding ElementName=layoutRoot}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="3" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="3" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="3" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="3" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="3" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Column="0"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    Orientation="Horizontal">
+
+            <Rectangle Width="32" Height="32">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource appbar_hardware_cpu}" />
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <TextBlock Margin="5,0,0,0"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource Heading2}"
+                       Text="{lex:Loc YAHW:Resources:UserControlCPUInformationHeader}" />
+
+        </StackPanel>
+
+
+        <!-- Manufacturer -->
+        <TextBlock Grid.Column="0"
+                   Grid.Row="2"
+                   Style="{StaticResource GridDescription}"
+                   Text="{lex:Loc YAHW:Resources:UserControlCPUInformationManufacturer}" />
+        <TextBlock Grid.Column="2"
+                   Grid.Row="2"
+                   VerticalAlignment="Center"
+                   Text="{Binding Path=CPUInformation.Manufacturer, UpdateSourceTrigger=PropertyChanged}" />
+
+        <!-- Product -->
+        <TextBlock Grid.Column="0"
+                   Grid.Row="4"
+                   Style="{StaticResource GridDescription}"
+                   Text="{lex:Loc YAHW:Resources:UserControlCPUInformationProduct}" />
+        <TextBlock Grid.Column="2"
+                   Grid.Row="4"
+                   VerticalAlignment="Center"
+                   Text="{Binding Path=CPUInformation.Name, UpdateSourceTrigger=PropertyChanged}" />
+
+        <!-- Cores -->
+        <TextBlock Grid.Column="0"
+                   Grid.Row="6"
+                   Style="{StaticResource GridDescription}"
+                   Text="{lex:Loc YAHW:Resources:UserControlCPUInformationCores}" />
+        <TextBlock Grid.Column="2"
+                   Grid.Row="6"
+                   VerticalAlignment="Center"
+                   Text="{Binding Path=CPUInformation.NumberOfCores, UpdateSourceTrigger=PropertyChanged}" />
+
+        <!-- Logical-Processors -->
+        <TextBlock Grid.Column="0"
+                   Grid.Row="8"
+                   Style="{StaticResource GridDescription}"
+                   Text="{lex:Loc YAHW:Resources:UserControlCPUInformationLogicalProcessors}" />
+        <TextBlock Grid.Column="2"
+                   Grid.Row="8"
+                   VerticalAlignment="Center"
+                   Text="{Binding Path=CPUInformation.NumberOfLogicalProcessors, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Button x:Name="btnDetails"
+                Grid.Column="0"
+                Grid.Row="10"
+                Grid.ColumnSpan="3"
+                HorizontalAlignment="Left"
+                Command="NavigationCommands.GoToPage" 
+                CommandParameter="/Pages/CPUInformation.xaml"
+                Width="100" 
+                Height="25">
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Rectangle Width="16" Height="16" VerticalAlignment="Center">
+                    <Rectangle.Fill>
+                        <VisualBrush Visual="{StaticResource appbar_arrow_right}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+
+                <TextBlock Text="Details" Margin="5,0,0,0" VerticalAlignment="Center" />
+
+            </StackPanel>
+
+        </Button>
+
+    </Grid>
+
+</UserControl>

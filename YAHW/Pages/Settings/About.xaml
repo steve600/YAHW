@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="YAHW.Pages.Settings.About"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+             xmlns:Providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+             xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+                 Engine:LocalizeDictionary.DesignCulture="de-DE"
+                 Providers:ResxLocalizationProvider.DefaultAssembly="YAHW"
+                 Providers:ResxLocalizationProvider.DefaultDictionary="Resources"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel MinWidth="200">
+                <TextBlock Text="{lex:Loc YAHW:Resources:MainWindowAbout}" Style="{StaticResource Heading2}" />
+                <mui:BBCodeBlock BBCode="{lex:Loc YAHW:Resources:PageAboutText}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

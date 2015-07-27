@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainWindowHelp" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
+  <data name="MainWindowHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="MainWindowSettings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="MainWindowWelcome" xml:space="preserve">
+    <value>Willkommen</value>
+  </data>
+  <data name="MainWindowOverview" xml:space="preserve">
+    <value>Übersicht</value>
+  </data>
+  <data name="MainWindowCPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="MainWindowRAM" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="MainWindowHDD" xml:space="preserve">
+    <value>HDD</value>
+  </data>
+  <data name="MainWindowFAN" xml:space="preserve">
+    <value>Fan</value>
+  </data>
+  <data name="MainWindowSystemInformation" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="MainWindowHint" xml:space="preserve">
+    <value>Mit dem YAHW - [b]Y[/b]et [b]A[/b]nother [b]H[/b]ardware [b]M[/b]onitor ist es möglich diverse Hardwarekomponenten zu überwachen. Aktuell werden die folgenden Hardwarekomponenten unterstützt:
+
+ - [url=/Pages/MainboardInformation.xaml]Mainboard[/url]
+ - [url=/Pages/CPUInformation.xaml]Prozessor[/url]
+ - [url=/Pages/GPUInformation.xaml]Grafikkarte[/url] 
+ - [url=/Pages/RAMInformation.xaml]RAM[/url]
+ - [url=/Pages/HDDInformation.xaml]HDD[/url]</value>
+  </data>
+  <data name="PageAboutText" xml:space="preserve">
+    <value>Mit dem YAHW - [b]Y[/b]et [b]A[/b]nother [b]H[/b]ardware [b]M[/b]onitor ist es möglich diverse Hardwarekomponenten zu überwachen. Für die Umsetzung wurden die folgenden Softwarekomponenten verwendet:
+
+ - Modern UI for WPF (MUI) - [url=https://github.com/firstfloorsoftware/mui]https://github.com/firstfloorsoftware/mui[/url]
+ - Open Hardware Monitor - [url=https://code.google.com/p/open-hardware-monitor]https://code.google.com/p/open-hardware-monitor[/url]</value>
+  </data>
+  <data name="MainWindowAbout" xml:space="preserve">
+    <value>Über</value>
+  </data>
+  <data name="UserControlMainboardInformationHeader" xml:space="preserve">
+    <value>Mainboard-Informationen</value>
+  </data>
+  <data name="UserControlMainboardInformationManufacturer" xml:space="preserve">
+    <value>Hersteller</value>
+  </data>
+  <data name="UserControlMainboardInformationProduct" xml:space="preserve">
+    <value>Produkt</value>
+  </data>
+  <data name="UserControlMainboardInformationSerialNumber" xml:space="preserve">
+    <value>Seriennummer</value>
+  </data>
+  <data name="MainWindowCPUInformation" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="MainWindowRAMInformation" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="MainWindowHDDInformation" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="HDDInformationSmartParameter" xml:space="preserve">
+    <value>Parameter</value>
+  </data>
+  <data name="HDDInformationSmartCurrentValue" xml:space="preserve">
+    <value>Aktueller Wert</value>
+  </data>
+  <data name="HDDInformationSmartWorstValue" xml:space="preserve">
+    <value>Schlechtester Wert</value>
+  </data>
+  <data name="HDDInformationSmartThreshold" xml:space="preserve">
+    <value>Grenzwert</value>
+  </data>
+  <data name="MainWindowCPUCoreWorkload" xml:space="preserve">
+    <value>CPU-Core Auslastung (%)</value>
+  </data>
+  <data name="CPUInformationPercentUsage" xml:space="preserve">
+    <value>%-Auslastung</value>
+  </data>
+  <data name="CPUInformationPowerConsumption" xml:space="preserve">
+    <value>Stromverbrauch</value>
+  </data>
+  <data name="CPUInformationCPU" xml:space="preserve">
+    <value>CPU</value>
+  </data>
+  <data name="CPUInformationCPUCores" xml:space="preserve">
+    <value>CPU-Cores</value>
+  </data>
+  <data name="CPUInformationCPUTotalWorkload" xml:space="preserve">
+    <value>Auslastung</value>
+  </data>
+  <data name="CPUInformationCPUCoreWorkloads" xml:space="preserve">
+    <value>Core-Auslastungen</value>
+  </data>
+  <data name="CPUInformationMaxAppreviation" xml:space="preserve">
+    <value>Max:</value>
+  </data>
+  <data name="CPUInformationMinAppreviation" xml:space="preserve">
+    <value>Min:</value>
+  </data>
+  <data name="CPUInformationCpuTemperature" xml:space="preserve">
+    <value>Temperatur</value>
+  </data>
+  <data name="CPUInformationCpuCoreTemperatures" xml:space="preserve">
+    <value>Core-Temperaturen</value>
+  </data>
+  <data name="CPUInformationCpuClockSpeed" xml:space="preserve">
+    <value>Taktgeschwindigkeit</value>
+  </data>
+  <data name="CPUInformationCpuCoreClockSpeeds" xml:space="preserve">
+    <value>Core-Taktgeschwindigkeiten</value>
+  </data>
+  <data name="MainWindowCPUCoreTemperatures" xml:space="preserve">
+    <value>CPU-Core Temperaturen (°C)</value>
+  </data>
+  <data name="UserControlCPUInformationHeader" xml:space="preserve">
+    <value>CPU-Informationen</value>
+  </data>
+  <data name="UserControlCPUInformationManufacturer" xml:space="preserve">
+    <value>Hersteller</value>
+  </data>
+  <data name="UserControlCPUInformationProduct" xml:space="preserve">
+    <value>Produkt</value>
+  </data>
+  <data name="UserControlCPUInformationCores" xml:space="preserve">
+    <value>Kerne</value>
+  </data>
+  <data name="UserControlCPUInformationLogicalProcessors" xml:space="preserve">
+    <value>Logische Prozessoren</value>
+  </data>
+  <data name="MainWindowMainboard" xml:space="preserve">
+    <value>Mainboard</value>
+  </data>
+  <data name="MainWindowMainboardInformation" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="MainboardInformationVoltagesHeader" xml:space="preserve">
+    <value>Spannungen</value>
+  </data>
+  <data name="MainboardInformationCPUVcore" xml:space="preserve">
+    <value>VCore</value>
+  </data>
+  <data name="MainboardInformationAVCC" xml:space="preserve">
+    <value>AVCC</value>
+  </data>
+  <data name="MainboardInformation3VCC" xml:space="preserve">
+    <value>3VCC</value>
+  </data>
+  <data name="MainboardInformation3VSB" xml:space="preserve">
+    <value>3VSB</value>
+  </data>
+  <data name="MainboardInformationVBAT" xml:space="preserve">
+    <value>VBAT</value>
+  </data>
+  <data name="MainboardInformationVTT" xml:space="preserve">
+    <value>VTT</value>
+  </data>
+  <data name="HDDInformationSMARTInformation" xml:space="preserve">
+    <value>S.M.A.R.T Informationen</value>
+  </data>
+  <data name="RAMInformationHeader" xml:space="preserve">
+    <value>RAM-Informationen</value>
+  </data>
+  <data name="RAMInformationListViewHeaderBankLabel" xml:space="preserve">
+    <value>Speicher-Bank</value>
+  </data>
+  <data name="RAMInformationListViewHeaderChannel" xml:space="preserve">
+    <value>Speicher-Kanal</value>
+  </data>
+  <data name="RAMInformationListViewHeaderFormFactor" xml:space="preserve">
+    <value>Form-Faktor</value>
+  </data>
+  <data name="RAMInformationListViewHeaderSpeed" xml:space="preserve">
+    <value>Geschwindigkeit</value>
+  </data>
+  <data name="RAMInformationListViewHeaderPartNumber" xml:space="preserve">
+    <value>Teilenummer</value>
+  </data>
+  <data name="UserControlMainboardTemperatureSensorsHeader" xml:space="preserve">
+    <value>Temperaturen</value>
+  </data>
+  <data name="MainWindowGPUInformation" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="MainWindowGPU" xml:space="preserve">
+    <value>GPU</value>
+  </data>
+  <data name="GPUInformationName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="GPUInformationVideoProcessor" xml:space="preserve">
+    <value>Video-Prozessor</value>
+  </data>
+  <data name="GPUInformationVideoMode" xml:space="preserve">
+    <value>Video-Mode</value>
+  </data>
+  <data name="GPUInformationCurrentHorizontalResolution" xml:space="preserve">
+    <value>Horizontale Auflösung</value>
+  </data>
+  <data name="GPUInformationCurrentVerticalResolution" xml:space="preserve">
+    <value>Vertikale Auflösung</value>
+  </data>
+  <data name="GPUInformationCurrentRefreshRate" xml:space="preserve">
+    <value>Bildwiederholrate</value>
+  </data>
+  <data name="GPUInformationDriverVersion" xml:space="preserve">
+    <value>Treiber-Version</value>
+  </data>
+  <data name="MainboardInformationMainboardInfo" xml:space="preserve">
+    <value>Mainboard</value>
+  </data>
+  <data name="UserControlMainboardInformationIOHardware" xml:space="preserve">
+    <value>I/O-Hardware</value>
+  </data>
+  <data name="UserControlFanContolValue" xml:space="preserve">
+    <value>Aktueller-Wert</value>
+  </data>
+  <data name="UserControlFanContolMinValue" xml:space="preserve">
+    <value>Min:</value>
+  </data>
+  <data name="UserControlFanContolMaxValue" xml:space="preserve">
+    <value>Max:</value>
+  </data>
+  <data name="MainWindowFanControl" xml:space="preserve">
+    <value>FAN-Control</value>
+  </data>
+  <data name="RAMInformationListViewHeaderCapacity" xml:space="preserve">
+    <value>Kapazität</value>
+  </data>
+  <data name="UserControlGPUInformationHeader" xml:space="preserve">
+    <value>Grafikkarte</value>
+  </data>
+</root>

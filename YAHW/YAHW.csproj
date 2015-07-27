@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8D0DF3CC-E833-4690-97DD-80CFD268391C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>YAHW</RootNamespace>
+    <AssemblyName>YAHW</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="De.TorstenMandelkow.MetroChart, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\De.TorstenMandelkow.MetroChart.dll</HintPath>
+    </Reference>
+    <Reference Include="FirstFloor.ModernUI">
+      <HintPath>..\packages\ModernUI.WPF.1.0.6\lib\net45\FirstFloor.ModernUI.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenHardwareMonitorLib">
+      <HintPath>..\Libs\OpenHardwareMonitorLib.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot">
+      <HintPath>..\packages\OxyPlot.Core.2014.1.546\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf">
+      <HintPath>..\packages\OxyPlot.Wpf.2014.1.546\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Xps">
+      <HintPath>..\packages\OxyPlot.Wpf.2014.1.546\lib\net45\OxyPlot.Xps.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFLocalizeExtension">
+      <HintPath>..\packages\WpfLocalizeExtension.2.3.2\lib\net35\WPFLocalizeExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="XAMLMarkupExtensions">
+      <HintPath>..\packages\XAMLMarkupExtensions.1.2.1.3\lib\net40\XAMLMarkupExtensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Constants\GeneralConstants.cs" />
+    <Compile Include="Constants\ServiceNames.cs" />
+    <Compile Include="ExtensionMethods\DataVolumeFormattingExtensions.cs" />
+    <Compile Include="Interfaces\IExceptionReporterService.cs" />
+    <Compile Include="Interfaces\ILocalizerService.cs" />
+    <Compile Include="Model\ChartDataPoint.cs" />
+    <Compile Include="Model\GPUInformation.cs" />
+    <Compile Include="Model\HDDPartition.cs" />
+    <Compile Include="Model\PerformanceInfoData.cs" />
+    <Compile Include="Model\RAMInformation.cs" />
+    <Compile Include="Pages\GPUInformation.xaml.cs">
+      <DependentUpon>GPUInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainboardFanControl.xaml.cs">
+      <DependentUpon>MainboardFanControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MainboardInformation.xaml.cs">
+      <DependentUpon>MainboardInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\RAMInformation.xaml.cs">
+      <DependentUpon>RAMInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ExceptionReporterService.cs" />
+    <Compile Include="Services\LocalizerService.cs" />
+    <Compile Include="Services\OpenHardwareMonitorManagementService.cs" />
+    <Compile Include="SystemInformation\PsApiWrapper.cs" />
+    <Compile Include="UserControls\CPUCoreTemperatureChartUserControl.xaml.cs">
+      <DependentUpon>CPUCoreTemperatureChartUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CPUCoreWorkloadChartUserControl.xaml.cs">
+      <DependentUpon>CPUCoreWorkloadChartUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IHardwareInformationService.cs" />
+    <Compile Include="Model\HDD.cs" />
+    <Compile Include="Model\MainboardInformation.cs" />
+    <Compile Include="Model\ProcessorInformation.cs" />
+    <Compile Include="Model\SMARTData.cs" />
+    <Compile Include="Pages\CPUCoreTemperatures.xaml.cs">
+      <DependentUpon>CPUCoreTemperatures.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CPUCoreWorkloads.xaml.cs">
+      <DependentUpon>CPUCoreWorkloads.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CPUInformation.xaml.cs">
+      <DependentUpon>CPUInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\HDDInformation.xaml.cs">
+      <DependentUpon>HDDInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SystemInformation.xaml.cs">
+      <DependentUpon>SystemInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\WmiHardwareInfoService.cs" />
+    <Page Include="Pages\GPUInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainboardFanControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainboardInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\RAMInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CPUCoreTemperatureChartUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CPUCoreWorkloadChartUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CPUCoreTemperatures.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CPUCoreWorkloads.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\HDDInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styling\Chart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="SystemInformation\DotNetFrameworkInfo.cs" />
+    <Compile Include="SystemInformation\OfficeInfo.cs" />
+    <Compile Include="SystemInformation\OSVersionInfo.cs" />
+    <Compile Include="UserControls\CPUInformationUserControl.xaml.cs">
+      <DependentUpon>CPUInformationUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\GPUInformationUserControl.xaml.cs">
+      <DependentUpon>GPUInformationUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MainboardFanControl.xaml.cs">
+      <DependentUpon>MainboardFanControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MainboardInformationUserControl.xaml.cs">
+      <DependentUpon>MainboardInformationUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MainboardTemperatureSensorsUserControl.xaml.cs">
+      <DependentUpon>MainboardTemperatureSensorsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\RAMInformationUserControl.xaml.cs">
+      <DependentUpon>RAMInformationUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\CPUCoreTemperaturesViewModel.cs" />
+    <Compile Include="ViewModels\CPUCoreWorkloadsViewModel.cs" />
+    <Compile Include="ViewModels\CPUInformationViewModel.cs" />
+    <Compile Include="ViewModels\GPUInformationViewModel.cs" />
+    <Compile Include="ViewModels\HDDInformationViewModel.cs" />
+    <Compile Include="ViewModels\MainboardFanControlViewModel.cs" />
+    <Compile Include="ViewModels\MainboardInformationViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\RAMInformationViewModel.cs" />
+    <Compile Include="ViewModels\SystemInformationViewModel.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="BaseClasses\ViewModelBase.cs" />
+    <Compile Include="DependencyFactory.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Pages\CPUInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="MVVMBase\BindableBase.cs" />
+    <Compile Include="MVVMBase\PropertySupport.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="Pages\Settings\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Pages\Settings\Appearance.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Pages\Settings\Appearance.xaml.cs">
+      <DependentUpon>Appearance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AppearanceViewModel.cs" />
+    <Page Include="Pages\Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Pages\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Page Include="Pages\SystemInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styling\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styling\ModernIcons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styling\TextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CPUInformationUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\GPUInformationUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MainboardFanControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MainboardInformationUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MainboardTemperatureSensorsUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\RAMInformationUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.de-DE.resx" />
+    <EmbeddedResource Include="Properties\Resources.en-US.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

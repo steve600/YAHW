@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="YAHW.UserControls.CPUCoreTemperatureChartUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:YAHW.UserControls"
+             xmlns:chart="http://oxyplot.org/wpf"
+             xmlns:muiChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+             x:Name="layoutRoot"
+             MinHeight="150"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="600">
+    
+    <Grid DataContext="{Binding ElementName=layoutRoot}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <!--<ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />-->
+        </Grid.ColumnDefinitions>
+        
+        <chart:PlotView x:Name="cpuCoreTemperatureChart" 
+                        Grid.Column="0"
+                        Model="{Binding Path=CPUCoreTemperaturePlot, UpdateSourceTrigger=PropertyChanged}" />
+
+        <!--<muiChart:ClusteredBarChart Grid.Column="2"
+                                    ChartTitleVisibility="Collapsed"
+                                    MaxDataPointValue="85"
+                                    ChartLegendVisibility="Collapsed">
+            <muiChart:ClusteredBarChart.Series>
+                <muiChart:ChartSeries SeriesTitle="Temperatures"
+                                      DisplayMember="Name"
+                                      ValueMember="Value"
+                                      ItemsSource="{Binding Path=CoreTemperaturesSeries}" />
+            </muiChart:ClusteredBarChart.Series>
+        </muiChart:ClusteredBarChart>-->
+    </Grid>
+    
+</UserControl>
