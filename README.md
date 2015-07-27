@@ -1,12 +1,3 @@
----
-title: YAHW - Yet Another Hardware Manager
-description: Application that monitors temperature sensors, fan speeds, voltages, load and clock speeds of a computer.
-author: Steffen Steinbrecher
-tags: YAHW
-created:  2015 Jul 27
-modified: 2015 Jul 27
----
-
 # YAHW - Yet Another Hardware Monitor
 
 Ich möchte Euch hier einmal ein kleines Hobby-Projekt von mir vorstellen. In den letzten Woche habe ich mich ein wenig mit dem Thema "Hardware" auseinandergesetzt und in diesem Zusammenhang nach Software für die Hardwareüberwachung gesucht. Es gibt hier ja diverse Programm für die unterschiedlichsten Einsatzzwecke. Zum einen liefern manche Hardwarehersteller bei ihren Produkte direkt Software zur Systemüberwachung mit (z.B. ASUS mit der AI-Suite). Dies ist allerdings je nach Verwendungszweck mit einem riesigen Overhead verbunden. Möchte man z.B. nur einige Temperatursensoren überwachen ist man gezwungen das komplette Softwarepaket zu installieren, welches unter Umständen über 100 MB groß ist. Dann gibt es noch einige Freeware-Programme, die die Überwachung von Temperatursensoren, Lüftersteuerung, usw. übernehmen. Hier bin ich dann auf den <a href="http://openhardwaremonitor.org/" target="_blank">Open Hardware Monitor</a> gestoßen. Mit diesem Programm ist es möglich Temperaturen, Taktfrequenzen, Spannungen und Lüfter zu überwachen. Hier hat mir das UI allerdings nicht so gut gefallen und es fehlten mir einigen Informationen (z.B. HDD-Informationen, laufende Prozesse, usw.). Jetzt bieten die Entwickler des Open Hardware Monitors eine Bibliothek (DLL) für die Verwendung in eigenen Applikationen. Also habe ich mal auf dieser Basis angefangen eine kleine Applikation zu entwickeln welche ich hier nur einmal vorstellen möchte.
