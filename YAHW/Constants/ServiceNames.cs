@@ -27,5 +27,7 @@
         public static readonly string LocalizerService = "LocalizerService";
         // Exception reporter service
         public static readonly string ExceptionReporterService = "ExceptionReporterService";
+        // Logging service
+        public static readonly string LoggingService = "LoggingService";
     }
 }

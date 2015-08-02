@@ -33,6 +33,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Styling\BitmapGraphics\Logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="De.TorstenMandelkow.MetroChart, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -49,6 +52,10 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OpenHardwareMonitorLib">
       <HintPath>..\Libs\OpenHardwareMonitorLib.dll</HintPath>
@@ -93,12 +100,24 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Constants\ConfigFileNames.cs" />
+    <Compile Include="Constants\DirectoryConstants.cs" />
     <Compile Include="Constants\GeneralConstants.cs" />
     <Compile Include="Constants\ServiceNames.cs" />
+    <Compile Include="Converter\InverseBooleanConverter.cs" />
     <Compile Include="ExtensionMethods\DataVolumeFormattingExtensions.cs" />
+    <Compile Include="Helper\CanonicalSplineHelper.cs" />
+    <Compile Include="Interfaces\IConfigurationFile.cs" />
     <Compile Include="Interfaces\IExceptionReporterService.cs" />
     <Compile Include="Interfaces\ILocalizerService.cs" />
+    <Compile Include="Interfaces\ILoggingService.cs" />
     <Compile Include="Model\ChartDataPoint.cs" />
+    <Compile Include="Model\ConfigurationSection.cs" />
+    <Compile Include="Model\ConfigurationSections.cs" />
+    <Compile Include="Model\ConfigurationSetting.cs" />
+    <Compile Include="Model\ConfigurationSettings.cs" />
+    <Compile Include="Model\ConfigurationSettingsGeneric.cs" />
+    <Compile Include="Model\FanControllerTemplate.cs" />
     <Compile Include="Model\GPUInformation.cs" />
     <Compile Include="Model\HDDPartition.cs" />
     <Compile Include="Model\PerformanceInfoData.cs" />
@@ -115,8 +134,15 @@
     <Compile Include="Pages\RAMInformation.xaml.cs">
       <DependentUpon>RAMInformation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Settings\Directories.xaml.cs">
+      <DependentUpon>Directories.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\License.xaml.cs">
+      <DependentUpon>License.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\ExceptionReporterService.cs" />
     <Compile Include="Services\LocalizerService.cs" />
+    <Compile Include="Services\LoggingServiceNLog.cs" />
     <Compile Include="Services\OpenHardwareMonitorManagementService.cs" />
     <Compile Include="SystemInformation\PsApiWrapper.cs" />
     <Compile Include="UserControls\CPUCoreTemperatureChartUserControl.xaml.cs">
@@ -151,6 +177,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\WmiHardwareInfoService.cs" />
+    <Compile Include="Services\UpdateVisitor.cs" />
+    <Compile Include="XmlConfigurationFile.cs" />
     <Page Include="Pages\GPUInformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -164,6 +192,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\RAMInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\Directories.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\License.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styling\BitmapGraphics\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styling\LookAndFeel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -187,7 +231,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styling\Chart.xaml">
+    <Page Include="Styling\Styles\Chart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,7 +317,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styling\Colors.xaml">
+    <Page Include="Styling\Colors\Colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -281,7 +325,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styling\TextBlock.xaml">
+    <Page Include="Styling\Styles\TextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -312,9 +356,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ConfigFiles\FanControllerTemplates.xml" />
+    <Content Include="LICENSE.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Styling\BitmapGraphics\Logo.ico" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.de-DE.resx" />
     <EmbeddedResource Include="Properties\Resources.en-US.resx" />
@@ -323,7 +376,14 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Styling\BitmapGraphics\Assets\" />
+    <Folder Include="Styling\BitmapGraphics\Icons\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)ConfigFiles\FanControllerTemplates.xml" "$(TargetDir)ConfigFiles\FanControllerTemplates.xml*" /y</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

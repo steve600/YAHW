@@ -28,6 +28,8 @@ namespace YAHW.Services
 
         private Computer observedComputer = null;
 
+        private UpdateVisitor updateVisitor = new UpdateVisitor();
+
         #endregion Members and Constants
 
         /// <summary>
@@ -44,6 +46,23 @@ namespace YAHW.Services
             this.observedComputer.HDDEnabled = true;
 
             this.observedComputer.Open();
+        }
+
+        /// <summary>
+        /// Close observed computer
+        /// </summary>
+        public void Close()
+        {
+            if (this.observedComputer != null)
+                this.observedComputer.Close();
+        }
+
+        /// <summary>
+        /// Accept new settings
+        /// </summary>
+        public void AcceptNewSettings()
+        {
+            this.observedComputer.Accept(this.updateVisitor);
         }
 
         /// <summary>

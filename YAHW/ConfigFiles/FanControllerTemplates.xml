@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<FanControllerTemplates>
+  <FanControllerTemplate Name="Standard">
+    <Settings>
+      <Setting Temperature="0" FanVoltageInPercent="20" />
+      <Setting Temperature="10" FanVoltageInPercent="20" />
+      <Setting Temperature="20" FanVoltageInPercent="20" />
+      <Setting Temperature="65" FanVoltageInPercent="70" />
+      <Setting Temperature="70" FanVoltageInPercent="100" />
+    </Settings>
+  </FanControllerTemplate>
+  <FanControllerTemplate Name="Silent">
+    <Settings>
+      <Setting Temperature="0" FanVoltageInPercent="20" />
+      <Setting Temperature="10" FanVoltageInPercent="20" />
+      <Setting Temperature="20" FanVoltageInPercent="20" />
+      <Setting Temperature="70" FanVoltageInPercent="70" />
+      <Setting Temperature="75" FanVoltageInPercent="100" />
+    </Settings>
+  </FanControllerTemplate>
+  <FanControllerTemplate Name="Performance">
+    <Settings>
+      <Setting Temperature="0" FanVoltageInPercent="20" />
+      <Setting Temperature="10" FanVoltageInPercent="20" />
+      <Setting Temperature="20" FanVoltageInPercent="20" />
+      <Setting Temperature="55" FanVoltageInPercent="70" />
+      <Setting Temperature="60" FanVoltageInPercent="100" />
+    </Settings>
+  </FanControllerTemplate>
+</FanControllerTemplates>

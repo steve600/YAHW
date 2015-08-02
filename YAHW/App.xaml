@@ -5,17 +5,27 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                
+
                 <!-- Global Styling -->
-                <ResourceDictionary Source="Styling/Colors.xaml" />
-                <ResourceDictionary Source="Styling/ModernIcons.xaml" />
-                <ResourceDictionary Source="Styling/TextBlock.xaml" />
-                <ResourceDictionary Source="Styling/Chart.xaml" />
-                
+                <!--<ResourceDictionary Source="/YAHW;component/Styling/LookAndFeel.xaml" />-->
+
+                <!-- Modern UI Icons -->
+                <ResourceDictionary Source="/YAHW;component/Styling/ModernIcons.xaml"/>
+
+                <!-- Assets and Icons -->
+                <ResourceDictionary Source="/YAHW;component/Styling/BitmapGraphics/Icons.xaml" />
+
+                <!-- Colors and Brushes -->
+                <ResourceDictionary Source="/YAHW;component/Styling/Colors/Colors.xaml" />
+
+                <!-- Styles -->
+                <ResourceDictionary Source="/YAHW;component/Styling/Styles/Chart.xaml" />
+                <ResourceDictionary Source="/YAHW;component/Styling/Styles/TextBlock.xaml" />
+
                 <!-- Modern UI Styles -->
                 <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
-                <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Light.xaml"/>  
-                
+                <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Light.xaml"/>
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

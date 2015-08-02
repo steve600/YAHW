@@ -180,6 +180,12 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                
                                 <Grid.ColumnDefinitions>
                                     <!-- Name -->
                                     <ColumnDefinition Width="Auto" />
@@ -191,25 +197,28 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Grid.Column="0" 
+                                           Grid.Row="0"
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Center"
                                            Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}" />
 
                                 <TextBlock Grid.Column="1"
+                                           Grid.Row="0"
                                            Margin="10,0,0,0"
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Center"
                                            Text="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2} %}" />
 
                                 <Grid Grid.Column="2"
+                                      Grid.Row="0"
                                       Margin="10,0,0,0">
-                                        
+
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="2" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                        
+
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="1" />
@@ -274,8 +283,10 @@
 
                                     </Grid>
 
-                                </Grid>                                    
+                                </Grid>
 
+                                <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,2,0,2" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -314,6 +325,12 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
                                 <Grid.ColumnDefinitions>
                                     <!-- Name -->
                                     <ColumnDefinition Width="Auto" />
@@ -410,6 +427,8 @@
 
                                 </Grid>
 
+                                <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,2,0,2" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -448,6 +467,12 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid>
+                                
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
                                 <Grid.ColumnDefinitions>
                                     <!-- Name -->
                                     <ColumnDefinition Width="Auto" />
@@ -544,6 +569,8 @@
 
                                 </Grid>
 
+                                <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,2,0,2" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

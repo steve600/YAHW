@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls.Primitives;
+﻿using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using YAHW.BaseClasses;
 using YAHW.Constants;
 using YAHW.Services;
@@ -40,7 +41,7 @@ namespace YAHW.ViewModels
             this.openHardwareMonitorManagementService = DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
             this.openHardwareMonitorManagementService.UpdateMainboardSensors();
 
-            this.MainContent = new UniformGrid();
+            this.MainContent = new StackPanel();
 
             foreach (var fc in this.openHardwareMonitorManagementService.MainboardFanControlSensors)
             {
@@ -55,15 +56,15 @@ namespace YAHW.ViewModels
 
         #region Properties
 
-        private UniformGrid mainContent;
+        private StackPanel mainContent;
 
         /// <summary>
         /// The main content
         /// </summary>
-        public UniformGrid MainContent
+        public StackPanel MainContent
         {
             get { return mainContent; }
-            set { this.SetProperty<UniformGrid>(ref this.mainContent, value); }
+            set { this.SetProperty<StackPanel>(ref this.mainContent, value); }
         }        
 
         #endregion Properties

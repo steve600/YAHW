@@ -348,4 +348,70 @@
   <data name="UserControlGPUInformationHeader" xml:space="preserve">
     <value>@UserControlGPUInformationHeader</value>
   </data>
+  <data name="MainboardFanControlErrorReadingConfigFile" xml:space="preserve">
+    <value>@MainboardFanControlErrorReadingConfig</value>
+  </data>
+  <data name="MainboardFanControlErrorCreatingConfigFile" xml:space="preserve">
+    <value>@MainboardFanControlErrorCreatingConfig</value>
+  </data>
+  <data name="MainboardFanControlErrorWritingConfigFile" xml:space="preserve">
+    <value>@MainboardFanControlErrorWritingConfigFile</value>
+  </data>
+  <data name="MainboardFanControlErrorReadingFanControllerTemplates" xml:space="preserve">
+    <value>@MainboardFanControlErrorReadingFanControllerTemplates</value>
+  </data>
+  <data name="MainboardFanControlActualValueAnnotation" xml:space="preserve">
+    <value>@MainboardFanControlActualValueAnnotation</value>
+  </data>
+  <data name="MainboardFanControlErrorSettingFanSpeed" xml:space="preserve">
+    <value>@MainboardFanControlErrorSettingFanSpeed</value>
+  </data>
+  <data name="MainboardFanControlNote" xml:space="preserve">
+    <value>@MainboardFanControlNote</value>
+  </data>
+  <data name="UserControlFanContolAdvancedMode" xml:space="preserve">
+    <value>@UserControlFanContolAdvancedMode</value>
+  </data>
+  <data name="UserControlFanContolTemperatureSensor" xml:space="preserve">
+    <value>@UserControlFanContolTemperatureSensor</value>
+  </data>
+  <data name="UserControlFanContolSettings" xml:space="preserve">
+    <value>@UserControlFanContolSettings</value>
+  </data>
+  <data name="UserControlFanFanVoltageInPercent" xml:space="preserve">
+    <value>@UserControlFanFanVoltageInPercent</value>
+  </data>
+  <data name="UserControlFanTemperatureSensorValue" xml:space="preserve">
+    <value>@UserControlFanTemperatureSensorValue</value>
+  </data>
+  <data name="UserControlFanContolDefaultMode" xml:space="preserve">
+    <value>@UserControlFanContolDefaultMode</value>
+  </data>
+  <data name="SettingsPageAppearance" xml:space="preserve">
+    <value>@SettingsPageAppearance</value>
+  </data>
+  <data name="SettingsPageAbout" xml:space="preserve">
+    <value>@SettingsPageAbout</value>
+  </data>
+  <data name="AppearancePageTheme" xml:space="preserve">
+    <value>@AppearancePageTheme</value>
+  </data>
+  <data name="AppearancePageFontSize" xml:space="preserve">
+    <value>@AppearancePageFontSize</value>
+  </data>
+  <data name="AppearancePageTitle" xml:space="preserve">
+    <value>@AppearancePageTitle</value>
+  </data>
+  <data name="DirectoriesPageTitle" xml:space="preserve">
+    <value>@DirectoriesPageTitle</value>
+  </data>
+  <data name="SettingsPageDirectories" xml:space="preserve">
+    <value>@SettingsPageDirectories</value>
+  </data>
+  <data name="LicensePageLicense" xml:space="preserve">
+    <value>@LicensePageLicense</value>
+  </data>
+  <data name="SettingsPageLicense" xml:space="preserve">
+    <value>@SettingsPageLicense</value>
+  </data>
 </root>

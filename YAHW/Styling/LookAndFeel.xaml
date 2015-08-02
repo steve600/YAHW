@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+
+        <!-- Modern UI Icons -->
+        <ResourceDictionary Source="/YAHW;component/Styling/ModernIcons.xaml"/>
+
+        <!-- Assets and Icons -->
+        <ResourceDictionary Source="/YAHW;component/Styling/BitmapGraphics/Icons.xaml" />
+
+        <!-- Colors and Brushes -->
+        <ResourceDictionary Source="/YAHW;component/Styling/Colors/Colors.xaml" />
+        
+        <!-- Styles -->
+        <ResourceDictionary Source="/YAHW;component/Styling/Styles/Chart.xaml" />
+        <ResourceDictionary Source="/YAHW;component/Styling/Styles/TextBlock.xaml" />
+                
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

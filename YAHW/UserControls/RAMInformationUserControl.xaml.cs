@@ -141,6 +141,10 @@ namespace YAHW.UserControls
             set { SetValue(FreePhysicalMemoryInPercentProperty, value); }
         }
 
+        // Using a DependencyProperty as the backing store for FreePhysicalMemoryInPercent.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty FreePhysicalMemoryInPercentProperty =
+            DependencyProperty.Register("FreePhysicalMemoryInPercent", typeof(double), typeof(RAMInformationUserControl), new PropertyMetadata(default(double)));
+
         /// <summary>
         /// Free physical memory
         /// </summary>
@@ -154,10 +158,6 @@ namespace YAHW.UserControls
         public static readonly DependencyProperty FreePhysicalMemoryProperty =
             DependencyProperty.Register("FreePhysicalMemory", typeof(string), typeof(RAMInformationUserControl), new PropertyMetadata("n.a."));
         
-        // Using a DependencyProperty as the backing store for FreePhysicalMemoryInPercent.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty FreePhysicalMemoryInPercentProperty =
-            DependencyProperty.Register("FreePhysicalMemoryInPercent", typeof(double), typeof(RAMInformationUserControl), new PropertyMetadata(default(double)));
-
         /// <summary>
         /// Used physical memory in percent
         /// </summary>

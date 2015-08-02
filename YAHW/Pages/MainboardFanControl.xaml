@@ -22,21 +22,29 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0"
+                            Orientation="Vertical">
+
+                    <StackPanel Grid.Row="0"
                             Orientation="Horizontal">
 
-                    <Rectangle Width="24" Height="24">
-                        <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_fan}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
+                        <Rectangle Width="24" Height="24">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_fan}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
 
-                    <TextBlock Text="{lex:Loc YAHW:Resources:MainWindowFanControl}" 
+                        <TextBlock Text="{lex:Loc YAHW:Resources:MainWindowFanControl}" 
                                Margin="3,0,0,0"
                                Style="{StaticResource Heading2}" 
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left" />
 
+                    </StackPanel>
+
+                    <mui:BBCodeBlock Margin="0,5,0,0" BBCode="{lex:Loc YAHW:Resources:MainboardFanControlNote}" />
+
                 </StackPanel>
+                
 
                 <ContentControl Grid.Row="2"
                                 Content="{Binding Path=MainContent, UpdateSourceTrigger=PropertyChanged}" />
