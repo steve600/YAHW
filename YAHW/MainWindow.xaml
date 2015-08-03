@@ -47,6 +47,7 @@
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowGPUInformation}" Source="/Pages/GPUInformation.xaml" />
                 <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowGPUCoreWorkload}" Source="/Pages/GPUCoreWorkloads.xaml" />
+                <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowGPUCoreTemperatures}" Source="/Pages/GPUCoreTemperatures.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <!-- RAM -->
