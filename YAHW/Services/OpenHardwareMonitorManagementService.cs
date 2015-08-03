@@ -391,5 +391,176 @@ namespace YAHW.Services
         }
 
         #endregion CPU-Properties
+
+        #region GPU-Properties
+
+        /// <summary>
+        /// The GPU
+        /// </summary>
+        public IHardware GPU
+        {
+            get
+            {
+                return this.observedComputer.Hardware.Where(p => (p.HardwareType == HardwareType.GpuAti || p.HardwareType == HardwareType.GpuNvidia)).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// GPU Manufactor Name
+        /// </summary>
+        public string GPUManufactorName
+        {
+            get
+            {
+                return
+                   (this.GPU.GetType().Equals(HardwareType.GpuAti)) ? "AMD" : (this.GPU.GetType().Equals(HardwareType.GpuNvidia) ? "Nvidia" : "");
+            }
+        }
+
+        /// <summary>
+        /// GPU-Core Clock Speed
+        /// </summary>
+        public double GPUCoreClockSpeed
+        {
+            get
+            {
+                var clockSpeed = this.GPUCoreClockSpeedSensors.Max(s => s.Value);
+
+                return (clockSpeed != null) ? (double)clockSpeed : default(double);
+            }
+        }
+
+        /// <summary>
+        /// GPU-Memory Clock Speed
+        /// </summary>
+        public double GPUMemoryClockSpeed
+        {
+            get
+            {
+                var clockSpeed = this.GPUMemoryClockSpeedSensors.Max(s => s.Value);
+
+                return (clockSpeed != null) ? (double)clockSpeed : default(double);
+            }
+        }
+
+        /// <summary>
+        /// GPU-Workload Sensor (TOTAL)
+        /// </summary>
+        public ISensor GPUWorkloadSensor
+        {
+            get
+            {
+                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Load && s.Name.Equals("GPU Total")).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// The GPU-Core Power-Consumption Sensor
+        /// </summary>
+        public ISensor GPUCorePowerConsumptionSensor
+        {
+            get
+            {
+                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Power && s.Name.Equals("GPU Cores")).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// The GPU Temperature-Sensor
+        /// </summary>
+        public ISensor GPUTemperatureSensor
+        {
+            get
+            {
+                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Equals("GPU Package")).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// GPU-Core Workload-Sensors
+        /// </summary>
+        public ObservableCollection<ISensor> GPUCoreWorkloadSensors
+        {
+            get
+            {
+                var sensors = this.GPU.Sensors.Where(s => s.SensorType == SensorType.Load && s.Name.Contains("Core"));
+                if (sensors != null)
+                {
+                    return new ObservableCollection<ISensor>(sensors);
+                }
+
+                return new ObservableCollection<ISensor>();
+            }
+        }
+
+        /// <summary>
+        /// GPU-Core Temperature-Sensors
+        /// </summary>
+        public ObservableCollection<ISensor> GPUCoreTemperatureSensors
+        {
+            get
+            {
+                var sensors = this.GPU.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Contains("Core"));
+                if (sensors != null)
+                {
+                    return new ObservableCollection<ISensor>(sensors);
+                }
+
+                return new ObservableCollection<ISensor>();
+            }
+        }
+
+        /// <summary>
+        /// GPU-Core ClockSpeed-Sensors
+        /// </summary>
+        public ObservableCollection<ISensor> GPUCoreClockSpeedSensors
+        {
+            get
+            {
+                var sensors = this.GPU.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("Core"));
+                if (sensors != null)
+                {
+                    return new ObservableCollection<ISensor>(sensors);
+                }
+
+                return new ObservableCollection<ISensor>();
+            }
+        }
+
+        /// <summary>
+        /// GPU-Memory ClockSpeed-Sensors
+        /// </summary>
+        public ObservableCollection<ISensor> GPUMemoryClockSpeedSensors
+        {
+            get
+            {
+                var sensors = this.GPU.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("Memory"));
+                if (sensors != null)
+                {
+                    return new ObservableCollection<ISensor>(sensors);
+                }
+
+                return new ObservableCollection<ISensor>();
+            }
+        }
+
+        /// <summary>
+        /// GPU FanSpeed-Sensors
+        /// </summary>
+        public ObservableCollection<ISensor> GPUFanSpeedSensors
+        {
+            get
+            {
+                var sensors = this.GPU.Sensors.Where(s => s.SensorType == SensorType.Fan && s.Name.Contains("GPU"));
+                if (sensors != null)
+                {
+                    return new ObservableCollection<ISensor>(sensors);
+                }
+
+                return new ObservableCollection<ISensor>();
+            }
+        }
+
+        #endregion GPU-Properties
     }
 }

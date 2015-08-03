@@ -122,6 +122,9 @@
     <Compile Include="Model\HDDPartition.cs" />
     <Compile Include="Model\PerformanceInfoData.cs" />
     <Compile Include="Model\RAMInformation.cs" />
+    <Compile Include="Pages\GPUCoreWorkloads.xaml.cs">
+      <DependentUpon>GPUCoreWorkloads.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\GPUInformation.xaml.cs">
       <DependentUpon>GPUInformation.xaml</DependentUpon>
     </Compile>
@@ -178,7 +181,12 @@
     </Compile>
     <Compile Include="Services\WmiHardwareInfoService.cs" />
     <Compile Include="Services\UpdateVisitor.cs" />
+    <Compile Include="ViewModels\GPUCoreWorkloadsViewModel.cs" />
     <Compile Include="XmlConfigurationFile.cs" />
+    <Page Include="Pages\GPUCoreWorkloads.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\GPUInformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

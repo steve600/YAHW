@@ -1056,4 +1056,10 @@ copy of the Program in return for a fee.</value>
   <data name="SettingsPageLicense" xml:space="preserve">
     <value>License</value>
   </data>
+  <data name="MainWindowGPUCoreTemperatures" xml:space="preserve">
+    <value>GPU-Core Temperaturen (°C)</value>
+  </data>
+  <data name="MainWindowGPUCoreWorkload" xml:space="preserve">
+    <value>GPU-Core Auslastung (%)</value>
+  </data>
 </root>
