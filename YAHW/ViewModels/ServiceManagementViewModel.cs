@@ -26,23 +26,65 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-using System.Windows.Controls;
-using YAHW.Constants;
-using YAHW.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceProcess;
+using System.Text;
+using System.Threading.Tasks;
+using YAHW.BaseClasses;
+using YAHW.Manager;
 
-namespace YAHW.Pages.Settings
+namespace YAHW.ViewModels
 {
     /// <summary>
-    /// Interaction logic for Appearance.xaml
+    /// <para>
+    /// ViewModel-Class for the service management
+    /// </para>
+    /// 
+    /// <para>
+    /// Class history:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <description>1.0: First release, working (Steffen Steinbrecher).</description>
+    ///     </item>
+    /// </list>
+    /// </para>
+    /// 
+    /// <para>Author: Steffen Steinbrecher</para>
+    /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public partial class Appearance : UserControl
+    class ServiceManagementViewModel : ViewModelBase
     {
-        public Appearance()
-        {
-            InitializeComponent();
+        #region Members and Constants
 
-            // create and assign the appearance view model
-            this.DataContext = DependencyFactory.Resolve<AppearanceViewModel>(GeneralConstants.ApperanceViewModel);
+        #endregion Members and Constants
+
+        #region CTOR
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        public ServiceManagementViewModel()
+        {
+            this.OnPropertyChanged(() => this.InstalledServices);
         }
+
+        #endregion CTOR
+
+        #region Properties
+
+        /// <summary>
+        /// List with installed services
+        /// </summary>
+        public ServiceController[] InstalledServices
+        {
+            get
+            {
+                return ServiceController.GetServices();
+            }
+        }
+
+        #endregion Properties
     }
 }

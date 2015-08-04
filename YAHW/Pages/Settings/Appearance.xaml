@@ -38,7 +38,7 @@
 
                 <Grid HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="120" />
                         <ColumnDefinition MinWidth="120"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -49,10 +49,36 @@
                     <TextBlock Text="{lex:Loc YAHW:Resources:AppearancePageTheme}" VerticalAlignment="Center" Margin="0,0,16,4" />
                     <ComboBox Grid.Column="1" ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme, Mode=TwoWay}" DisplayMemberPath="DisplayName" VerticalAlignment="Center" Margin="0,0,0,4" />
 
-                    <TextBlock Grid.Row="1" Text="{lex:Loc YAHW:Resources:AppearancePageFontSize}" VerticalAlignment="Center" Margin="0,0,16,0" />
-                    <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding FontSizes}" SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Row="1" Text="{lex:Loc YAHW:Resources:AppearancePageFontSize}" VerticalAlignment="Center" Margin="0,0,16,4" />
+                    <ComboBox Grid.Row="1" 
+                              Grid.Column="1" 
+                              ItemsSource="{Binding FontSizes}" 
+                              SelectedItem="{Binding SelectedFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                              VerticalAlignment="Center" />
+
                 </Grid>
+
+                <TextBlock Text="{lex:Loc YAHW:Resources:AppearancePageLanguage}" Style="{StaticResource Heading2}" Margin="0,15,0,8" />
+
+                <Grid HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition MinWidth="120"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>                    
+
+                    <TextBlock Grid.Row="0" Text="{lex:Loc YAHW:Resources:AppearancePageLanguage}" VerticalAlignment="Center" Margin="0,0,16,0" />
+                    <ComboBox Grid.Row="0" 
+                              Grid.Column="1" 
+                              ItemsSource="{Binding AvailableLanguages}" 
+                              SelectedItem="{Binding Path=SelectedLanguage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                              VerticalAlignment="Center" />
+                </Grid>
+
             </StackPanel>
+
         </ScrollViewer>
     </Grid>
 </UserControl>

@@ -27,6 +27,7 @@
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace YAHW.Model
@@ -129,6 +130,19 @@ namespace YAHW.Model
         {
             get { return partitions; }
             set { partitions = value; }
+        }
+
+        public IList<HDDPartition> PartitionsWithDriveLetter
+        {
+            get
+            {
+                if (this.Partitions != null && this.Partitions.Count > 0)
+                {
+                    return this.Partitions.Where(p => !String.IsNullOrEmpty(p.DriveLetter)).ToList();
+                }
+
+                return null;
+            }
         }
     }
 }

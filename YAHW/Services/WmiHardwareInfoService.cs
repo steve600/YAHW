@@ -429,8 +429,9 @@ namespace YAHW.Services
                 if (drive["DeviceID"].ToString() == inp)
                 {
                     partition.FreeSpace = Convert.ToUInt64(drive["FreeSpace"]);
-                    partition.TotalSpace = Convert.ToUInt64(drive["Size"].ToString());
+                    partition.TotalSpace = Convert.ToUInt64(drive["Size"]);
                     partition.FreeSapceInPercent = partition.FreeSpace * 100 / partition.TotalSpace;
+                    partition.FileSystem = Convert.ToString(drive["FileSystem"]);
                 }
             }
         }

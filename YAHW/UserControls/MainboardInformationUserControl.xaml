@@ -50,8 +50,7 @@
                        Style="{StaticResource Heading2}"
                        Text="{lex:Loc YAHW:Resources:UserControlMainboardInformationHeader}" />
 
-        </StackPanel>
-        
+        </StackPanel>        
 
         <!-- Manufacturer -->
         <TextBlock Grid.Column="0"

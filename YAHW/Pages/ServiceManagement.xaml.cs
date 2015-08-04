@@ -26,23 +26,46 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
-using YAHW.Constants;
-using YAHW.ViewModels;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace YAHW.Pages.Settings
+namespace YAHW.Pages
 {
     /// <summary>
-    /// Interaction logic for Appearance.xaml
+    /// <para>
+    /// Interaction logic for ServiceManagement.xaml
+    /// </para>
+    /// 
+    /// <para>
+    /// Class history:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <description>1.0: First release, working (Steffen Steinbrecher).</description>
+    ///     </item>
+    /// </list>
+    /// </para>
+    /// 
+    /// <para>Author: Steffen Steinbrecher</para>
+    /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public partial class Appearance : UserControl
+    public partial class ServiceManagement : UserControl
     {
-        public Appearance()
+        public ServiceManagement()
         {
             InitializeComponent();
-
-            // create and assign the appearance view model
-            this.DataContext = DependencyFactory.Resolve<AppearanceViewModel>(GeneralConstants.ApperanceViewModel);
+            this.DataContext = new ViewModels.ServiceManagementViewModel();
         }
     }
 }

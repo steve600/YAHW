@@ -26,7 +26,9 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
+using YAHW.Constants;
 using YAHW.MVVMBase;
+using YAHW.ViewModels;
 
 namespace YAHW.BaseClasses
 {

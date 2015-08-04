@@ -70,6 +70,15 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @AppearancePageLanguage ähnelt.
+        /// </summary>
+        internal static string AppearancePageLanguage {
+            get {
+                return ResourceManager.GetString("AppearancePageLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AppearancePageTheme ähnelt.
         /// </summary>
         internal static string AppearancePageTheme {
@@ -84,6 +93,15 @@ namespace YAHW.Properties {
         internal static string AppearancePageTitle {
             get {
                 return ResourceManager.GetString("AppearancePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @AutoRunsLogon ähnelt.
+        /// </summary>
+        internal static string AutoRunsLogon {
+            get {
+                return ResourceManager.GetString("AutoRunsLogon", resourceCulture);
             }
         }
         
@@ -268,6 +286,24 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @HDDInformationFreeSpace ähnelt.
+        /// </summary>
+        internal static string HDDInformationFreeSpace {
+            get {
+                return ResourceManager.GetString("HDDInformationFreeSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @HDDInformationPartitions ähnelt.
+        /// </summary>
+        internal static string HDDInformationPartitions {
+            get {
+                return ResourceManager.GetString("HDDInformationPartitions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @HDDInformationSmartCurrentValue ähnelt.
         /// </summary>
         internal static string HDDInformationSmartCurrentValue {
@@ -313,11 +349,29 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die @LicensePageLicense ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die @HDDInformationTitle ähnelt.
         /// </summary>
-        internal static string LicensePageLicense {
+        internal static string HDDInformationTitle {
             get {
-                return ResourceManager.GetString("LicensePageLicense", resourceCulture);
+                return ResourceManager.GetString("HDDInformationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @HDDInformationTotalSpace ähnelt.
+        /// </summary>
+        internal static string HDDInformationTotalSpace {
+            get {
+                return ResourceManager.GetString("HDDInformationTotalSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @HDDInformationUsedSpace ähnelt.
+        /// </summary>
+        internal static string HDDInformationUsedSpace {
+            get {
+                return ResourceManager.GetString("HDDInformationUsedSpace", resourceCulture);
             }
         }
         
@@ -462,6 +516,15 @@ namespace YAHW.Properties {
         internal static string MainWindowAbout {
             get {
                 return ResourceManager.GetString("MainWindowAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowAutoRuns ähnelt.
+        /// </summary>
+        internal static string MainWindowAutoRuns {
+            get {
+                return ResourceManager.GetString("MainWindowAutoRuns", resourceCulture);
             }
         }
         
@@ -628,6 +691,15 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowServiceManagement ähnelt.
+        /// </summary>
+        internal static string MainWindowServiceManagement {
+            get {
+                return ResourceManager.GetString("MainWindowServiceManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowSettings ähnelt.
         /// </summary>
         internal static string MainWindowSettings {
@@ -642,6 +714,24 @@ namespace YAHW.Properties {
         internal static string MainWindowSystemInformation {
             get {
                 return ResourceManager.GetString("MainWindowSystemInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowTaskbarContextMenuClose ähnelt.
+        /// </summary>
+        internal static string MainWindowTaskbarContextMenuClose {
+            get {
+                return ResourceManager.GetString("MainWindowTaskbarContextMenuClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowTitle ähnelt.
+        /// </summary>
+        internal static string MainWindowTitle {
+            get {
+                return ResourceManager.GetString("MainWindowTitle", resourceCulture);
             }
         }
         
@@ -723,6 +813,15 @@ namespace YAHW.Properties {
         internal static string RAMInformationListViewHeaderSpeed {
             get {
                 return ResourceManager.GetString("RAMInformationListViewHeaderSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @ServiceManagementTitle ähnelt.
+        /// </summary>
+        internal static string ServiceManagementTitle {
+            get {
+                return ResourceManager.GetString("ServiceManagementTitle", resourceCulture);
             }
         }
         

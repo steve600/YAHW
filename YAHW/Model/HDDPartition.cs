@@ -27,7 +27,11 @@
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
 using System;
+using System.Collections.ObjectModel;
 using YAHW.MVVMBase;
+using YAHW.ExtensionMethods;
+using YAHW.Interfaces;
+using YAHW.Constants;
 
 namespace YAHW.Model
 {
@@ -59,6 +63,17 @@ namespace YAHW.Model
         {
             get { return diskName; }
             set { this.SetProperty<string>(ref this.diskName, value); }
+        }
+
+        private string fileSystem;
+
+        /// <summary>
+        /// File-System
+        /// </summary>
+        public string FileSystem
+        {
+            get { return fileSystem; }
+            set { this.SetProperty<string>(ref this.fileSystem, value); }
         }
 
         private string partitionName;
@@ -94,6 +109,17 @@ namespace YAHW.Model
             set { this.SetProperty<UInt64>(ref this.freeSpace, value); }
         }
 
+        /// <summary>
+        /// Formatted free space 
+        /// </summary>
+        public string FreeSpacePrettySize
+        {
+            get
+            {
+                return this.FreeSpace.ToPrettySize(1);
+            }
+        }
+
         private double freeSpaceInPercent;
 
         /// <summary>
@@ -114,6 +140,54 @@ namespace YAHW.Model
         {
             get { return totalSpace; }
             set { this.SetProperty<UInt64>(ref this.totalSpace, value); }
+        }
+
+        /// <summary>
+        /// Formatted total space
+        /// </summary>
+        public string TotalSpacePrettySize
+        {
+            get
+            {
+                return this.TotalSpace.ToPrettySize(1);
+            }
+        }
+
+        /// <summary>
+        /// Used space
+        /// </summary>
+        public UInt64 UsedSpace
+        {
+            get
+            {
+                return (this.TotalSpace - this.FreeSpace);
+            }
+        }
+        
+        /// <summary>
+        /// Formatted used space
+        /// </summary>
+        public string UsedSpacePrettySize
+        {
+            get
+            {
+                return this.UsedSpace.ToPrettySize(1);
+            }
+        }
+
+        /// <summary>
+        /// HDD-Workload
+        /// </summary>
+        public ObservableCollection<ChartDataPoint> HDDWorkload
+        {
+           get
+            {
+                var result = new ObservableCollection<ChartDataPoint>();
+                string seriesName = DependencyFactory.Resolve<ILocalizerService>(ServiceNames.LocalizerService).GetLocalizedString("YAHW:Resources:HDDInformationUsedSpace");
+                result.Add(new ChartDataPoint() { Name = seriesName, Value = 100 - this.FreeSapceInPercent });
+
+                return result;
+            }
         }
     }
 }

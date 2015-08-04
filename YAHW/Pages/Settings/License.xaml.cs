@@ -40,6 +40,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using YAHW.Constants;
 
 namespace YAHW.Pages.Settings
 {
@@ -51,6 +52,15 @@ namespace YAHW.Pages.Settings
         public License()
         {
             InitializeComponent();
+
+            if (System.IO.File.Exists(DirectoryConstants.LicenseFile))
+            {
+                this.txtLicense.Text = System.IO.File.ReadAllText(DirectoryConstants.LicenseFile);
+            }
+            else
+            {
+                this.txtLicense.Text = "n.a.";
+            }
         }
     }
 }

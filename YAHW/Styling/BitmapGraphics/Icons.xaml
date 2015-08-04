@@ -1,6 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!-- Appliation-Icon -->
     <ImageSource x:Key="ApplicationIcon">/YAHW;component/Styling/BitmapGraphics/Logo.ico</ImageSource>
+
+    <!-- 16x16-Icons -->
+    <ImageSource x:Key="delete_16x16">/YAHW;component/Styling/BitmapGraphics/Icons/16x16/delete.png</ImageSource>
+
+    <!-- 32x32-Icons -->
+    <ImageSource x:Key="delete_32x32">/YAHW;component/Styling/BitmapGraphics/Icons/32x32/delete.png</ImageSource>
 
 </ResourceDictionary>

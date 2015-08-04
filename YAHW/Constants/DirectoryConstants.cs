@@ -43,7 +43,24 @@ namespace YAHW.Constants
         {
             get
             {
-                return System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "YAHW");
+                string basePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "YAHW");
+
+                // Create directory if not exists
+                if (!System.IO.Directory.Exists(basePath))
+                    System.IO.Directory.CreateDirectory(basePath);
+
+                return basePath;
+            }
+        }
+
+        /// <summary>
+        /// Application config
+        /// </summary>
+        public static string ApplicationConfig
+        {
+            get
+            {
+                return System.IO.Path.Combine(ApplicationDataFolder, "ApplicationSettings.xml");
             }
         }
 
@@ -66,6 +83,14 @@ namespace YAHW.Constants
             get
             {
                 return System.IO.Path.Combine(ApplicationDataFolder, "FanControllerSettings.xml");
+            }
+        }
+
+        public static string LicenseFile
+        {
+            get
+            {
+                return System.IO.Path.Combine(System.Environment.CurrentDirectory, "LICENSE.txt");
             }
         }
     }
