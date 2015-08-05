@@ -26,40 +26,38 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-using YAHW.Constants;
-using YAHW.MVVMBase;
-using YAHW.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 
-namespace YAHW.BaseClasses
+namespace YAHW.Converter
 {
-    /// <summary>
-    /// <para>
-    /// Base class for the ViewModels
-    /// </para>
-    /// 
-    /// <para>
-    /// Class history:
-    /// <list type="bullet">
-    ///     <item>
-    ///         <description>1.0: First release, working (Steffen Steinbrecher).</description>
-    ///     </item>
-    /// </list>
-    /// </para>
-    /// 
-    /// <para>Author: Steffen Steinbrecher</para>
-    /// <para>Date: 12.07.2015</para>
-    /// </summary>
-    public abstract class ViewModelBase : BindableBase
+    [ValueConversion(typeof(bool), typeof(Visibility))]
+    public class ConfigurableBooleanToVisibilityConverter : IValueConverter
     {
-        private bool isDialogDisabled = false;
+        public Visibility TrueValue { get; set; }
+        public Visibility FalseValue { get; set; }
 
-        /// <summary>
-        /// Flag if dialog is disabled
-        /// </summary>
-        public bool IsDialogDisabled
+        public ConfigurableBooleanToVisibilityConverter()
         {
-            get { return isDialogDisabled; }
-            set { this.SetProperty<bool>(ref this.isDialogDisabled, value); }
+            // set defaults
+            FalseValue = Visibility.Hidden;
+            TrueValue = Visibility.Visible;
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool)value ? TrueValue : FalseValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

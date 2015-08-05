@@ -71,12 +71,20 @@ namespace YAHW.ViewModels
 
             this.MainContent = new StackPanel();
 
-            foreach (var fc in this.openHardwareMonitorManagementService.MainboardFanControlSensors)
+            if (this.openHardwareMonitorManagementService.MainboardFanControlSensors != null &&
+                this.openHardwareMonitorManagementService.MainboardFanControlSensors.Count > 0)
             {
-                var fanControl = new UserControls.MainboardFanControl();
-                fanControl.FanController = fc;
+                foreach (var fc in this.openHardwareMonitorManagementService.MainboardFanControlSensors)
+                {
+                    var fanControl = new UserControls.MainboardFanControl();
+                    fanControl.FanController = fc;
 
-                this.MainContent.Children.Add(fanControl);
+                    this.MainContent.Children.Add(fanControl);
+                }
+            }
+            else
+            {
+                this.IsDialogDisabled = true;
             }
         }
 

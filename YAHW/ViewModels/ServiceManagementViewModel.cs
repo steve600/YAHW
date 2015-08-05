@@ -34,6 +34,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YAHW.BaseClasses;
 using YAHW.Manager;
+using YAHW.Model;
 
 namespace YAHW.ViewModels
 {
@@ -58,6 +59,8 @@ namespace YAHW.ViewModels
     {
         #region Members and Constants
 
+        private ServiceManager serviceManager = null;
+
         #endregion Members and Constants
 
         #region CTOR
@@ -67,22 +70,23 @@ namespace YAHW.ViewModels
         /// </summary>
         public ServiceManagementViewModel()
         {
-            this.OnPropertyChanged(() => this.InstalledServices);
+            this.serviceManager = new ServiceManager();
+            this.InstalledServices = this.serviceManager.GetInstalledWindowsServices();
         }
 
         #endregion CTOR
 
         #region Properties
 
+        private IList<WindowsService> installedServices;
+
         /// <summary>
         /// List with installed services
         /// </summary>
-        public ServiceController[] InstalledServices
+        public IList<WindowsService> InstalledServices
         {
-            get
-            {
-                return ServiceController.GetServices();
-            }
+            get { return installedServices; }
+            private set { this.SetProperty<IList<WindowsService>>(ref this.installedServices, value); }
         }
 
         #endregion Properties

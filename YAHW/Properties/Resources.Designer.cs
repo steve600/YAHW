@@ -385,6 +385,15 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @MainboardFanControlDialogDisabledText ähnelt.
+        /// </summary>
+        internal static string MainboardFanControlDialogDisabledText {
+            get {
+                return ResourceManager.GetString("MainboardFanControlDialogDisabledText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MainboardFanControlErrorCreatingConfig ähnelt.
         /// </summary>
         internal static string MainboardFanControlErrorCreatingConfigFile {

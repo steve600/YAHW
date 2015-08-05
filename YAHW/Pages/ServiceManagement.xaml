@@ -20,13 +20,17 @@
 
         <TextBlock Grid.Row="0" Text="{lex:Loc YAHW:Resources:ServiceManagementTitle}" Style="{StaticResource Heading2}" />
 
-            <DataGrid Grid.Row="1" ItemsSource="{Binding Path=InstalledServices}" 
-                      ScrollViewer.CanContentScroll="True"
-                      AutoGenerateColumns="True">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Path=DisplayName}" Header="DisplayName" />
-                </DataGrid.Columns>
-            </DataGrid>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Path=InstalledServices}" 
+                  ScrollViewer.CanContentScroll="True"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="250" Binding="{Binding Path=DisplayName}" Header="DisplayName" />
+                <DataGridTextColumn Width="100" Binding="{Binding Path=State}" Header="Status" />
+                <DataGridTextColumn Width="120" Binding="{Binding Path=StartMode}" Header="Start-Modus" />
+                <DataGridTextColumn Width="200" Binding="{Binding Path=PathName}" Header="Pfad" />
+                <DataGridTextColumn Width="180" Binding="{Binding Path=StartName}" Header="Anmeldung" />
+            </DataGrid.Columns>
+        </DataGrid>
 
         
     </Grid>

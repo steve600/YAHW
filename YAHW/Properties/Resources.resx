@@ -447,4 +447,7 @@
   <data name="MainWindowTitle" xml:space="preserve">
     <value>@MainWindowTitle</value>
   </data>
+  <data name="MainboardFanControlDialogDisabledText" xml:space="preserve">
+    <value>@MainboardFanControlDialogDisabledText</value>
+  </data>
 </root>

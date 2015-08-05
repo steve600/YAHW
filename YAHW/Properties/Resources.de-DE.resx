@@ -157,7 +157,7 @@
  - [url=/Pages/HDDInformation.xaml]HDD[/url]</value>
   </data>
   <data name="PageAboutText" xml:space="preserve">
-    <value>Mit dem YAHW - [b]Y[/b]et [b]A[/b]nother [b]H[/b]ardware [b]M[/b]onitor ist es möglich diverse Hardwarekomponenten zu überwachen. Das Programm selbst ist ebenfalls OpenSource. Das Repository wird unter GitHub verwaltet und ist hier zu finden:
+    <value>Mit dem YAHW - [b]Y[/b]et [b]A[/b]nother [b]H[/b]ardware [b]M[/b]onitor ist es möglich diverse Hardwarekomponenten zu überwachen. Das Programm selbst ist OpenSource. Das Repository wird unter GitHub verwaltet und ist hier zu finden:
 
 [url=https://github.com/steve600/YAHW]https://github.com/steve600/YAHW[/url]
 
@@ -172,9 +172,7 @@ Für die Umsetzung wurden die folgenden Softwarekomponenten verwendet:
 YAHW - Yet Another Hardware Monitor
 Copyright (C) 2015  S. Steinbrecher
 
-DIE SOFTWARE WIRD OHNE JEDE AUSDRÜCKLICHE ODER IMPLIZIERTE GARANTIE BEREITGESTELLT, EINSCHLIESSLICH DER GARANTIE ZUR BENUTZUNG FÜR DEN VORGESEHENEN ODER EINEM BESTIMMTEN ZWECK SOWIE JEGLICHER RECHTSVERLETZUNG, JEDOCH NICHT DARAUF BESCHRÄNKT. IN KEINEM FALL SIND DIE AUTOREN ODER COPYRIGHTINHABER FÜR JEGLICHEN SCHADEN ODER SONSTIGE ANSPRÜCHE HAFTBAR ZU MACHEN, OB INFOLGE DER ERFÜLLUNG EINES VERTRAGES, EINES DELIKTES ODER ANDERS IM ZUSAMMENHANG MIT DER SOFTWARE ODER SONSTIGER VERWENDUNG DER SOFTWARE ENTSTANDEN SIND.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</value>
+DIE SOFTWARE WIRD OHNE JEDE AUSDRÜCKLICHE ODER IMPLIZIERTE GARANTIE BEREITGESTELLT, EINSCHLIESSLICH DER GARANTIE ZUR BENUTZUNG FÜR DEN VORGESEHENEN ODER EINEM BESTIMMTEN ZWECK SOWIE JEGLICHER RECHTSVERLETZUNG, JEDOCH NICHT DARAUF BESCHRÄNKT. IN KEINEM FALL SIND DIE AUTOREN ODER COPYRIGHTINHABER FÜR JEGLICHEN SCHADEN ODER SONSTIGE ANSPRÜCHE HAFTBAR ZU MACHEN, OB INFOLGE DER ERFÜLLUNG EINES VERTRAGES, EINES DELIKTES ODER ANDERS IM ZUSAMMENHANG MIT DER SOFTWARE ODER SONSTIGER VERWENDUNG DER SOFTWARE ENTSTANDEN SIND.</value>
   </data>
   <data name="MainWindowAbout" xml:space="preserve">
     <value>Über</value>
@@ -470,5 +468,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>YAHW - Yet Another Hardware Monitor v{0} BETA</value>
+  </data>
+  <data name="MainboardFanControlDialogDisabledText" xml:space="preserve">
+    <value>[b][color=Red]Warnung:[/color][/b]
+
+Es wurden keine Controller für die Lüftersteuerung gefunden!</value>
   </data>
 </root>

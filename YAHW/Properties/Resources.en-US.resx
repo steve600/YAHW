@@ -148,11 +148,11 @@
     <value>System</value>
   </data>
   <data name="PageAboutText" xml:space="preserve">
-    <value>Mit dem YAHW - [b]Y[/b]et [b]A[/b]nother [b]H[/b]ardware [b]M[/b]onitor ist es möglich diverse Hardwarekomponenten zu überwachen. Das Programm selbst ist ebenfalls OpenSource. Das Repository wird unter GitHub verwaltet und ist hier zu finden:
+    <value>With the YAHW - [b]Y[/b]et [b]A[/b]nother [b]H[/b]ardware [b]M[/b]onitor it is possible to monitor various hardware components. The program itself is open source. The repository is managed under GitHub and can be found here:
 
 [url=https://github.com/steve600/YAHW]https://github.com/steve600/YAHW[/url]
 
-Für die Umsetzung wurden die folgenden Softwarekomponenten verwendet:
+For the implementation of the following software components were used:
 
  - Open Hardware Monitor - [url=https://code.google.com/p/open-hardware-monitor]https://code.google.com/p/open-hardware-monitor[/url]
  - Modern UI for WPF (MUI) - [url=https://github.com/firstfloorsoftware/mui]https://github.com/firstfloorsoftware/mui[/url]
@@ -162,8 +162,6 @@ Für die Umsetzung wurden die folgenden Softwarekomponenten verwendet:
  
 YAHW - Yet Another Hardware Monitor
 Copyright (C) 2015  S. Steinbrecher
-
-DIE SOFTWARE WIRD OHNE JEDE AUSDRÜCKLICHE ODER IMPLIZIERTE GARANTIE BEREITGESTELLT, EINSCHLIESSLICH DER GARANTIE ZUR BENUTZUNG FÜR DEN VORGESEHENEN ODER EINEM BESTIMMTEN ZWECK SOWIE JEGLICHER RECHTSVERLETZUNG, JEDOCH NICHT DARAUF BESCHRÄNKT. IN KEINEM FALL SIND DIE AUTOREN ODER COPYRIGHTINHABER FÜR JEGLICHEN SCHADEN ODER SONSTIGE ANSPRÜCHE HAFTBAR ZU MACHEN, OB INFOLGE DER ERFÜLLUNG EINES VERTRAGES, EINES DELIKTES ODER ANDERS IM ZUSAMMENHANG MIT DER SOFTWARE ODER SONSTIGER VERWENDUNG DER SOFTWARE ENTSTANDEN SIND.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</value>
   </data>
@@ -424,11 +422,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>Directories</value>
   </data>
   <data name="MainWindowHint" xml:space="preserve">
-    <value>Mit dem YAHW - [b]Y[/b]et [b]A[/b]nother [b]H[/b]ardware [b]M[/b]onitor ist es möglich diverse Hardwarekomponenten zu überwachen. Aktuell werden die folgenden Hardwarekomponenten unterstützt:
+    <value>With the YAHW - [b]Y[/b]et [b]A[/b]nother [b]H[/b]ardware [b]M[/b]onitor it is possible to monitor various hardware components. Currently the following hardware components are supported:
 
  - [url=/Pages/MainboardInformation.xaml]Mainboard[/url]
- - [url=/Pages/CPUInformation.xaml]Prozessor[/url]
- - [url=/Pages/GPUInformation.xaml]Grafikkarte[/url] 
+ - [url=/Pages/CPUInformation.xaml]Processor[/url]
+ - [url=/Pages/GPUInformation.xaml]Graphics card[/url] 
  - [url=/Pages/RAMInformation.xaml]RAM[/url]
  - [url=/Pages/HDDInformation.xaml]HDD[/url]</value>
   </data>
@@ -470,5 +468,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   </data>
   <data name="MainWindowTitle" xml:space="preserve">
     <value>YAHW - Yet Another Hardware Monitor v{0} BETA</value>
+  </data>
+  <data name="MainboardFanControlDialogDisabledText" xml:space="preserve">
+    <value>[b][color=Red]Warning:[/color][/b]
+
+There are no controllers found for the fan control!</value>
   </data>
 </root>

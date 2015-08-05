@@ -106,7 +106,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CommonControls\AdornedControl\AdornedControl.cs" />
+    <Compile Include="CommonControls\AdornedControl\AdornerPlacement.cs" />
+    <Compile Include="CommonControls\AdornedControl\FrameworkElementAdorner.cs" />
+    <Compile Include="CommonControls\DialogDisabledControl.xaml.cs">
+      <DependentUpon>DialogDisabledControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converter\ConfigurableBooleanToVisibilityConverter.cs" />
+    <Compile Include="Manager\ServiceManager.cs" />
     <Compile Include="Model\AutoRunEntry.cs" />
+    <Compile Include="Model\WindowsService.cs" />
     <Compile Include="MVVMBase\DelegateCommand.cs" />
     <Compile Include="MVVMBase\DelegateCommandBase.cs" />
     <Compile Include="Constants\ConfigFileNames.cs" />
@@ -200,6 +209,10 @@
     <Compile Include="ViewModels\AutoRunsViewModel.cs" />
     <Compile Include="ViewModels\ServiceManagementViewModel.cs" />
     <Compile Include="XmlConfigurationFile.cs" />
+    <Page Include="CommonControls\DialogDisabledControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AutoRuns.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

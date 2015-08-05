@@ -26,7 +26,10 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
+using System;
 using System.Windows;
+using YAHW.Constants;
+using YAHW.Interfaces;
 
 namespace YAHW
 {
@@ -49,5 +52,29 @@ namespace YAHW
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            this.Startup += App_Startup;
+        }
+
+        private void App_Startup(object sender, StartupEventArgs e)
+        {
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+        }
+
+        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = e.ExceptionObject as Exception;
+            DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException(ex.Message, ex);
+            DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(ex);
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            //Handling the exception within the UnhandledException handler.
+            DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException(e.Exception.Message, e.Exception);
+            DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(e.Exception);
+            e.Handled = true;
+        }
     }
 }
