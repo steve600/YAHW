@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:muiChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
              xmlns:Providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
              xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
@@ -15,13 +16,14 @@
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <StackPanel MinWidth="200">
-                <TextBlock Text="{lex:Loc Key=YAHW:Resources:HDDInformationSMARTInformation}" Style="{StaticResource Heading2}" />
+                <TextBlock Text="{lex:Loc Key=YAHW:Resources:HDDInformationTitle}" Style="{StaticResource Heading2}" />
 
-                <ItemsControl Margin="0,5,0,0" ItemsSource="{Binding Path=HDDSmartInformation, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl Margin="0,5,0,0" ItemsSource="{Binding Path=InstalledHDDs, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
                                 
+                                <!-- Header -->
                                 <StackPanel Orientation="Horizontal">
                                     <Rectangle Width="24" Height="32">
                                         <Rectangle.Fill>
@@ -39,9 +41,13 @@
                                     </TextBlock>
                                 </StackPanel>
 
-                                <ListView ItemsSource="{Binding Path=Value.Attributes}">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}">
+                                <!-- SMART-Data -->
+                                <DataGrid ItemsSource="{Binding Path=Value.Attributes}"
+                                          AutoGenerateColumns="False"
+                                          HorizontalAlignment="Left"
+                                          Width="600">
+                                    <DataGrid.ItemContainerStyle>
+                                        <Style TargetType="{x:Type DataGridRow}">
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Path=Value.HasData}" Value="True">
                                                     <Setter Property="Visibility"  Value="Visible"/>
@@ -51,18 +57,118 @@
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="{lex:Loc YAHW:Resources:HDDInformationSmartParameter}" Width="180" DisplayMemberBinding="{Binding Path=Value.Attribute}" />
-                                            <GridViewColumn Header="{lex:Loc YAHW:Resources:HDDInformationSmartCurrentValue}" Width="100" DisplayMemberBinding="{Binding Path=Value.Current}" />
-                                            <GridViewColumn Header="{lex:Loc YAHW:Resources:HDDInformationSmartWorstValue}" Width="100" DisplayMemberBinding="{Binding Path=Value.Worst}" />
-                                            <GridViewColumn Header="{lex:Loc YAHW:Resources:HDDInformationSmartThreshold}" Width="100" DisplayMemberBinding="{Binding Path=Value.Threshold}" />
-                                            <!--<GridViewColumn Header="Data" Width="80" DisplayMemberBinding="{Binding Path=Value.Data}" />
-                                                 <GridViewColumn Header="Status" Width="80" DisplayMemberBinding="{Binding Path=Value.Status}" />-->
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
+                                    </DataGrid.ItemContainerStyle>
+
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="{lex:Loc YAHW:Resources:HDDInformationSmartParameter}" Width="180" Binding="{Binding Path=Value.Attribute}" />
+                                        <DataGridTextColumn Header="{lex:Loc YAHW:Resources:HDDInformationSmartCurrentValue}" Width="130" Binding="{Binding Path=Value.Current}" />
+                                        <DataGridTextColumn Header="{lex:Loc YAHW:Resources:HDDInformationSmartWorstValue}" Width="155" Binding="{Binding Path=Value.Worst}" />
+                                        <DataGridTextColumn Header="{lex:Loc YAHW:Resources:HDDInformationSmartThreshold}" Width="100" Binding="{Binding Path=Value.Threshold}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <TextBlock Margin="5,5,0,0" 
+                                           Text="{lex:Loc YAHW:Resources:HDDInformationPartitions}" 
+                                           Style="{StaticResource Heading2}" />
+
+                                <ItemsControl Margin="5,0,0,0" 
+                                              ItemsSource="{Binding Path=Value.PartitionsWithDriveLetter, UpdateSourceTrigger=PropertyChanged}">
+                                    
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+
+                                                <muiChart:RadialGaugeChart Grid.Row="0"
+                                                                           ChartTitle="{Binding Path=DiskName}"
+                                                                           ChartSubTitle="{Binding Path=FileSystem}"
+                                                                           ChartLegendVisibility="Collapsed">
+                                                    <muiChart:RadialGaugeChart.Series>
+                                                        <muiChart:ChartSeries SeriesTitle="{lex:Loc Key=YAHW:Resources:HDDInformationUsedSpace}"
+                                                                              DisplayMember="Name"
+                                                                              ValueMember="Value"
+                                                                              ItemsSource="{Binding Path=HDDWorkload}" />
+                                                    </muiChart:RadialGaugeChart.Series>
+                                                </muiChart:RadialGaugeChart>
+
+                                                <Grid Grid.Row="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="8" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="8" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="2" />
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="2" />
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="2" />
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="2" />
+                                                    </Grid.RowDefinitions>
+                                                    
+                                                    <TextBlock Grid.Row="0"
+                                                               Grid.Column="0"
+                                                               Text="{lex:Loc Key=YAHW:Resources:HDDInformationUsedSpace}" />
+                                                    <TextBlock Grid.Row="0"
+                                                               Grid.Column="2"
+                                                               HorizontalAlignment="Right"
+                                                               Text="{Binding Path=UsedSpace, StringFormat={}{0:0,0} Bytes}" />
+                                                    <TextBlock Grid.Row="0"
+                                                               Grid.Column="4"
+                                                               HorizontalAlignment="Right"
+                                                               Text="{Binding Path=UsedSpacePrettySize}" />
+
+                                                    <TextBlock Grid.Row="2"
+                                                               Grid.Column="0"
+                                                               Text="{lex:Loc Key=YAHW:Resources:HDDInformationFreeSpace}" />
+                                                    <TextBlock Grid.Row="2"
+                                                               Grid.Column="2"
+                                                               HorizontalAlignment="Right"
+                                                               Text="{Binding Path=FreeSpace, StringFormat={}{0:0,0} Bytes}" />
+                                                    <TextBlock Grid.Row="2"
+                                                               Grid.Column="4"
+                                                               HorizontalAlignment="Right"
+                                                               Text="{Binding Path=FreeSpacePrettySize}" />
+
+                                                    <Separator Grid.Row="4" 
+                                                               Grid.Column="0" 
+                                                               Grid.ColumnSpan="5" 
+                                                               Margin="0,2,0,2" 
+                                                               Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                                                    
+                                                    <TextBlock Grid.Row="6"
+                                                               Grid.Column="0"
+                                                               Text="{lex:Loc Key=YAHW:Resources:HDDInformationTotalSpace}" />
+                                                    <TextBlock Grid.Row="6"
+                                                               Grid.Column="2"
+                                                               HorizontalAlignment="Right"
+                                                               Text="{Binding Path=TotalSpace, StringFormat={}{0:0,0} Bytes}" />
+                                                    <TextBlock Grid.Row="6"
+                                                               Grid.Column="4"
+                                                               HorizontalAlignment="Right"
+                                                               Text="{Binding Path=TotalSpacePrettySize}" />
+                                                </Grid>
+                                                
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <Separator Margin="0,5,0,0" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
 
                             </StackPanel>
                         </DataTemplate>

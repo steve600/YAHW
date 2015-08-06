@@ -26,11 +26,21 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-namespace YAHW.Constants
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceProcess;
+using System.Text;
+using System.Threading.Tasks;
+using YAHW.BaseClasses;
+using YAHW.Manager;
+using YAHW.Model;
+
+namespace YAHW.ViewModels
 {
     /// <summary>
     /// <para>
-    /// Static-Class for general constants
+    /// ViewModel-Class for the service management
     /// </para>
     /// 
     /// <para>
@@ -45,16 +55,40 @@ namespace YAHW.Constants
     /// <para>Author: Steffen Steinbrecher</para>
     /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public static class GeneralConstants
+    class ServiceManagementViewModel : ViewModelBase
     {
-        public static readonly string ThemeDark = "dark";
-        public static readonly string ThemeLight = "light";
+        #region Members and Constants
 
-        public static readonly string FontSmall = "small";
-        public static readonly string FontLarge = "large";
+        private ServiceManager serviceManager = null;
 
-        public static readonly string ApperanceViewModel = "ApperanceViewModel";
+        #endregion Members and Constants
 
-        public static readonly string MonitoredComputer = "MonitoredComputer";
+        #region CTOR
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        public ServiceManagementViewModel()
+        {
+            this.serviceManager = new ServiceManager();
+            this.InstalledServices = this.serviceManager.GetInstalledWindowsServices();
+        }
+
+        #endregion CTOR
+
+        #region Properties
+
+        private IList<WindowsService> installedServices;
+
+        /// <summary>
+        /// List with installed services
+        /// </summary>
+        public IList<WindowsService> InstalledServices
+        {
+            get { return installedServices; }
+            private set { this.SetProperty<IList<WindowsService>>(ref this.installedServices, value); }
+        }
+
+        #endregion Properties
     }
 }

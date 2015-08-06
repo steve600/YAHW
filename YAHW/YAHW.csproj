@@ -44,6 +44,10 @@
     <Reference Include="FirstFloor.ModernUI">
       <HintPath>..\packages\ModernUI.WPF.1.0.6\lib\net45\FirstFloor.ModernUI.dll</HintPath>
     </Reference>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hardcodet.NotifyIcon.Wpf.1.0.5\lib\net451\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
@@ -72,7 +76,9 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -100,6 +106,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CommonControls\AdornedControl\AdornedControl.cs" />
+    <Compile Include="CommonControls\AdornedControl\AdornerPlacement.cs" />
+    <Compile Include="CommonControls\AdornedControl\FrameworkElementAdorner.cs" />
+    <Compile Include="CommonControls\DialogDisabledControl.xaml.cs">
+      <DependentUpon>DialogDisabledControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converter\ConfigurableBooleanToVisibilityConverter.cs" />
+    <Compile Include="Manager\ServiceManager.cs" />
+    <Compile Include="Model\AutoRunEntry.cs" />
+    <Compile Include="Model\WindowsService.cs" />
+    <Compile Include="MVVMBase\DelegateCommand.cs" />
+    <Compile Include="MVVMBase\DelegateCommandBase.cs" />
     <Compile Include="Constants\ConfigFileNames.cs" />
     <Compile Include="Constants\DirectoryConstants.cs" />
     <Compile Include="Constants\GeneralConstants.cs" />
@@ -111,6 +129,7 @@
     <Compile Include="Interfaces\IExceptionReporterService.cs" />
     <Compile Include="Interfaces\ILocalizerService.cs" />
     <Compile Include="Interfaces\ILoggingService.cs" />
+    <Compile Include="Manager\AutoRunManager.cs" />
     <Compile Include="Model\ChartDataPoint.cs" />
     <Compile Include="Model\ConfigurationSection.cs" />
     <Compile Include="Model\ConfigurationSections.cs" />
@@ -122,6 +141,12 @@
     <Compile Include="Model\HDDPartition.cs" />
     <Compile Include="Model\PerformanceInfoData.cs" />
     <Compile Include="Model\RAMInformation.cs" />
+    <Compile Include="Pages\AutoRuns.xaml.cs">
+      <DependentUpon>AutoRuns.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AutoRunPages\AutoRunsLogon.xaml.cs">
+      <DependentUpon>AutoRunsLogon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\GPUCoreTemperatures.xaml.cs">
       <DependentUpon>GPUCoreTemperatures.xaml</DependentUpon>
     </Compile>
@@ -139,6 +164,9 @@
     </Compile>
     <Compile Include="Pages\RAMInformation.xaml.cs">
       <DependentUpon>RAMInformation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ServiceManagement.xaml.cs">
+      <DependentUpon>ServiceManagement.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings\Directories.xaml.cs">
       <DependentUpon>Directories.xaml</DependentUpon>
@@ -184,9 +212,23 @@
     </Compile>
     <Compile Include="Services\WmiHardwareInfoService.cs" />
     <Compile Include="Services\UpdateVisitor.cs" />
+    <Compile Include="ViewModels\AutoRunsViewModel.cs" />
+    <Compile Include="ViewModels\ServiceManagementViewModel.cs" />
     <Compile Include="ViewModels\GPUCoreTemperaturesViewModel.cs" />
     <Compile Include="ViewModels\GPUCoreWorkloadsViewModel.cs" />
     <Compile Include="XmlConfigurationFile.cs" />
+    <Page Include="CommonControls\DialogDisabledControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AutoRuns.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AutoRunPages\AutoRunsLogon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\GPUCoreTemperatures.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -208,6 +250,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\RAMInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ServiceManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -382,6 +428,8 @@
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Styling\BitmapGraphics\Icons\32x32\delete.png" />
+    <Resource Include="Styling\BitmapGraphics\Icons\16x16\delete.png" />
     <Resource Include="Styling\BitmapGraphics\Logo.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -394,7 +442,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Styling\BitmapGraphics\Assets\" />
-    <Folder Include="Styling\BitmapGraphics\Icons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

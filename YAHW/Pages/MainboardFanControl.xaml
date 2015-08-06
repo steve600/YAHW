@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:commonControls="clr-namespace:YAHW.CommonControls"
+             xmlns:converter="clr-namespace:YAHW.Converter"
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
              xmlns:Providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
@@ -12,6 +14,16 @@
              Providers:ResxLocalizationProvider.DefaultDictionary="Resources"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <converter:ConfigurableBooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" 
+                                                            TrueValue="Visible"
+                                                            FalseValue="Hidden" />
+        <converter:ConfigurableBooleanToVisibilityConverter x:Key="invertedBooleanToVisibilityConverter" 
+                                                            TrueValue="Hidden"
+                                                            FalseValue="Visible" />
+    </UserControl.Resources>
+
     <Grid Style="{StaticResource ContentRoot}">
         <ScrollViewer>
             <Grid>
@@ -25,7 +37,7 @@
                             Orientation="Vertical">
 
                     <StackPanel Grid.Row="0"
-                            Orientation="Horizontal">
+                                Orientation="Horizontal">
 
                         <Rectangle Width="24" Height="24">
                             <Rectangle.Fill>
@@ -34,22 +46,29 @@
                         </Rectangle>
 
                         <TextBlock Text="{lex:Loc YAHW:Resources:MainWindowFanControl}" 
-                               Margin="3,0,0,0"
-                               Style="{StaticResource Heading2}" 
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Left" />
+                                   Margin="3,0,0,0"
+                                   Style="{StaticResource Heading2}" 
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left" />
 
                     </StackPanel>
 
                     <mui:BBCodeBlock Margin="0,5,0,0" BBCode="{lex:Loc YAHW:Resources:MainboardFanControlNote}" />
 
                 </StackPanel>
-                
 
+                <!-- Warning if no controllers found -->
+                <mui:BBCodeBlock Grid.Row="2" 
+                                 Visibility="{Binding Path=IsDialogDisabled, FallbackValue=Hidden, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource booleanToVisibilityConverter}}"
+                                 BBCode="{lex:Loc Key=YAHW:Resources:MainboardFanControlDialogDisabledText}" />
+                
+                <!-- Main Content -->
                 <ContentControl Grid.Row="2"
+                                Visibility="{Binding Path=IsDialogDisabled, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource invertedBooleanToVisibilityConverter}}"
                                 Content="{Binding Path=MainContent, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
 
         </ScrollViewer>
     </Grid>
+
 </UserControl>

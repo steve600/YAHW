@@ -26,23 +26,38 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-using System.Windows.Controls;
-using YAHW.Constants;
-using YAHW.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 
-namespace YAHW.Pages.Settings
+namespace YAHW.Converter
 {
-    /// <summary>
-    /// Interaction logic for Appearance.xaml
-    /// </summary>
-    public partial class Appearance : UserControl
+    [ValueConversion(typeof(bool), typeof(Visibility))]
+    public class ConfigurableBooleanToVisibilityConverter : IValueConverter
     {
-        public Appearance()
-        {
-            InitializeComponent();
+        public Visibility TrueValue { get; set; }
+        public Visibility FalseValue { get; set; }
 
-            // create and assign the appearance view model
-            this.DataContext = DependencyFactory.Resolve<AppearanceViewModel>(GeneralConstants.ApperanceViewModel);
+        public ConfigurableBooleanToVisibilityConverter()
+        {
+            // set defaults
+            FalseValue = Visibility.Hidden;
+            TrueValue = Visibility.Visible;
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool)value ? TrueValue : FalseValue;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

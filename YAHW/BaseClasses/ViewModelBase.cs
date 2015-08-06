@@ -26,7 +26,9 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
+using YAHW.Constants;
 using YAHW.MVVMBase;
+using YAHW.ViewModels;
 
 namespace YAHW.BaseClasses
 {
@@ -49,5 +51,15 @@ namespace YAHW.BaseClasses
     /// </summary>
     public abstract class ViewModelBase : BindableBase
     {
+        private bool isDialogDisabled = false;
+
+        /// <summary>
+        /// Flag if dialog is disabled
+        /// </summary>
+        public bool IsDialogDisabled
+        {
+            get { return isDialogDisabled; }
+            set { this.SetProperty<bool>(ref this.isDialogDisabled, value); }
+        }
     }
 }

@@ -26,11 +26,20 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-namespace YAHW.Constants
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using YAHW.BaseClasses;
+using YAHW.Manager;
+using YAHW.Model;
+
+namespace YAHW.ViewModels
 {
     /// <summary>
     /// <para>
-    /// Static-Class for general constants
+    /// A simple view model for managing AutoRun-Entries
     /// </para>
     /// 
     /// <para>
@@ -45,16 +54,41 @@ namespace YAHW.Constants
     /// <para>Author: Steffen Steinbrecher</para>
     /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public static class GeneralConstants
+    public class AutoRunsViewModel : ViewModelBase
     {
-        public static readonly string ThemeDark = "dark";
-        public static readonly string ThemeLight = "light";
+        #region Members and Constants
 
-        public static readonly string FontSmall = "small";
-        public static readonly string FontLarge = "large";
+        private AutoRunManager autoRunManager = null;
 
-        public static readonly string ApperanceViewModel = "ApperanceViewModel";
+        #endregion Members and Constants
 
-        public static readonly string MonitoredComputer = "MonitoredComputer";
+        #region CTOR
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        public AutoRunsViewModel()
+        {
+            this.autoRunManager = new AutoRunManager();
+
+            this.AutoRunEntries = autoRunManager.DetectRunKeyEntriesWithWMI();
+        }
+
+        #endregion CTOR
+
+        #region Properties
+
+        private IList<AutoRunEntry> autoRunEntries;
+
+        /// <summary>
+        /// List with AutoRun-Entries
+        /// </summary>
+        public IList<AutoRunEntry> AutoRunEntries
+        {
+            get { return autoRunEntries; }
+            set { this.SetProperty<IList<AutoRunEntry>>(ref this.autoRunEntries, value); }
+        }
+
+        #endregion Properties
     }
 }

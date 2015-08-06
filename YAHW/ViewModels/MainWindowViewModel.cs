@@ -26,12 +26,15 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-using NLog;
+using FirstFloor.ModernUI.Presentation;
 using System;
+using System.Reflection;
+using System.Windows.Input;
 using XAHW.Interfaces;
 using YAHW.BaseClasses;
 using YAHW.Constants;
 using YAHW.Interfaces;
+using YAHW.MVVMBase;
 using YAHW.Services;
 
 namespace YAHW.ViewModels
@@ -60,14 +63,25 @@ namespace YAHW.ViewModels
         /// </summary>
         public MainWindowViewModel()
         {
+            // Initialize commands
+            this.InitializeCommands();
+
+            // Read config file
             IConfigurationFile configFile = this.LoadApplicationConfigFile();
 
             // Register services
-            DependencyFactory.RegisterInstance<ILocalizerService>(ServiceNames.LocalizerService, new LocalizerService(configFile.Sections["GeneralSettings"].Settings["Language"].Value));
+            DependencyFactory.RegisterInstance<ILocalizerService>(ServiceNames.LocalizerService, new LocalizerService("de-DE"));
             DependencyFactory.RegisterInstance<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService, new OpenHardwareMonitorManagementService());
             DependencyFactory.RegisterInstance<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService, new WmiHardwareInfoService());
             DependencyFactory.RegisterInstance<IExceptionReporterService>(ServiceNames.ExceptionReporterService, new ExceptionReporterService());
             DependencyFactory.RegisterInstance<ILoggingService>(ServiceNames.LoggingService, new LoggingServiceNLog());
+
+            // Application title
+            string appVersion = DependencyFactory.Resolve<ILocalizerService>(ServiceNames.LocalizerService).GetLocalizedString("MainWindowTitle");
+            this.ApplicationTitle = String.Format(appVersion, Assembly.GetEntryAssembly().GetName().Version.ToString());
+
+            // Create appearance ViewModel
+            DependencyFactory.RegisterInstance<AppearanceViewModel>(GeneralConstants.ApperanceViewModel, new AppearanceViewModel());
         }
 
         /// <summary>
@@ -76,31 +90,13 @@ namespace YAHW.ViewModels
         /// <returns></returns>
         private IConfigurationFile LoadApplicationConfigFile()
         {
-            string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "YAHW");
-
-            // Create directory if not exists
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
-
             // Create config file
-            IConfigurationFile configFile = new XmlConfigurationFile(System.IO.Path.Combine(path, "ApplicationSettings.xml"));
+            IConfigurationFile configFile = new XmlConfigurationFile(DirectoryConstants.ApplicationConfig);
 
             if (!configFile.Load())
             {
                 // Add section GeneralSettings
                 configFile.Sections.Add("GeneralSettings");
-
-                // Add settings
-                configFile.Sections["GeneralSettings"].Settings.Add("Language", "de", "de", typeof(System.String));
-                configFile.Sections["GeneralSettings"].Settings.Add("Theme", "Light", "Light", typeof(System.String));
-            }
-            else
-            {
-                // Check if all settings are in config file
-                if (configFile.Sections["GeneralSettings"].Settings["Language"] == null)
-                    configFile.Sections["GeneralSettings"].Settings.Add("Language", "de", "de", typeof(System.String));
-                if (configFile.Sections["GeneralSettings"].Settings["Theme"] == null)
-                    configFile.Sections["GeneralSettings"].Settings.Add("Theme", "Light", "Light", typeof(System.String));
             }
 
             // Save config file
@@ -124,5 +120,53 @@ namespace YAHW.ViewModels
                 hardwareService.Close();
             }
         }
+
+        #region Commands
+
+        #region Properties
+
+        private string applicationTitle;
+
+        /// <summary>
+        /// The application title
+        /// </summary>
+        public string ApplicationTitle
+        {
+            get { return applicationTitle; }
+            private set { this.SetProperty<string>(ref this.applicationTitle, value); }
+        }
+
+        #endregion Properties
+
+        /// <summary>
+        /// Initialize commands
+        /// </summary>
+        private void InitializeCommands()
+        {
+            this.CloseApplicationCommand = new DelegateCommand(this.CloseApplicationCommandExecute, this.CloseApplicationCommandCanExecute);
+        }
+
+        /// <summary>
+        /// Close application command
+        /// </summary>
+        public ICommand CloseApplicationCommand { get; private set; }
+
+        /// <summary>
+        /// Close application command can exectue
+        /// </summary>
+        public bool CloseApplicationCommandCanExecute()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Close application command execute
+        /// </summary>
+        public void CloseApplicationCommandExecute()
+        {
+            System.Environment.Exit(0);
+        }
+
+        #endregion Commands
     }
 }

@@ -68,8 +68,7 @@ namespace YAHW.Services
             try
             {
                 ManagementObjectSearcher searcher =
-                    new ManagementObjectSearcher("root\\CIMV2",
-                    "SELECT * FROM Win32_BaseBoard");
+                    new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_BaseBoard");
 
                 foreach (ManagementObject queryObj in searcher.Get())
                 {
@@ -82,8 +81,10 @@ namespace YAHW.Services
             }
             catch (ManagementException e)
             {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("WmiHardwareInfoService: Fehler bei der Ermittlung der Mainboard-Informationen", e);
+                // Show exception
                 DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(e);
-                // TODO: Logging
             }
 
             return result;
@@ -104,8 +105,7 @@ namespace YAHW.Services
             try
             {
                 ManagementObjectSearcher searcher =
-                    new ManagementObjectSearcher("root\\CIMV2",
-                    "SELECT * FROM Win32_Processor");
+                    new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
 
                 foreach (ManagementObject queryObj in searcher.Get())
                 {
@@ -126,8 +126,10 @@ namespace YAHW.Services
             }
             catch (ManagementException e)
             {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("WmiHardwareInfoService: Fehler bei der Ermittlung der CPU-Informationen", e);
+                // Show exception
                 DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(e);
-                // TODO: Logging
             }
 
             return result;
@@ -176,8 +178,10 @@ namespace YAHW.Services
             }
             catch (ManagementException e)
             {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("WmiHardwareInfoService: Fehler bei der Ermittlung der GPU-Informationen", e);
+                // Show exception
                 DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(e);
-                // TODO: Logging
             }
 
             return result;
@@ -224,8 +228,10 @@ namespace YAHW.Services
             }
             catch (ManagementException e)
             {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("WmiHardwareInfoService: Fehler bei der Ermittlung der RAM-Informationen", e);
+                // Show exception
                 DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(e);
-                // TODO: Logging
             }
 
             return result;
@@ -387,40 +393,20 @@ namespace YAHW.Services
             }
             catch (ManagementException ex)
             {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("WmiHardwareInfoService: Fehler bei der Ermittlung der S.M.A.R.T-Informationen", ex);
+                // Show exception
                 DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(ex);
-                // TODO: Logging
             }
 
             return result;
         }
 
         /// <summary>
-        /// Get free space of a partition
+        /// Get free space for a partition
         /// </summary>
-        /// <param name="inp"></param>
-        /// <returns></returns>
-        private String GetFreeSpace(String inp)
-        {
-            String totalspace = "", freespace = "", freepercent = "";
-            Double sFree = 0, sTotal = 0, sEq = 0;
-            ManagementObjectSearcher getspace = new ManagementObjectSearcher("Select * from Win32_LogicalDisk Where DeviceID='" + inp + "'");
-            foreach (ManagementObject drive in getspace.Get())
-            {
-                if (drive["DeviceID"].ToString() == inp)
-                {
-                    freespace = drive["FreeSpace"].ToString();
-                    totalspace = drive["Size"].ToString();
-                    sFree = Convert.ToDouble(freespace);
-                    sTotal = Convert.ToDouble(totalspace);
-                    sEq = sFree * 100 / sTotal;
-                    freepercent = (Math.Round((sTotal - sFree) / 1073741824, 2)).ToString() + " (" + Math.Round(sEq, 0).ToString() + " %)";
-                    return freepercent;
-                }
-            }
-
-            return "";
-        }
-
+        /// <param name="inp">The DeviceID for the partition</param>
+        /// <param name="partition">Reference to the partition instance</param>
         private void GetFreeSpace(string inp, ref HDDPartition partition)
         {
             ManagementObjectSearcher getspace = new ManagementObjectSearcher("Select * from Win32_LogicalDisk Where DeviceID='" + inp + "'");
@@ -429,8 +415,9 @@ namespace YAHW.Services
                 if (drive["DeviceID"].ToString() == inp)
                 {
                     partition.FreeSpace = Convert.ToUInt64(drive["FreeSpace"]);
-                    partition.TotalSpace = Convert.ToUInt64(drive["Size"].ToString());
+                    partition.TotalSpace = Convert.ToUInt64(drive["Size"]);
                     partition.FreeSapceInPercent = partition.FreeSpace * 100 / partition.TotalSpace;
+                    partition.FileSystem = Convert.ToString(drive["FileSystem"]);
                 }
             }
         }

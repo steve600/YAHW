@@ -18,9 +18,9 @@ Die Applikation selbst befindet sich noch in einer sehr frühen Entwicklungsphas
 
 ![Informationen zum Mainboard](http://csharp-blog.de/wp-content/uploads/2015/07/YAHW_021.png)
 
-### Lüftersteuerung (funktioniert leider noch nicht)
+### Lüftersteuerung
 
-![Lüftersteuerung](http://csharp-blog.de/wp-content/uploads/2015/07/YAHW_031.png)
+![Lüftersteuerung](http://csharp-blog.de/wp-content/uploads/2015/08/YAHW_Fan_Controller.png)
 
 ### Informationen zur CPU (Auslastung, Temperaturen, Taktgeschwindigkeit)
 
@@ -44,7 +44,7 @@ Die Applikation selbst befindet sich noch in einer sehr frühen Entwicklungsphas
 
 ### S.M.A.R.T Informationen zu den verbauten Festplatten
 
-![S.M.A.R.T Informationen zu den verbauten Festplatten](http://csharp-blog.de/wp-content/uploads/2015/07/YAHW_091.png)
+![S.M.A.R.T Informationen zu den verbauten Festplatten](http://csharp-blog.de/wp-content/uploads/2015/08/YAHW_HDD_Info.png)
 
 Aktuell sind noch nicht alle Dialoge fertig bzw. werden bestehende Dialoge nochmal überarbeitet. Zur Zeit gibt es noch die folgenden ToDos:
 

@@ -58,18 +58,18 @@ namespace YAHW.ViewModels
         /// </summary>
         public HDDInformationViewModel()
         {
-            this.HDDSmartInformation = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetHddSmartInformation();
+            this.InstalledHDDs = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetHddSmartInformation();
         }
 
-        private Dictionary<int, HDD> hddSmartInformation;
+        private Dictionary<int, HDD> installedHDDs;
 
         /// <summary>
         /// Dictionary with SMART information
         /// </summary>
-        public Dictionary<int, HDD> HDDSmartInformation
+        public Dictionary<int, HDD> InstalledHDDs
         {
-            get { return hddSmartInformation; }
-            set { this.SetProperty<Dictionary<int, HDD>>(ref this.hddSmartInformation, value); }
+            get { return installedHDDs; }
+            set { this.SetProperty<Dictionary<int, HDD>>(ref this.installedHDDs, value); }
         }        
     }
 }

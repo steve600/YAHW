@@ -27,10 +27,17 @@
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
 using FirstFloor.ModernUI.Presentation;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Media;
+using System.Xml;
+using XAHW.Interfaces;
 using YAHW.BaseClasses;
+using YAHW.Constants;
+using YAHW.Interfaces;
 
 namespace YAHW.ViewModels
 {
@@ -53,21 +60,7 @@ namespace YAHW.ViewModels
     /// </summary>
     public class AppearanceViewModel : ViewModelBase
     {
-        private const string FontSmall = "small";
-        private const string FontLarge = "large";
-
-        // 9 accent colors from metro design principles
-        /*private Color[] accentColors = new Color[]{
-            Color.FromRgb(0x33, 0x99, 0xff),   // blue
-            Color.FromRgb(0x00, 0xab, 0xa9),   // teal
-            Color.FromRgb(0x33, 0x99, 0x33),   // green
-            Color.FromRgb(0x8c, 0xbf, 0x26),   // lime
-            Color.FromRgb(0xf0, 0x96, 0x09),   // orange
-            Color.FromRgb(0xff, 0x45, 0x00),   // orange red
-            Color.FromRgb(0xe5, 0x14, 0x00),   // red
-            Color.FromRgb(0xff, 0x00, 0x97),   // magenta
-            Color.FromRgb(0xa2, 0x00, 0xff),   // purple            
-        };*/
+        private IConfigurationFile applicationConfigFile = null;
 
         // 20 accent colors from Windows Phone 8
         private Color[] accentColors = new Color[]{
@@ -98,16 +91,152 @@ namespace YAHW.ViewModels
         private Link selectedTheme;
         private string selectedFontSize;
 
+        /// <summary>
+        /// CTOR
+        /// </summary>
         public AppearanceViewModel()
         {
             // add the default themes
-            this.themes.Add(new Link { DisplayName = "dark", Source = AppearanceManager.DarkThemeSource });
-            this.themes.Add(new Link { DisplayName = "light", Source = AppearanceManager.LightThemeSource });
+            this.themes.Add(new Link { DisplayName = GeneralConstants.ThemeDark, Source = AppearanceManager.DarkThemeSource });
+            this.themes.Add(new Link { DisplayName = GeneralConstants.ThemeLight, Source = AppearanceManager.LightThemeSource });
 
-            this.SelectedFontSize = AppearanceManager.Current.FontSize == FontSize.Large ? FontLarge : FontSmall;
+            this.AvailableLanguages = CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+                                            .Where(ci => ci.IetfLanguageTag == "de-DE" || ci.IetfLanguageTag == "en-US")
+                                            .ToList();
+
+            // Read config file
+            this.ReadConfigFile();
+
             SyncThemeAndColor();
 
             AppearanceManager.Current.PropertyChanged += OnAppearanceManagerPropertyChanged;
+        }
+
+        // Read config file
+        private void ReadConfigFile()
+        {
+            this.applicationConfigFile = DependencyFactory.Resolve<IConfigurationFile>(ConfigFileNames.ApplicationConfig);
+
+            if (this.applicationConfigFile != null)
+            {
+                // Theme
+                if (this.applicationConfigFile.Sections["GeneralSettings"].Settings["Theme"] == null)
+                {
+                    // Add entry
+                    this.applicationConfigFile.Sections["GeneralSettings"].Settings.Add("Theme", GeneralConstants.ThemeLight, GeneralConstants.ThemeLight, typeof(System.String));
+                    AppearanceManager.Current.ThemeSource = AppearanceManager.LightThemeSource;
+                    this.applicationConfigFile.Save();
+                }
+                else
+                {
+                    var theme = this.applicationConfigFile.Sections["GeneralSettings"].Settings["Theme"].Value;
+                    if (theme.Equals(GeneralConstants.ThemeLight))
+                        AppearanceManager.Current.ThemeSource = AppearanceManager.LightThemeSource;
+                    else if (theme.Equals(GeneralConstants.ThemeDark))
+                        AppearanceManager.Current.ThemeSource = AppearanceManager.DarkThemeSource;
+                    // Fallback value
+                    else
+                        AppearanceManager.Current.ThemeSource = AppearanceManager.LightThemeSource;
+                }
+
+                // Font size
+                if (this.applicationConfigFile.Sections["GeneralSettings"].Settings["FontSize"] == null)
+                {
+                    this.applicationConfigFile.Sections["GeneralSettings"].Settings.Add("FontSize", GeneralConstants.FontLarge, GeneralConstants.FontLarge, typeof(System.String));
+                    this.SelectedFontSize = GeneralConstants.FontLarge;
+                    AppearanceManager.Current.FontSize = FontSize.Large;
+                }
+                else
+                {
+                    var fontSize = this.applicationConfigFile.Sections["GeneralSettings"].Settings["FontSize"].Value;
+                    if (fontSize.Equals(GeneralConstants.FontLarge))
+                    {
+                        this.SelectedFontSize = GeneralConstants.FontLarge;
+                        AppearanceManager.Current.FontSize = FontSize.Large;
+                    }
+                    else if (fontSize.Equals(GeneralConstants.FontSmall))
+                    {
+                        this.SelectedFontSize = GeneralConstants.FontSmall;
+                        AppearanceManager.Current.FontSize = FontSize.Small;
+                    }
+                    else
+                    {
+                        this.SelectedFontSize = GeneralConstants.FontLarge;
+                        AppearanceManager.Current.FontSize = FontSize.Large;
+                    }
+                }
+
+                // Color
+                if (this.applicationConfigFile.Sections["GeneralSettings"].Settings["AccentColor"] == null)
+                {
+                    this.applicationConfigFile.Sections["GeneralSettings"].Settings.Add("AccentColor", AppearanceManager.Current.AccentColor.ToString(), AppearanceManager.Current.AccentColor.ToString(), typeof(System.String));
+                    this.applicationConfigFile.Save();
+                }
+                else
+                {
+                    var color = this.applicationConfigFile.Sections["GeneralSettings"].Settings["AccentColor"].Value;
+                    if (!String.IsNullOrEmpty(color) && color.Length == 9)
+                    {
+                        AppearanceManager.Current.AccentColor = this.GetColorFromString(color);
+                    }
+                }
+
+                // Check if all settings are in config file
+                if (this.applicationConfigFile.Sections["GeneralSettings"].Settings["Language"] == null)
+                {
+                    this.applicationConfigFile.Sections["GeneralSettings"].Settings.Add("Language", "de-DE", "de-DE", typeof(System.String));
+                    this.SelectedLanguage = this.AvailableLanguages.Where(l => l.IetfLanguageTag.Equals("de-DE")).FirstOrDefault();
+                }
+                else
+                {
+                    var language = this.applicationConfigFile.Sections["GeneralSettings"].Settings["Language"].Value;
+                    this.SelectedLanguage = this.AvailableLanguages.Where(l => l.IetfLanguageTag.Equals(language)).FirstOrDefault();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get path fill brush
+        /// </summary>
+        /// <returns></returns>
+        private SolidColorBrush GetPathFillBrush()
+        {
+            byte R, G, B;
+
+            SolidColorBrush brush;
+
+            if (AppearanceManager.Current.ThemeSource.Equals(this.themes.FirstOrDefault(l => l.DisplayName.Equals(GeneralConstants.ThemeLight)).Source))
+            {
+                R = Convert.ToByte("00", 16);
+                G = Convert.ToByte("00", 16);
+                B = Convert.ToByte("00", 16);
+            }
+            else
+            {
+                R = Convert.ToByte("D1", 16);
+                G = Convert.ToByte("D1", 16);
+                B = Convert.ToByte("D1", 16);
+            }
+            
+            brush = new SolidColorBrush(Color.FromRgb(R, G, B));
+
+            return brush;
+        }
+
+        /// <summary>
+        /// Convert string to color
+        /// </summary>
+        /// <param name="c">Color, e.g. #FF1BA1E2</param>
+        /// <returns>The converter color struct</returns>
+        private Color GetColorFromString(string c)
+        {
+            byte R, G, B;
+
+            R = Convert.ToByte(c.Substring(3, 2), 16);
+            G = Convert.ToByte(c.Substring(5, 2), 16);
+            B = Convert.ToByte(c.Substring(7, 2), 16);
+
+            return Color.FromRgb(R, G, B);
         }
 
         private void SyncThemeAndColor()
@@ -127,21 +256,33 @@ namespace YAHW.ViewModels
             }
         }
 
+        /// <summary>
+        /// List with themes
+        /// </summary>
         public LinkCollection Themes
         {
             get { return this.themes; }
         }
 
+        /// <summary>
+        /// List with font sizes
+        /// </summary>
         public string[] FontSizes
         {
-            get { return new string[] { FontSmall, FontLarge }; }
+            get { return new string[] { GeneralConstants.FontSmall, GeneralConstants.FontLarge }; }
         }
 
+        /// <summary>
+        /// List with accent colors
+        /// </summary>
         public Color[] AccentColors
         {
             get { return this.accentColors; }
         }
 
+        /// <summary>
+        /// The selected theme
+        /// </summary>
         public Link SelectedTheme
         {
             get { return this.selectedTheme; }
@@ -151,10 +292,18 @@ namespace YAHW.ViewModels
                 {
                     // and update the actual theme
                     AppearanceManager.Current.ThemeSource = value.Source;
+                    // Path fill brush
+                    this.PathFillBrush = this.GetPathFillBrush();
+                    // Save to config
+                    this.applicationConfigFile.Sections["GeneralSettings"].Settings["Theme"].Value = value.DisplayName;
+                    this.applicationConfigFile.Save();
                 }
             }
         }
 
+        /// <summary>
+        /// The selected font size
+        /// </summary>
         public string SelectedFontSize
         {
             get { return this.selectedFontSize; }
@@ -162,11 +311,17 @@ namespace YAHW.ViewModels
             {
                 if (this.SetProperty<string>(ref this.selectedFontSize, value))
                 {
-                    AppearanceManager.Current.FontSize = value == FontLarge ? FontSize.Large : FontSize.Small;
+                    AppearanceManager.Current.FontSize = value == GeneralConstants.FontLarge ? FontSize.Large : FontSize.Small;
+                    // Save config
+                    this.applicationConfigFile.Sections["GeneralSettings"].Settings["FontSize"].Value = value;
+                    this.applicationConfigFile.Save();
                 }
             }
         }
 
+        /// <summary>
+        /// Selected accent color
+        /// </summary>
         public Color SelectedAccentColor
         {
             get { return this.selectedAccentColor; }
@@ -174,9 +329,57 @@ namespace YAHW.ViewModels
             {
                 if (this.SetProperty<Color>(ref this.selectedAccentColor, value))
                 {
+                    // Set value
                     AppearanceManager.Current.AccentColor = value;
+                    // Save config
+                    this.applicationConfigFile.Sections["GeneralSettings"].Settings["AccentColor"].Value = value.ToString();
+                    this.applicationConfigFile.Save();
                 }
             }
+        }
+
+        /// <summary>
+        /// List with availabe languages
+        /// </summary>
+        public List<CultureInfo> AvailableLanguages
+        {
+            get;
+            private set;
+        }
+
+        private CultureInfo selectedLanguage;
+
+        /// <summary>
+        /// Selected language
+        /// </summary>
+        public CultureInfo SelectedLanguage
+        {
+            get { return selectedLanguage; }
+            set
+            {
+                if (this.SetProperty<CultureInfo>(ref this.selectedLanguage, value))
+                {
+                    var localizerService = DependencyFactory.Resolve<ILocalizerService>(ServiceNames.LocalizerService);
+                    if (localizerService != null)
+                    {
+                        localizerService.SetLocale(value.IetfLanguageTag);
+                    }
+                    // Save config
+                    this.applicationConfigFile.Sections["GeneralSettings"].Settings["Language"].Value = value.IetfLanguageTag;
+                    this.applicationConfigFile.Save();
+                }
+            }
+        }
+
+        private SolidColorBrush pathFillBrush;
+
+        /// <summary>
+        /// Path fill brush
+        /// </summary>
+        public SolidColorBrush PathFillBrush
+        {
+            get { return pathFillBrush; }
+            private set { this.SetProperty<SolidColorBrush>(ref this.pathFillBrush, value); }
         }
     }
 }

@@ -408,10 +408,46 @@
   <data name="SettingsPageDirectories" xml:space="preserve">
     <value>@SettingsPageDirectories</value>
   </data>
-  <data name="LicensePageLicense" xml:space="preserve">
-    <value>@LicensePageLicense</value>
-  </data>
   <data name="SettingsPageLicense" xml:space="preserve">
     <value>@SettingsPageLicense</value>
+  </data>
+  <data name="HDDInformationUsedSpace" xml:space="preserve">
+    <value>@HDDInformationUsedSpace</value>
+  </data>
+  <data name="HDDInformationFreeSpace" xml:space="preserve">
+    <value>@HDDInformationFreeSpace</value>
+  </data>
+  <data name="HDDInformationTotalSpace" xml:space="preserve">
+    <value>@HDDInformationTotalSpace</value>
+  </data>
+  <data name="HDDInformationTitle" xml:space="preserve">
+    <value>@HDDInformationTitle</value>
+  </data>
+  <data name="HDDInformationPartitions" xml:space="preserve">
+    <value>@HDDInformationPartitions</value>
+  </data>
+  <data name="ServiceManagementTitle" xml:space="preserve">
+    <value>@ServiceManagementTitle</value>
+  </data>
+  <data name="MainWindowServiceManagement" xml:space="preserve">
+    <value>@MainWindowServiceManagement</value>
+  </data>
+  <data name="MainWindowAutoRuns" xml:space="preserve">
+    <value>@MainWindowAutoRuns</value>
+  </data>
+  <data name="MainWindowTaskbarContextMenuClose" xml:space="preserve">
+    <value>@MainWindowTaskbarContextMenuClose</value>
+  </data>
+  <data name="AutoRunsLogon" xml:space="preserve">
+    <value>@AutoRunsLogon</value>
+  </data>
+  <data name="AppearancePageLanguage" xml:space="preserve">
+    <value>@AppearancePageLanguage</value>
+  </data>
+  <data name="MainWindowTitle" xml:space="preserve">
+    <value>@MainWindowTitle</value>
+  </data>
+  <data name="MainboardFanControlDialogDisabledText" xml:space="preserve">
+    <value>@MainboardFanControlDialogDisabledText</value>
   </data>
 </root>

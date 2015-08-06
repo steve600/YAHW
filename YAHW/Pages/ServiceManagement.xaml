@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="YAHW.Pages.ServiceManagement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+             xmlns:Providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+             xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+             Engine:LocalizeDictionary.DesignCulture="de-DE"
+             Providers:ResxLocalizationProvider.DefaultAssembly="YAHW"
+             Providers:ResxLocalizationProvider.DefaultDictionary="Resources"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Style="{StaticResource ContentRoot}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{lex:Loc YAHW:Resources:ServiceManagementTitle}" Style="{StaticResource Heading2}" />
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Path=InstalledServices}" 
+                  ScrollViewer.CanContentScroll="True"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="250" Binding="{Binding Path=DisplayName}" Header="DisplayName" />
+                <DataGridTextColumn Width="100" Binding="{Binding Path=State}" Header="Status" />
+                <DataGridTextColumn Width="120" Binding="{Binding Path=StartMode}" Header="Start-Modus" />
+                <DataGridTextColumn Width="200" Binding="{Binding Path=PathName}" Header="Pfad" />
+                <DataGridTextColumn Width="180" Binding="{Binding Path=StartName}" Header="Anmeldung" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        
+    </Grid>
+</UserControl>
