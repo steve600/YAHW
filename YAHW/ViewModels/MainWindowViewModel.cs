@@ -71,7 +71,8 @@ namespace YAHW.ViewModels
 
             // Register services
             DependencyFactory.RegisterInstance<ILocalizerService>(ServiceNames.LocalizerService, new LocalizerService("de-DE"));
-            DependencyFactory.RegisterInstance<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService, new OpenHardwareMonitorManagementService());
+            //TODO: Add debug mode. When enabled register OHW Debug Service, otherwise OHW Service as normal
+            DependencyFactory.RegisterInstance<OpenHardwareMonitorManagementServiceDebug>(ServiceNames.OpenHardwareMonitorManagementService, new OpenHardwareMonitorManagementServiceDebug());
             DependencyFactory.RegisterInstance<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService, new WmiHardwareInfoService());
             DependencyFactory.RegisterInstance<IExceptionReporterService>(ServiceNames.ExceptionReporterService, new ExceptionReporterService());
             DependencyFactory.RegisterInstance<ILoggingService>(ServiceNames.LoggingService, new LoggingServiceNLog());
