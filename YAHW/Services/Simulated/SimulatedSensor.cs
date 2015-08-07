@@ -5,14 +5,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenHardwareMonitor.Collections;
+using System.Windows.Threading;
 
 namespace YAHW.Services
 {
-    class SimulatedSensor : ISensor
+    internal class SimulatedSensor : ISensor
     {
-
         private String name = "Simulated Sensor";
         private SensorType sensorType = SensorType.Temperature;
+        private DispatcherTimer timer = null;
+        private float? value = 0;
+
+        public SimulatedSensor()
+        {
+            this.timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Tick += timer_Tick;
+            timer.Start();
+        }
+
+        public static ISensor getSimulatedSensor(SensorType sensorType, string sensorName)
+        {
+            SimulatedSensor sim = new SimulatedSensor();
+            sim.SensorType = sensorType;
+            sim.Name = sensorName;
+            return sim;
+        }
+
+        /// <summary>
+        /// Timer-Tick Event-Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            update();
+        }
+
+        public void update() {
+            Random rand = new Random();
+            this.Value = rand.Next(0, 100);
+        }
 
         public IControl Control
         {
@@ -58,7 +91,7 @@ namespace YAHW.Services
         {
             get
             {
-                throw new NotImplementedException();
+                return 95;
             }
         }
 
@@ -66,7 +99,7 @@ namespace YAHW.Services
         {
             get
             {
-                throw new NotImplementedException();
+                return 5;
             }
         }
 
@@ -99,7 +132,7 @@ namespace YAHW.Services
             }
             set
             {
-                this.SensorType = value;
+                this.sensorType = value;
             }
         }
 
@@ -107,7 +140,10 @@ namespace YAHW.Services
         {
             get
             {
-                throw new NotImplementedException();
+                return this.value;
+            }
+            set {
+                this.value = value;
             }
         }
 

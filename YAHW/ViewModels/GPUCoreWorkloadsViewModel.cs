@@ -59,7 +59,7 @@ namespace YAHW.ViewModels
         #region Members and Constants
 
         private DispatcherTimer timer = null;
-        private OpenHardwareMonitorManagementService openHardwareManagementService = null;
+        private IOpenHardwareMonitorManagementService openHardwareManagementService = null;
 
         #endregion Members and Constants
 
@@ -72,7 +72,7 @@ namespace YAHW.ViewModels
         {
             this.timer = new DispatcherTimer();
 
-            this.openHardwareManagementService = DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
+            this.openHardwareManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
 
             timer.Interval = TimeSpan.FromMilliseconds(1000);
             timer.Tick += timer_Tick;

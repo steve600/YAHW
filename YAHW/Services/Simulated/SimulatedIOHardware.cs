@@ -1,42 +1,33 @@
-﻿using OpenHardwareMonitor.Hardware;
-using System;
+﻿using System;
+using OpenHardwareMonitor.Hardware;
+using YAHW.Services.Simulated;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace YAHW.Services.Simulated
+namespace YAHW.Services
 {
-    internal class SimulatedGPU : IHardware
+    internal class SimulatedIOHardware : IHardware
     {
-
-        private HardwareType hardwareType = HardwareType.GpuAti;
         private List<ISensor> sensors;
 
-        public SimulatedGPU() {
+        public SimulatedIOHardware()
+        {
             ISensor[] sensorArray = {
-                //TODO: get actual names from OHW GUI for consistency
-                SimulatedSensor.getSimulatedSensor(SensorType.Load, "GPU Total"),
-                SimulatedSensor.getSimulatedSensor(SensorType.Power, "GPU Cores"),
-                SimulatedSensor.getSimulatedSensor(SensorType.Temperature, "GPU Package"),
-                SimulatedSensor.getSimulatedSensor(SensorType.Load, "Core"),
-                SimulatedSensor.getSimulatedSensor(SensorType.Temperature, "Core"),
-                SimulatedSensor.getSimulatedSensor(SensorType.Clock, "Core"),
-                SimulatedSensor.getSimulatedSensor(SensorType.Clock, "Memory"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Voltage, "CPU VCore"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Voltage, "AVCC"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Voltage, "3VCC"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Voltage, "3VSB"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Voltage, "VBAT"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Voltage, "VTT"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Temperature, "CPU Core"),
                 SimulatedSensor.getSimulatedSensor(SensorType.Control, "Fan"),
             };
             this.sensors = new List<ISensor>(sensorArray);
         }
-    
         public HardwareType HardwareType
         {
             get
             {
-                return this.hardwareType;
-            }
-            set
-            {
-                this.hardwareType = value;
+                return HardwareType.SuperIO;
             }
         }
 
@@ -52,7 +43,7 @@ namespace YAHW.Services.Simulated
         {
             get
             {
-                throw new NotImplementedException();
+                return this.GetType().Name;
             }
 
             set
@@ -73,7 +64,7 @@ namespace YAHW.Services.Simulated
         {
             get
             {
-                return this.sensors.ToArray();
+                return sensors.ToArray();
             }
         }
 
@@ -105,8 +96,7 @@ namespace YAHW.Services.Simulated
 
         public void Update()
         {
-            foreach (var sensor in this.Sensors)
-            {
+            foreach (var sensor in this.Sensors) {
                 // Used explicit Cast over adding another subclass
                 if (sensor is SimulatedSensor)
                     ((SimulatedSensor)sensor).update();

@@ -68,7 +68,7 @@ namespace YAHW.ViewModels
 
         private DateTime time;
 
-        private OpenHardwareMonitorManagementService openHardwareManagementService = null;
+        private IOpenHardwareMonitorManagementService openHardwareManagementService = null;
 
         #endregion Members and Constants
 
@@ -88,7 +88,7 @@ namespace YAHW.ViewModels
             cpuCounter.CounterName = "% Processor Time";
             cpuCounter.InstanceName = "_Total";
 
-            this.openHardwareManagementService = DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
+            this.openHardwareManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
             this.CPUInformation = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetProcessorInformation();
 
             timer.Interval = TimeSpan.FromMilliseconds(1000);

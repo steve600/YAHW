@@ -73,7 +73,7 @@ namespace YAHW.UserControls
         private double timerIntervall = 1000;
 
         // OpenHardwareManagement-Service
-        private OpenHardwareMonitorManagementService service = null;
+        private IOpenHardwareMonitorManagementService service = null;
 
         // Smoothed data points
         private IList<DataPoint> smoothedPoints = null;
@@ -96,7 +96,7 @@ namespace YAHW.UserControls
             this.ReadFanControllerTemplates();
 
             // Resolve service
-            this.service = DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
+            this.service = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
 
             if (service != null)
             {
@@ -175,7 +175,7 @@ namespace YAHW.UserControls
                         // Set value
                         this.FanController.Control.SetSoftware((float)newValue);
                         // Accept
-                        DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
+                        DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
                     }
                 }
                 catch (Exception ex)
@@ -205,7 +205,7 @@ namespace YAHW.UserControls
                     // Set value
                     this.FanController.Control.SetSoftware(newValue);
                     // Accept
-                    DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
+                    DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
                 }
                 catch (Exception ex)
                 {
@@ -499,7 +499,7 @@ namespace YAHW.UserControls
                         // Set new value
                         this.FanController.Control.SetSoftware((float)args.NewValue);
                         // Accept
-                        DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
+                        DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
                         // Write to Config-File
                         this.WriteFanControllerSettings("SelectedFanSpeedValue", args.NewValue);
                     }
@@ -585,7 +585,7 @@ namespace YAHW.UserControls
 
                 // Set controller default mode
                 this.FanController.Control.SetDefault();
-                DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
+                DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
 
                 // Disable advanced mode
                 this.IsAdvancedModeEnabled = false;

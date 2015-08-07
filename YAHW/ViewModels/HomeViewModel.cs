@@ -55,7 +55,7 @@ namespace YAHW.ViewModels
     {
         #region Members and Constants
 
-        private OpenHardwareMonitorManagementService openHardwareManagementService = null;
+        private IOpenHardwareMonitorManagementService openHardwareManagementService = null;
 
         #endregion Members and Constants
 
@@ -64,7 +64,7 @@ namespace YAHW.ViewModels
         /// </summary>
         public HomeViewModel()
         {
-            this.openHardwareManagementService = DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
+            this.openHardwareManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
             this.MainboardInfo = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetMainboardInformation();
             this.ProcessorInformation = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetProcessorInformation();
             this.GPUInformation = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetGPUInformation();

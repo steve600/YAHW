@@ -50,7 +50,7 @@ namespace YAHW.Services
     /// <para>Author: Steffen Steinbrecher</para>
     /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public class OpenHardwareMonitorManagementService
+    public class OpenHardwareMonitorManagementService : IOpenHardwareMonitorManagementService
     {
         #region Members and Constants
 
@@ -112,7 +112,7 @@ namespace YAHW.Services
         /// <param name="sensorType">The sensor type</param>
         /// <param name="sensorName">The sensor name</param>
         /// <returns></returns>
-        protected ISensor GetMainboardSensor(SensorType sensorType, string sensorName)
+        private ISensor GetMainboardSensor(SensorType sensorType, string sensorName)
         {
             if (this.MainboardIOHardware != null)
             {
