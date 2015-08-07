@@ -1,21 +1,44 @@
-﻿using OpenHardwareMonitor.Hardware;
+﻿using OpenHardwareMonitor.Collections;
+using OpenHardwareMonitor.Hardware;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenHardwareMonitor.Collections;
 using System.Windows.Threading;
 
 namespace YAHW.Services
 {
+    /// <summary>
+    /// <para>
+    /// Simulation of Open Hardware Monitor Library compliant sensor
+    /// </para>
+    ///
+    /// <para>
+    /// Class history:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <description>1.0: First release, working (Steffen Steinbrecher).</description>
+    ///     </item>
+    /// </list>
+    /// </para>
+    ///
+    /// <para>Author: No3x</para>
+    /// <para>Date: 07.08.2015</para>
+    /// </summary>
     internal class SimulatedSensor : ISensor
     {
+        #region Fields
+
         private String name = "Simulated Sensor";
         private SensorType sensorType = SensorType.Temperature;
         private DispatcherTimer timer = null;
         private float? value = 0;
 
+        #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
         public SimulatedSensor()
         {
             this.timer = new DispatcherTimer();
@@ -24,28 +47,9 @@ namespace YAHW.Services
             timer.Start();
         }
 
-        public static ISensor getSimulatedSensor(SensorType sensorType, string sensorName)
-        {
-            SimulatedSensor sim = new SimulatedSensor();
-            sim.SensorType = sensorType;
-            sim.Name = sensorName;
-            return sim;
-        }
+        #endregion Constructors
 
-        /// <summary>
-        /// Timer-Tick Event-Handler
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            update();
-        }
-
-        public void update() {
-            Random rand = new Random();
-            this.Value = rand.Next(0, 100);
-        }
+        #region Properties
 
         public IControl Control
         {
@@ -142,7 +146,8 @@ namespace YAHW.Services
             {
                 return this.value;
             }
-            set {
+            set
+            {
                 this.value = value;
             }
         }
@@ -153,6 +158,18 @@ namespace YAHW.Services
             {
                 throw new NotImplementedException();
             }
+        }
+
+        #endregion Properties
+
+        #region Methods
+
+        public static ISensor getSimulatedSensor(SensorType sensorType, string sensorName)
+        {
+            SimulatedSensor sim = new SimulatedSensor();
+            sim.SensorType = sensorType;
+            sim.Name = sensorName;
+            return sim;
         }
 
         public void Accept(IVisitor visitor)
@@ -174,5 +191,23 @@ namespace YAHW.Services
         {
             throw new NotImplementedException();
         }
+
+        public void update()
+        {
+            Random rand = new Random();
+            this.Value = rand.Next(0, 100);
+        }
+
+        /// <summary>
+        /// Timer-Tick Event-Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            update();
+        }
+
+        #endregion Methods
     }
 }

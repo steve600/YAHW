@@ -1,14 +1,39 @@
-﻿using System;
-using OpenHardwareMonitor.Hardware;
-using YAHW.Services.Simulated;
+﻿using OpenHardwareMonitor.Hardware;
+using System;
 using System.Collections.Generic;
 
 namespace YAHW.Services
 {
+    /// <summary>
+    /// <para>
+    /// Simulation of Open Hardware Monitor Library compliant IO hardware component
+    /// </para>
+    ///
+    /// <para>
+    /// Class history:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <description>1.0: First release, working (Steffen Steinbrecher).</description>
+    ///     </item>
+    /// </list>
+    /// </para>
+    ///
+    /// <para>Author: No3x</para>
+    /// <para>Date: 07.08.2015</para>
+    /// </summary>
     internal class SimulatedIOHardware : IHardware
     {
+        #region Fields
+
         private List<ISensor> sensors;
 
+        #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
         public SimulatedIOHardware()
         {
             ISensor[] sensorArray = {
@@ -23,6 +48,19 @@ namespace YAHW.Services
             };
             this.sensors = new List<ISensor>(sensorArray);
         }
+
+        #endregion Constructors
+
+        #region Events
+
+        public event SensorEventHandler SensorAdded;
+
+        public event SensorEventHandler SensorRemoved;
+
+        #endregion Events
+
+        #region Properties
+
         public HardwareType HardwareType
         {
             get
@@ -76,8 +114,9 @@ namespace YAHW.Services
             }
         }
 
-        public event SensorEventHandler SensorAdded;
-        public event SensorEventHandler SensorRemoved;
+        #endregion Properties
+
+        #region Methods
 
         public void Accept(IVisitor visitor)
         {
@@ -96,11 +135,14 @@ namespace YAHW.Services
 
         public void Update()
         {
-            foreach (var sensor in this.Sensors) {
+            foreach (var sensor in this.Sensors)
+            {
                 // Used explicit Cast over adding another subclass
                 if (sensor is SimulatedSensor)
                     ((SimulatedSensor)sensor).update();
             }
         }
+
+        #endregion Methods
     }
 }
