@@ -389,7 +389,7 @@ DIE SOFTWARE WIRD OHNE JEDE AUSDRÜCKLICHE ODER IMPLIZIERTE GARANTIE BEREITGESTE
     <value>Fehler beim Festlegen der Lüftergeschwindigkeit</value>
   </data>
   <data name="MainboardFanControlNote" xml:space="preserve">
-    <value>[b]Hinweis:[/b] Innerhalb diese Dialoges können Einstellungen vorgenommen werden, die potentiell Ihren Rechner beschädigen können! Alle Einstellungen sollten mit entsprechender Vorsicht vorgenommen werden!</value>
+    <value>[b][color=Red]Hinweis:[/color][/b] Innerhalb diese Dialoges können Einstellungen vorgenommen werden, die potentiell Ihren Rechner beschädigen können! Alle Einstellungen sollten mit entsprechender Vorsicht vorgenommen werden!</value>
   </data>
   <data name="UserControlFanContolAdvancedMode" xml:space="preserve">
     <value>Erweiterter-Modus</value>

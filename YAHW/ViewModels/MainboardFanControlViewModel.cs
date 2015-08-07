@@ -55,7 +55,7 @@ namespace YAHW.ViewModels
     {
         #region Members and Constants
 
-        private OpenHardwareMonitorManagementService openHardwareMonitorManagementService = null;
+        private FanControllerService fanControllerService = null;
 
         #endregion Members and Constants
 
@@ -66,20 +66,15 @@ namespace YAHW.ViewModels
         /// </summary>
         public MainboardFanControlViewModel()
         {
-            this.openHardwareMonitorManagementService = DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
-            this.openHardwareMonitorManagementService.UpdateMainboardSensors();
+            this.fanControllerService = DependencyFactory.Resolve<FanControllerService>(ServiceNames.FanControllerService);
 
             this.MainContent = new StackPanel();
 
-            if (this.openHardwareMonitorManagementService.MainboardFanControlSensors != null &&
-                this.openHardwareMonitorManagementService.MainboardFanControlSensors.Count > 0)
+            if (!fanControllerService.IsDisabled)
             {
-                foreach (var fc in this.openHardwareMonitorManagementService.MainboardFanControlSensors)
+                foreach (var fc in this.fanControllerService.FanControllers)
                 {
-                    var fanControl = new UserControls.MainboardFanControl();
-                    fanControl.FanController = fc;
-
-                    this.MainContent.Children.Add(fanControl);
+                    this.MainContent.Children.Add(fc.MainboardFanUserControl);
                 }
             }
             else

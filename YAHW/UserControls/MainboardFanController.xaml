@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="YAHW.UserControls.MainboardFanControl"
+﻿<UserControl x:Class="YAHW.UserControls.MainboardFanController"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:YAHW.UserControls"
              xmlns:swc="http://schemas.microsoft.com/netfx/2007/xaml/presentation"
              xmlns:converter="clr-namespace:YAHW.Converter"
              xmlns:oxyPlot="http://oxyplot.org/wpf"
@@ -15,7 +16,6 @@
              x:Name="layoutRoot"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="600">
-
     <UserControl.Resources>
         <swc:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
         <converter:InverseBooleanConverter x:Key="inverseBooleanConverter" />
@@ -35,7 +35,7 @@
             <TextBlock Margin="5,0,0,0"
                        VerticalAlignment="Center"
                        Style="{StaticResource Heading2}"
-                       Text="{Binding Path=FanController.Name, UpdateSourceTrigger=PropertyChanged}" />
+                       Text="{Binding Path=FanController.FanSensor.Name, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
 
         <Grid Margin="0,5,0,0">
@@ -75,8 +75,8 @@
                           Grid.Column="0"
                           Grid.ColumnSpan="3"
                           Content="{lex:Loc YAHW:Resources:UserControlFanContolDefaultMode}"
-                          IsEnabled="{Binding Path=IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource inverseBooleanConverter}}"
-                          IsChecked="{Binding Path=IsDefaultModeEnabled,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                          IsEnabled="{Binding Path=FanController.IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource inverseBooleanConverter}}"
+                          IsChecked="{Binding Path=FanController.IsDefaultModeEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
                 <!-- Current-Value -->
                 <TextBlock Grid.Row="2"
@@ -85,7 +85,7 @@
                 <TextBlock Grid.Row="2"
                            Grid.Column="2"
                            HorizontalAlignment="Right"
-                           Text="{Binding Path=CurrentFanSpeedValue, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}" />
+                           Text="{Binding Path=FanController.CurrentFanSpeedValue, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}" />
 
                 <!-- Slider -->
                 <Slider Grid.Row="4"
@@ -94,13 +94,13 @@
                         Width="150"
                         Minimum="0"
                         Maximum="100"
-                        Value="{Binding Path=SelectedFanSpeedValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        Value="{Binding Path=FanController.SelectedFanSpeedValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                         Orientation="Horizontal"
                         TickPlacement="BottomRight"
                         AutoToolTipPlacement="BottomRight"
                         TickFrequency="10"
                         IsSnapToTickEnabled="True"
-                        IsEnabled="{Binding Path=IsFanSpeedSliderEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        IsEnabled="{Binding Path=FanController.CanSetFanSpeed, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <!-- Min-Value -->
                 <TextBlock Grid.Row="6"
@@ -109,7 +109,7 @@
                 <TextBlock Grid.Row="6"
                            Grid.Column="2"
                            HorizontalAlignment="Right"
-                           Text="{Binding Path=MinFanSpeedValue, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}" />
+                           Text="{Binding Path=FanController.MinFanSpeedValue, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}" />
 
                 <!-- Max-Value -->
                 <TextBlock Grid.Row="8"
@@ -118,7 +118,7 @@
                 <TextBlock Grid.Row="8"
                            Grid.Column="2"
                            HorizontalAlignment="Right"
-                           Text="{Binding Path=MaxFanSpeedValue, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}" />
+                           Text="{Binding Path=FanController.MaxFanSpeedValue, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}" />
 
             </Grid>
 
@@ -144,8 +144,8 @@
                           Grid.Row="0"
                           Grid.Column="0"
                           Grid.ColumnSpan="3"
-                          IsEnabled="{Binding Path=IsDefaultModeEnabled, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource inverseBooleanConverter}}"
-                          IsChecked="{Binding Path=IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          IsEnabled="{Binding Path=FanController.IsDefaultModeEnabled, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource inverseBooleanConverter}}"
+                          IsChecked="{Binding Path=FanController.IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                           Content="{lex:Loc YAHW:Resources:UserControlFanContolAdvancedMode}" />
 
                 <!-- Temperature-Sensor -->
@@ -157,10 +157,10 @@
                           Grid.Column="2"
                           HorizontalAlignment="Left"
                           Width="180" 
-                          IsEnabled="{Binding Path=IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=MainboardTemperatureSensors, UpdateSourceTrigger=PropertyChanged}"
+                          IsEnabled="{Binding Path=FanController.IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Path=FanController.FanControllerService.MainboardTemperatureSensors, UpdateSourceTrigger=PropertyChanged}"
                           DisplayMemberPath="Name" 
-                          SelectedValue="{Binding Path=SelectedMainboardTemperatureSensor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                          SelectedValue="{Binding Path=FanController.SelectedMainboardTemperatureSensor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <!-- Controller-Settings -->
                 <TextBlock Grid.Row="4"
@@ -171,10 +171,10 @@
                           Grid.Column="2"
                           HorizontalAlignment="Left"
                           Width="180" 
-                          IsEnabled="{Binding Path=IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FanControllerTemplates, UpdateSourceTrigger=PropertyChanged}" 
+                          IsEnabled="{Binding Path=FanController.IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Path=FanController.FanControllerService.FanControllerTemplates, UpdateSourceTrigger=PropertyChanged}" 
                           DisplayMemberPath="Name"
-                          SelectedValue="{Binding Path=SelectedFanControllerTemplate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                          SelectedValue="{Binding Path=FanController.SelectedFanControllerTemplate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <!-- Fan-Speed -->
                 <StackPanel Grid.Row="6"
@@ -182,7 +182,7 @@
                             Grid.ColumnSpan="3">
                     <oxyPlot:PlotView x:Name="fanSpeedChart"
                                       HorizontalAlignment="Left"
-                                      IsEnabled="{Binding Path=IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged}"
+                                      IsEnabled="{Binding Path=FanController.IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged}"
                                       Width="350"
                                       Height="250">
                         <oxyPlot:PlotView.Axes>
@@ -203,7 +203,7 @@
                                                 Minimum="0" 
                                                 Maximum="100" />
                         </oxyPlot:PlotView.Axes>
-                        <oxyPlot:LineSeries ItemsSource="{Binding Path=SelectedFanControllerTemplate.DataPoints, UpdateSourceTrigger=PropertyChanged}" />
+                        <oxyPlot:LineSeries ItemsSource="{Binding Path=FanController.SelectedFanControllerTemplate.DataPoints, UpdateSourceTrigger=PropertyChanged}" />
                     </oxyPlot:PlotView>
 
                 </StackPanel>

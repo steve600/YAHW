@@ -380,7 +380,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <value>Error while setting fan speed</value>
   </data>
   <data name="MainboardFanControlNote" xml:space="preserve">
-    <value>[b]Note:[/ b] Within this dialog settings can be made that can harm your computer! All adjustments should be made with caution!</value>
+    <value>[b][color=Red]Note:[/color][/b] Within this dialog settings can be made that can harm your computer! All adjustments should be made with caution!</value>
   </data>
   <data name="UserControlFanContolAdvancedMode" xml:space="preserve">
     <value>Advanced-Mode</value>

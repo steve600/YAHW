@@ -57,5 +57,7 @@ namespace YAHW.Constants
         public static readonly string ExceptionReporterService = "ExceptionReporterService";
         // Logging service
         public static readonly string LoggingService = "LoggingService";
+        // Fan-Controller-Service
+        public static readonly string FanControllerService = "FanControllerService";
     }
 }

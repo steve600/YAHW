@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="YAHW.Services.FanControllerService">
+    <Position X="0.75" Y="0.75" Width="3.25" />
+    <Members>
+      <Property Name="FanControllers" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACEAAJQAAAAAACAAAAAAAAEABAABAQAABAA=</HashCode>
+      <FileName>Services\FanControllerService.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FanControllers" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="YAHW.Hardware.FanController">
+    <Position X="5.75" Y="0.75" Width="3.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AI0CAkCCAgBBAAgIIAiICBAKAAABAQBAADCIEAAAAgA=</HashCode>
+      <FileName>Hardware\FanController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FanControllerService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="YAHW.UserControls.MainboardFanController">
+    <Position X="0.75" Y="5.5" Width="3.25" />
+    <AssociationLine Name="FanController" Type="YAHW.Hardware.FanController">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.11" Y="0.267" Height="0.182" Width="1.104" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAA=</HashCode>
+      <FileName>UserControls\MainboardFanController.xaml.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FanController" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

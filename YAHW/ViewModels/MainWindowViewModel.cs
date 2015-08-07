@@ -75,6 +75,11 @@ namespace YAHW.ViewModels
             DependencyFactory.RegisterInstance<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService, new WmiHardwareInfoService());
             DependencyFactory.RegisterInstance<IExceptionReporterService>(ServiceNames.ExceptionReporterService, new ExceptionReporterService());
             DependencyFactory.RegisterInstance<ILoggingService>(ServiceNames.LoggingService, new LoggingServiceNLog());
+            DependencyFactory.RegisterInstance<FanControllerService>(ServiceNames.FanControllerService, new FanControllerService());
+            //DependencyFactory.RegisterInstance(typeof(FanControllerService), ServiceNames.FanControllerService, new FanControllerService());
+
+            // Start Fan-Controller-Service
+            DependencyFactory.Resolve<FanControllerService>(ServiceNames.FanControllerService).Start();
 
             // Application title
             string appVersion = DependencyFactory.Resolve<ILocalizerService>(ServiceNames.LocalizerService).GetLocalizedString("MainWindowTitle");

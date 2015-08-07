@@ -113,6 +113,7 @@
       <DependentUpon>DialogDisabledControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\ConfigurableBooleanToVisibilityConverter.cs" />
+    <Compile Include="Hardware\FanController.cs" />
     <Compile Include="Manager\ServiceManager.cs" />
     <Compile Include="Model\AutoRunEntry.cs" />
     <Compile Include="Model\WindowsService.cs" />
@@ -169,6 +170,7 @@
       <DependentUpon>License.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\ExceptionReporterService.cs" />
+    <Compile Include="Services\FanControllerService.cs" />
     <Compile Include="Services\LocalizerService.cs" />
     <Compile Include="Services\LoggingServiceNLog.cs" />
     <Compile Include="Services\OpenHardwareMonitorManagementService.cs" />
@@ -206,6 +208,9 @@
     </Compile>
     <Compile Include="Services\WmiHardwareInfoService.cs" />
     <Compile Include="Services\UpdateVisitor.cs" />
+    <Compile Include="UserControls\MainboardFanController.xaml.cs">
+      <DependentUpon>MainboardFanController.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\AutoRunsViewModel.cs" />
     <Compile Include="ViewModels\ServiceManagementViewModel.cs" />
     <Compile Include="XmlConfigurationFile.cs" />
@@ -387,6 +392,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\MainboardFanController.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\MainboardInformationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -402,6 +411,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
+    <None Include="ClassDiagrams\FanController.cd" />
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

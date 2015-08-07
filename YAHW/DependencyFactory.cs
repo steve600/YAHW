@@ -77,16 +77,14 @@ namespace YAHW
         /// </summary>
         static DependencyFactory()
         {
-            var container = new UnityContainer();
+            Container = new UnityContainer();
 
             var section = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
 
             if (section != null)
             {
-                section.Configure(container);
+                section.Configure(Container);
             }
-
-            _container = container;
         }
 
         /// <summary>
@@ -101,6 +99,18 @@ namespace YAHW
             {
                 Container.RegisterInstance<TInterface>(name, instance, new ContainerControlledLifetimeManager());
             }
+        }
+
+        /// <summary>
+        /// Register an instance of a given type with a given name
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <param name="instance"></param>
+        public static void RegisterInstance(Type type, string name, object instance)
+        {
+            if (type != null && !String.IsNullOrEmpty(name) && instance != null)
+                Container.RegisterInstance(type, name, instance, new ContainerControlledLifetimeManager());
         }
 
         /// <summary>

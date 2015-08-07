@@ -39,7 +39,7 @@ namespace YAHW.Services
 {
     /// <summary>
     /// <para>
-    /// Service for logging (base on NLOG)
+    /// Service for logging (based on NLOG)
     /// </para>
     /// 
     /// <para>

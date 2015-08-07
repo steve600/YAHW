@@ -44,6 +44,7 @@ using System.Linq;
 using YAHW.Helper;
 using YAHW.Interfaces;
 using System.Windows.Threading;
+using YAHW.Hardware;
 
 namespace YAHW.UserControls
 {
@@ -666,7 +667,7 @@ namespace YAHW.UserControls
 
         #region Dependency Properties
 
-        /// <summary>
+                /// <summary>
         /// Fan-Controller
         /// </summary>
         public ISensor FanController

@@ -243,6 +243,7 @@ namespace YAHW.Services
 
                     if (io != null)
                     {
+                        io.Update();
                         return io.Sensors.Where(s => s.SensorType == SensorType.Temperature).ToList();
                     }
                 }
