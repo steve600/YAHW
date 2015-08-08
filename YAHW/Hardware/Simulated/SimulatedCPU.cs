@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace YAHW.Services
+namespace YAHW.Hardware.Simulated
 {
     /// <summary>
     /// <para>
-    /// Simulation of Open Hardware Monitor Library compliant mainboard hardware component
+    /// Simulation of Open Hardware Monitor Library compliant CPU hardware component
     /// </para>
     ///
     /// <para>
@@ -21,12 +21,11 @@ namespace YAHW.Services
     /// <para>Author: No3x</para>
     /// <para>Date: 07.08.2015</para>
     /// </summary>
-    internal class SimulatedMainboard : IHardware
+    internal class SimulatedCPU : IHardware
     {
         #region Fields
 
         private List<ISensor> sensors;
-        private List<IHardware> subHardware;
 
         #endregion Fields
 
@@ -35,11 +34,19 @@ namespace YAHW.Services
         /// <summary>
         /// CTOR
         /// </summary>
-        public SimulatedMainboard()
+        public SimulatedCPU()
         {
-            IHardware[] hardware = { new SimulatedIOHardware() };
-            this.subHardware = new List<IHardware>(hardware);
-            this.sensors = new List<ISensor>();
+            ISensor[] sensorArray = {
+                //TODO: get actual names from OHW GUI for consistency
+                SimulatedSensor.getSimulatedSensor(SensorType.Load, "CPU Total"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Power, "CPU Package"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Power, "CPU Cores"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Temperature, "CPU Package"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Load, "Core"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Temperature, "Core"),
+                SimulatedSensor.getSimulatedSensor(SensorType.Clock, "Core")
+            };
+            this.sensors = new List<ISensor>(sensorArray);
         }
 
         #endregion Constructors
@@ -58,7 +65,7 @@ namespace YAHW.Services
         {
             get
             {
-                return HardwareType.Mainboard;
+                return HardwareType.CPU;
             }
         }
 
@@ -95,7 +102,7 @@ namespace YAHW.Services
         {
             get
             {
-                return this.sensors.ToArray();
+                return sensors.ToArray();
             }
         }
 
@@ -103,7 +110,7 @@ namespace YAHW.Services
         {
             get
             {
-                return this.subHardware.ToArray();
+                throw new NotImplementedException();
             }
         }
 
@@ -128,12 +135,7 @@ namespace YAHW.Services
 
         public void Update()
         {
-            List<ISensor> associatedSensors = new List<ISensor>(10);
-            associatedSensors.AddRange(new List<ISensor>(this.Sensors));
-            this.subHardware.ForEach(
-                subhardwareItem => associatedSensors.AddRange(new List<ISensor>(subhardwareItem.Sensors))
-            );
-            foreach (var sensor in associatedSensors)
+            foreach (var sensor in this.Sensors)
             {
                 // Used explicit Cast over adding another subclass
                 if (sensor is SimulatedSensor)

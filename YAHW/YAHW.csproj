@@ -175,12 +175,12 @@
     <Compile Include="Pages\Settings\License.xaml.cs">
       <DependentUpon>License.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Services\IOpenHardwareMonitorManagementService.cs" />
-    <Compile Include="Services\Simulated\SimulatedMainboard.cs" />
-    <Compile Include="Services\Simulated\SimulatedCPU.cs" />
-    <Compile Include="Services\Simulated\SimulatedIOHardware.cs" />
-    <Compile Include="Services\Simulated\SimulatedGPU.cs" />
-    <Compile Include="Services\Simulated\SimulatedSensor.cs" />
+    <Compile Include="Interfaces\IOpenHardwareMonitorManagementService.cs" />
+    <Compile Include="Hardware\Simulated\SimulatedMainboard.cs" />
+    <Compile Include="Hardware\Simulated\SimulatedCPU.cs" />
+    <Compile Include="Hardware\Simulated\SimulatedIOHardware.cs" />
+    <Compile Include="Hardware\Simulated\SimulatedGPU.cs" />
+    <Compile Include="Hardware\Simulated\SimulatedSensor.cs" />
     <Compile Include="Services\ExceptionReporterService.cs" />
     <Compile Include="Services\FanControllerService.cs" />
     <Compile Include="Services\LocalizerService.cs" />

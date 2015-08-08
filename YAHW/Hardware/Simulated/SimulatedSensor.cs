@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Threading;
 
-namespace YAHW.Services
+namespace YAHW.Hardware.Simulated
 {
     /// <summary>
     /// <para>

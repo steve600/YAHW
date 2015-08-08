@@ -32,6 +32,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using YAHW.BaseClasses;
 using YAHW.Constants;
+using YAHW.Interfaces;
 using YAHW.Services;
 using YAHW.UserControls;
 

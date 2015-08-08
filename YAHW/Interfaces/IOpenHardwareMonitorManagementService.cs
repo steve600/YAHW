@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace YAHW.Services
+namespace YAHW.Interfaces
 {
     /// <summary>
     /// <para>

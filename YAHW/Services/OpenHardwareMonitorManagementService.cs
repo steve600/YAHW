@@ -30,6 +30,7 @@ using OpenHardwareMonitor.Hardware;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using YAHW.Interfaces;
 
 namespace YAHW.Services
 {

@@ -30,6 +30,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using YAHW.BaseClasses;
 using YAHW.Constants;
+using YAHW.Interfaces;
 using YAHW.Services;
 
 namespace YAHW.ViewModels

@@ -34,6 +34,7 @@ using YAHW.Constants;
 using System.Windows.Controls;
 using YAHW.UserControls;
 using YAHW.Services;
+using YAHW.Interfaces;
 
 namespace YAHW.ViewModels
 {

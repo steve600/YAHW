@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace YAHW.Services.Simulated
+namespace YAHW.Hardware.Simulated
 {
     /// <summary>
     /// <para>

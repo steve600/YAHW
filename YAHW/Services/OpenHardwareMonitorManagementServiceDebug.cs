@@ -31,7 +31,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using YAHW.Services.Simulated;
+using YAHW.Interfaces;
+using YAHW.Hardware.Simulated;
 
 namespace YAHW.Services
 {
