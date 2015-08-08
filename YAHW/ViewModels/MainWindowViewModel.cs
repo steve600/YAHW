@@ -71,7 +71,8 @@ namespace YAHW.ViewModels
 
             // Register services
             DependencyFactory.RegisterInstance<ILocalizerService>(ServiceNames.LocalizerService, new LocalizerService("de-DE"));
-            DependencyFactory.RegisterInstance<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService, new OpenHardwareMonitorManagementService());
+            //TODO: Add debug mode. When enabled register OHW Debug Service, otherwise OHW Service as normal
+            DependencyFactory.RegisterInstance<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService, new OpenHardwareMonitorManagementService());
             DependencyFactory.RegisterInstance<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService, new WmiHardwareInfoService());
             DependencyFactory.RegisterInstance<IExceptionReporterService>(ServiceNames.ExceptionReporterService, new ExceptionReporterService());
             DependencyFactory.RegisterInstance<ILoggingService>(ServiceNames.LoggingService, new LoggingServiceNLog());
@@ -118,7 +119,7 @@ namespace YAHW.ViewModels
         /// </summary>
         public void ShutdownApplication()
         {
-            var hardwareService = DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
+            var hardwareService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
 
             if (hardwareService != null)
             {
@@ -126,9 +127,9 @@ namespace YAHW.ViewModels
             }
         }
 
-        #region Commands
+#region Commands
 
-        #region Properties
+#region Properties
 
         private string applicationTitle;
 
@@ -141,7 +142,7 @@ namespace YAHW.ViewModels
             private set { this.SetProperty<string>(ref this.applicationTitle, value); }
         }
 
-        #endregion Properties
+#endregion Properties
 
         /// <summary>
         /// Initialize commands
@@ -172,6 +173,6 @@ namespace YAHW.ViewModels
             System.Environment.Exit(0);
         }
 
-        #endregion Commands
+#endregion Commands
     }
 }

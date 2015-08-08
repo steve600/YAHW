@@ -27,15 +27,17 @@
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
 using OpenHardwareMonitor.Hardware;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using YAHW.Services.Simulated;
 
 namespace YAHW.Services
 {
     /// <summary>
     /// <para>
-    /// Wrapper for the Open Hardware Monitor Library
+    /// Wrapper for the Open Hardware Monitor Library in Debug functionality
     /// </para>
     ///
     /// <para>
@@ -47,17 +49,16 @@ namespace YAHW.Services
     /// </list>
     /// </para>
     ///
-    /// <para>Author: Steffen Steinbrecher</para>
-    /// <para>Date: 12.07.2015</para>
+    /// <para>Author: No3x</para>
+    /// <para>Date: 07.08.2015</para>
     /// </summary>
-    public class OpenHardwareMonitorManagementService : IOpenHardwareMonitorManagementService
+    public class OpenHardwareMonitorManagementServiceDebug : IOpenHardwareMonitorManagementService
     {
         #region Members and Constants
 
-        private Computer observedComputer = null;
-
-        private UpdateVisitor updateVisitor = new UpdateVisitor();
-
+        private IHardware cpu;
+        private IHardware gpu;
+        private IHardware mainboard;
         #endregion Members and Constants
 
         #region Constructors
@@ -65,17 +66,11 @@ namespace YAHW.Services
         /// <summary>
         /// CTOR
         /// </summary>
-        public OpenHardwareMonitorManagementService()
+        public OpenHardwareMonitorManagementServiceDebug()
         {
-            this.observedComputer = new Computer();
-            this.observedComputer.FanControllerEnabled = true;
-            this.observedComputer.CPUEnabled = true;
-            this.observedComputer.MainboardEnabled = true;
-            this.observedComputer.RAMEnabled = true;
-            this.observedComputer.GPUEnabled = true;
-            this.observedComputer.HDDEnabled = true;
-
-            this.observedComputer.Open();
+            this.mainboard = new SimulatedMainboard();
+            this.cpu = new SimulatedCPU();
+            this.gpu = new SimulatedGPU();
         }
 
         #endregion Constructors
@@ -85,24 +80,21 @@ namespace YAHW.Services
         /// <inheritdoc />
         public void AcceptNewSettings()
         {
-            this.observedComputer.Accept(this.updateVisitor);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void Close()
         {
-            if (this.observedComputer != null)
-                this.observedComputer.Close();
+            this.mainboard = null;
+            this.cpu = null;
+            this.gpu = null;
         }
+
         /// <inheritdoc />
         public void UpdateMainboardSensors()
         {
-            if (this.Mainboard != null)
-            {
-                this.Mainboard.Update();
-                foreach (var h in this.Mainboard.SubHardware)
-                    h.Update();
-            }
+            this.mainboard.Update();
         }
 
         /// <summary>
@@ -130,7 +122,7 @@ namespace YAHW.Services
         {
             get
             {
-                return this.observedComputer.Hardware.Where(m => m.HardwareType == HardwareType.Mainboard).FirstOrDefault();
+                return this.mainboard;
             }
         }
 
@@ -219,7 +211,6 @@ namespace YAHW.Services
 
                     if (io != null)
                     {
-                        io.Update();
                         return io.Sensors.Where(s => s.SensorType == SensorType.Temperature).ToList();
                     }
                 }
@@ -254,7 +245,7 @@ namespace YAHW.Services
         {
             get
             {
-                return this.observedComputer.Hardware.Where(p => p.HardwareType == HardwareType.CPU).FirstOrDefault();
+                return this.cpu;
             }
         }
 
@@ -358,7 +349,7 @@ namespace YAHW.Services
         {
             get
             {
-                return this.observedComputer.Hardware.Where(p => (p.HardwareType == HardwareType.GpuAti || p.HardwareType == HardwareType.GpuNvidia)).FirstOrDefault();
+                return this.gpu;
             }
         }
 
@@ -408,7 +399,12 @@ namespace YAHW.Services
                     return new ObservableCollection<ISensor>(sensors);
                 }
 
-                return new ObservableCollection<ISensor>();
+                SimulatedSensor sim = new SimulatedSensor();
+                sim.SensorType = SensorType.Temperature;
+                sim.Name = "GPU Core";
+                List<ISensor> simulatedSensors = new List<ISensor>(5);
+                simulatedSensors.Add(sim);
+                return new ObservableCollection<ISensor>(simulatedSensors);
             }
         }
 

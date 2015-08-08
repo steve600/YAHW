@@ -148,6 +148,12 @@
     <Compile Include="Pages\AutoRunPages\AutoRunsLogon.xaml.cs">
       <DependentUpon>AutoRunsLogon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\GPUCoreTemperatures.xaml.cs">
+      <DependentUpon>GPUCoreTemperatures.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\GPUCoreWorkloads.xaml.cs">
+      <DependentUpon>GPUCoreWorkloads.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\GPUInformation.xaml.cs">
       <DependentUpon>GPUInformation.xaml</DependentUpon>
     </Compile>
@@ -169,10 +175,17 @@
     <Compile Include="Pages\Settings\License.xaml.cs">
       <DependentUpon>License.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\IOpenHardwareMonitorManagementService.cs" />
+    <Compile Include="Services\Simulated\SimulatedMainboard.cs" />
+    <Compile Include="Services\Simulated\SimulatedCPU.cs" />
+    <Compile Include="Services\Simulated\SimulatedIOHardware.cs" />
+    <Compile Include="Services\Simulated\SimulatedGPU.cs" />
+    <Compile Include="Services\Simulated\SimulatedSensor.cs" />
     <Compile Include="Services\ExceptionReporterService.cs" />
     <Compile Include="Services\FanControllerService.cs" />
     <Compile Include="Services\LocalizerService.cs" />
     <Compile Include="Services\LoggingServiceNLog.cs" />
+    <Compile Include="Services\OpenHardwareMonitorManagementServiceDebug.cs" />
     <Compile Include="Services\OpenHardwareMonitorManagementService.cs" />
     <Compile Include="SystemInformation\PsApiWrapper.cs" />
     <Compile Include="UserControls\CPUCoreTemperatureChartUserControl.xaml.cs">
@@ -213,6 +226,8 @@
     </Compile>
     <Compile Include="ViewModels\AutoRunsViewModel.cs" />
     <Compile Include="ViewModels\ServiceManagementViewModel.cs" />
+    <Compile Include="ViewModels\GPUCoreTemperaturesViewModel.cs" />
+    <Compile Include="ViewModels\GPUCoreWorkloadsViewModel.cs" />
     <Compile Include="XmlConfigurationFile.cs" />
     <Page Include="CommonControls\DialogDisabledControl.xaml">
       <SubType>Designer</SubType>
@@ -225,6 +240,14 @@
     <Page Include="Pages\AutoRunPages\AutoRunsLogon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\GPUCoreTemperatures.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\GPUCoreWorkloads.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\GPUInformation.xaml">
       <SubType>Designer</SubType>

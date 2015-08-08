@@ -474,4 +474,10 @@ DIE SOFTWARE WIRD OHNE JEDE AUSDRÜCKLICHE ODER IMPLIZIERTE GARANTIE BEREITGESTE
 
 Es wurden keine Controller für die Lüftersteuerung gefunden!</value>
   </data>
+  <data name="MainWindowGPUCoreTemperatures" xml:space="preserve">
+    <value>GPU-Core Temperaturen (°C)</value>
+  </data>
+  <data name="MainWindowGPUCoreWorkload" xml:space="preserve">
+    <value>GPU-Core Auslastung (%)</value>
+  </data>
 </root>

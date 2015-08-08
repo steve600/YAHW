@@ -474,4 +474,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 There are no controllers found for the fan control!</value>
   </data>
+  <data name="MainWindowGPUCoreTemperatures" xml:space="preserve">
+    <value>GPU-Core Temperaturen (°C)</value>
+  </data>
+  <data name="MainWindowGPUCoreWorkload" xml:space="preserve">
+    <value>GPU-Core Auslastung (%)</value>
+  </data>
 </root>

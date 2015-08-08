@@ -26,17 +26,20 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
+using System;
+using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Threading;
 using YAHW.BaseClasses;
 using YAHW.Constants;
-using YAHW.Interfaces;
-using YAHW.Model;
 using YAHW.Services;
+using YAHW.UserControls;
 
 namespace YAHW.ViewModels
 {
     /// <summary>
     /// <para>
-    /// A simple view model the Home-Page
+    /// ViewModel-Class for the CPU-Core workload page
     /// </para>
     /// 
     /// <para>
@@ -51,57 +54,84 @@ namespace YAHW.ViewModels
     /// <para>Author: Steffen Steinbrecher</para>
     /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public class HomeViewModel : ViewModelBase
+    public class GPUCoreTemperaturesViewModel : ViewModelBase
     {
         #region Members and Constants
 
+        private DispatcherTimer timer = null;
         private IOpenHardwareMonitorManagementService openHardwareManagementService = null;
 
         #endregion Members and Constants
 
+        #region CTOR
+
         /// <summary>
         /// CTOR
         /// </summary>
-        public HomeViewModel()
+        public GPUCoreTemperaturesViewModel()
         {
+            this.timer = new DispatcherTimer();
+
             this.openHardwareManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
-            this.MainboardInfo = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetMainboardInformation();
-            this.ProcessorInformation = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetProcessorInformation();
-            this.GPUInformation = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetGPUInformation();
+
+            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            timer.Tick += timer_Tick;
+            timer.Start();
         }
 
-        private MainboardInformation mainboardInfo;
+        #endregion CTOR
+
+        #region Event-Handler
 
         /// <summary>
-        /// Mainboard informations
+        /// Timer-Tick Event-Handler
         /// </summary>
-        public MainboardInformation MainboardInfo
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void timer_Tick(object sender, EventArgs e)
         {
-            get { return mainboardInfo; }
-            set { this.SetProperty<MainboardInformation>(ref this.mainboardInfo, value); }
+            if (this.openHardwareManagementService.GPU != null)
+            {
+                // Update hardware item
+                this.openHardwareManagementService.GPU.Update();
+
+                // Get core workload
+                foreach (var sensor in this.openHardwareManagementService.GPUCoreTemperatureSensors)
+                {
+                    var chart = (from r in this.MainContent.Children.OfType<CPUCoreTemperatureChartUserControl>()
+                                 where r.CoreName == sensor.Name
+                                 select r).FirstOrDefault();
+
+                    if (chart == null)
+                    {
+                        var newChart = new CPUCoreTemperatureChartUserControl();
+                        newChart.CoreName = sensor.Name;
+                        newChart.CurrentCoreTemperature = (sensor.Value != null) ? (double)sensor.Value.Value : default(double);
+                        this.MainContent.Children.Add(newChart);
+                    }
+                    else
+                    {
+                        chart.CurrentCoreTemperature = (sensor.Value != null) ? (double)sensor.Value.Value : default(double);
+                    }
+                }
+            }
         }
 
-        private ProcessorInformation processorInformation;
+        #endregion Event-Handler
+
+        #region Properties
+
+        private StackPanel mainContent = new StackPanel();
 
         /// <summary>
-        /// Processor Information
+        /// Main-Content
         /// </summary>
-        public ProcessorInformation ProcessorInformation
+        public StackPanel MainContent
         {
-            get { return processorInformation; }
-            set { this.SetProperty<ProcessorInformation>(ref this.processorInformation, value); }
+            get { return mainContent; }
+            set { this.SetProperty<StackPanel>(ref this.mainContent, value); }
         }
 
-        private GPUInformation gpuInformation;
-
-        /// <summary>
-        /// GPU-Information
-        /// </summary>
-        public GPUInformation GPUInformation
-        {
-            get { return gpuInformation; }
-            set { this.SetProperty<GPUInformation>(ref this.gpuInformation, value); }
-        }
-        
+        #endregion Properties
     }
 }
