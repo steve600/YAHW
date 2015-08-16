@@ -62,16 +62,12 @@ namespace YAHW.Hardware
     /// <para>Author: Steffen Steinbrecher</para>
     /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public class FanController : BindableBase
+    public class MainboardFanController : BindableBase, IFanController
     {
         #region Members and Constants
 
-        private FanControllerService fanControllerService = null;
-
-        // Timer
-        private DispatcherTimer timer = null;
-
-        private double timerIntervall = 1000;
+        private IFanControllerService fanControllerService = null;
+        private IOpenHardwareMonitorManagementService ohmManagementService = null;
 
         // Smoothed data points
         private IList<DataPoint> smoothedPoints = null;
@@ -84,65 +80,154 @@ namespace YAHW.Hardware
         /// Standard CTOR
         /// </summary>
         /// <param name="sensor"></param>
-        public FanController(ISensor sensor)
+        public MainboardFanController(string sensorName)
         {
             // Set sensor
-            this.FanSensor = sensor;
+            this.FanSensorName = sensorName;
 
             // Get Fan-Controller-Service
-            this.fanControllerService = DependencyFactory.Resolve<FanControllerService>(ServiceNames.FanControllerService);
+            this.fanControllerService = DependencyFactory.Resolve<IFanControllerService>(ServiceNames.MainboardFanControllerService);
+            // Get OpenHardwareMonitorManagementService
+            this.ohmManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
 
-            if (this.FanSensor != null)
+            if (!String.IsNullOrEmpty(this.FanSensorName))
             {
                 this.ReadFanControllerSettings();
             }
 
             // Create user control
-            var userControl = new MainboardFanController();
-            userControl.FanController = this;
-            this.MainboardFanUserControl = userControl;
-
-            // Create timer
-            this.timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(this.timerIntervall);
-            timer.Tick += timer_Tick;
-
-            // Start timer
-            timer.Start();
+            this.FanControllerUserControl = new MainboardFanControllerUserControl(this);
         }
 
         #endregion CTOR
 
         #region EventHandler
 
-        /// <summary>
-        /// Timer-Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void timer_Tick(object sender, EventArgs e)
+        public void UpdateValues()
         {
             // Check if Advanced-Mode is enabled
             if (IsAdvancedModeEnabled)
             {
                 // Set Fan-Speed
                 this.SetFanSpeed();
-                // Clear chart
-                if (this.MainboardFanUserControl != null && this.MainboardFanUserControl is MainboardFanController)
+                // Update chart
+                if (this.FanControllerUserControl != null && this.FanControllerUserControl is MainboardFanControllerUserControl)
                 {
-                    ((MainboardFanController)this.MainboardFanUserControl).UpdateChart();
+                    ((MainboardFanControllerUserControl)this.FanControllerUserControl).UpdateChart();
                 }
             }
 
-            // Update Fan-Speed display values
-            this.CurrentFanSpeedValue = this.FanSensor.Value.Value;
-            this.MinFanSpeedValue = this.FanSensor.Min.Value;
-            this.MaxFanSpeedValue = this.FanSensor.Max.Value;
+            this.OnPropertyChanged(() => this.CurrentFanSpeedValue);
+            this.OnPropertyChanged(() => this.MinFanSpeedValue);
+            this.OnPropertyChanged(() => this.MaxFanSpeedValue);
         }
 
         #endregion EventHandler
 
         #region Methods
+
+        /// <summary>
+        /// Get fan sensor by name
+        /// </summary>
+        /// <param name="name">The name of the sensor</param>
+        /// <returns></returns>
+        private ISensor GetFanSensor()
+        {
+            return this.ohmManagementService.MainboardFanControlSensors.Where(s => s.Name.Equals(this.FanSensorName)).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Get current value of the sensor
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private float GetFanSensorValue()
+        {
+            var s = this.GetFanSensor();
+
+            if (s != null && s.Value != null)
+            {
+                if (s.Value.HasValue)
+                    return s.Value.Value;
+            }
+
+            return default(float);
+        }
+
+        /// <summary>
+        /// Get min value of the sensor
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private float GetFanSensorMinValue()
+        {
+            var s = this.GetFanSensor();
+
+            if (s != null && s.Min != null)
+            {
+                if (s.Min.HasValue)
+                    return s.Min.Value;
+            }
+
+            return default(float);
+        }
+
+        /// <summary>
+        /// Get max value of the sensor
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private float GetFanSensorMaxValue()
+        {
+            var s = this.GetFanSensor();
+
+            if (s != null && s.Max != null)
+            {
+                if (s.Max.HasValue)
+                    return s.Max.Value;
+            }
+
+            return default(float);
+        }
+
+        /// <summary>
+        /// Set fan sensor value
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="newValue"></param>
+        private void SetFanSensorValue(float newValue)
+        {
+            var s = this.GetFanSensor();
+
+            if (s != null)
+            {
+                // Set value
+                s.Control.SetSoftware(newValue);
+                // Accept
+                this.ohmManagementService.AcceptNewSettings();
+            }
+        }
+
+        /// <summary>
+        /// Set fan sensor default value
+        /// </summary>
+        /// <param name="name"></param>
+        private void SetFanSensorDefaultValue()
+        {
+            var s = this.GetFanSensor();
+
+            if (s != null)
+            {
+                // Set value
+                s.Control.SetDefault();
+                // Accept
+                this.ohmManagementService.AcceptNewSettings();
+
+                OnPropertyChanged(() => this.CurrentFanSpeedValue);
+                OnPropertyChanged(() => this.MinFanSpeedValue);
+                OnPropertyChanged(() => this.MaxFanSpeedValue);
+            }
+        }
 
         /// <summary>
         /// Read Fan-Controller-Settings
@@ -157,18 +242,17 @@ namespace YAHW.Hardware
                 // Check if elements exists
                 if (xdoc.Descendants("FanControllerSettings").FirstOrDefault().HasElements)
                 {
-                    XElement settings = (from xml in xdoc.Descendants("FanController")
-                                         where xml.Attribute("Name").Value == this.FanSensor.Name
+                    XElement settings = (from xml in xdoc.Descendants("MainboardFanController")
+                                         where xml.Attribute("Name").Value == this.FanSensorName
                                          select xml).FirstOrDefault();
 
                     // If settings for the fan controller not found -> create and save settings
                     if (settings == null)
                     {
-                        this.SelectedMainboardTemperatureSensor = this.fanControllerService.MainboardTemperatureSensors.FirstOrDefault();
+                        this.SelectedTemperatureSensor = this.fanControllerService.TemperatureSensors.FirstOrDefault();
                         this.SelectedFanControllerTemplate = this.fanControllerService.FanControllerTemplates.FirstOrDefault();
                         this.CanSetFanSpeed = false;
-                        this.CurrentFanSpeedValue = this.FanSensor.Value.Value;
-                        this.SelectedFanSpeedValue = this.FanSensor.Value.Value;
+                        this.SelectedFanSpeedValue = this.GetFanSensorValue();
                         xdoc.Element("FanControllerSettings").Add(this.GetSettingsAsXml());
                         xdoc.Save(DirectoryConstants.FanControllerSettingsConfig);
                     }
@@ -177,36 +261,40 @@ namespace YAHW.Hardware
                         // Set settings from XML-File
                         this.IsDefaultModeEnabled = XmlConvert.ToBoolean(settings.Element("IsDefaultModeEnabled").Value);
                         this.IsAdvancedModeEnabled = XmlConvert.ToBoolean(settings.Element("IsAdvancedModeEnabled").Value);
-                        this.SelectedMainboardTemperatureSensor = this.fanControllerService.MainboardTemperatureSensors.Where(sensor => sensor.Name.Equals(settings.Element("TemperatureSensor").Value)).FirstOrDefault();
+                        this.SelectedTemperatureSensor = this.fanControllerService.TemperatureSensors.Where(sensor => sensor.Name.Equals(settings.Element("TemperatureSensor").Value)).FirstOrDefault();
                         this.SelectedFanControllerTemplate = this.fanControllerService.FanControllerTemplates.Where(template => template.Name.Equals(settings.Element("FanControllerTemplate").Value)).FirstOrDefault();
+
+                        // Set value from config
+                        var fanSpeedValue = (float)XmlConvert.ToDouble(settings.Element("SelectedFanSpeedValue").Value);
 
                         if (IsDefaultModeEnabled || IsAdvancedModeEnabled)
                         {
                             this.CanSetFanSpeed = false;
+
+                            if (IsDefaultModeEnabled)
+                                this.SetFanSensorDefaultValue();
+
                             // Set current value reported from controller
-                            this.SelectedFanSpeedValue = this.FanSensor.Value.Value;
+                            this.SelectedFanSpeedValue = fanSpeedValue;
                         }
                         else
                         {
                             this.CanSetFanSpeed = true;
-                            // Set value from config
-                            var valueFromSettings = (float)XmlConvert.ToDouble(settings.Element("SelectedFanSpeedValue").Value);
 
-                            if (valueFromSettings == 0)
-                                valueFromSettings = this.FanSensor.Value.Value;
+                            if (fanSpeedValue == 0)
+                                fanSpeedValue = this.GetFanSensorValue();
 
-                            this.SelectedFanSpeedValue = valueFromSettings;
+                            this.SelectedFanSpeedValue = fanSpeedValue;
                         }
                     }
                 }
                 // If no elements found -> create the first one with default values
                 else
                 {
-                    this.SelectedMainboardTemperatureSensor = this.fanControllerService.MainboardTemperatureSensors.FirstOrDefault();
+                    this.SelectedTemperatureSensor = this.fanControllerService.TemperatureSensors.FirstOrDefault();
                     this.SelectedFanControllerTemplate = this.fanControllerService.FanControllerTemplates.FirstOrDefault();
                     this.CanSetFanSpeed = false;
-                    this.CurrentFanSpeedValue = this.FanSensor.Value.Value;
-                    this.SelectedFanSpeedValue = this.FanSensor.Value.Value;
+                    this.SelectedFanSpeedValue = this.GetFanSensorValue();
                     xdoc.Element("FanControllerSettings").Add(this.GetSettingsAsXml());
                     xdoc.Save(DirectoryConstants.FanControllerSettingsConfig);
                 }
@@ -234,8 +322,8 @@ namespace YAHW.Hardware
                 // Check if elements exists
                 if (xdoc.Descendants("FanControllerSettings").FirstOrDefault().HasElements)
                 {
-                    XElement settings = (from xml in xdoc.Descendants("FanController")
-                                         where xml.Attribute("Name").Value == this.FanSensor.Name
+                    XElement settings = (from xml in xdoc.Descendants("MainboardFanController")
+                                         where xml.Attribute("Name").Value == this.FanSensorName
                                          select xml).FirstOrDefault();
 
                     if (settings != null)
@@ -262,11 +350,11 @@ namespace YAHW.Hardware
         /// <returns></returns>
         private XElement GetSettingsAsXml()
         {
-            return new XElement("FanController", new XAttribute("Name", this.FanSensor.Name),
+            return new XElement("MainboardFanController", new XAttribute("Name", this.FanSensorName),
                 new XElement("IsDefaultModeEnabled", XmlConvert.ToString(this.IsDefaultModeEnabled)),
                 new XElement("IsAdvancedModeEnabled", XmlConvert.ToString(this.IsAdvancedModeEnabled)),
                 new XElement("SelectedFanSpeedValue", XmlConvert.ToString(this.SelectedFanSpeedValue)),
-                new XElement("TemperatureSensor", (this.SelectedMainboardTemperatureSensor != null) ? this.SelectedMainboardTemperatureSensor.Name : string.Empty),
+                new XElement("TemperatureSensor", (this.SelectedTemperatureSensor != null) ? this.SelectedTemperatureSensor.Name : string.Empty),
                 new XElement("FanControllerTemplate", (this.SelectedFanControllerTemplate != null) ? this.SelectedFanControllerTemplate.Name : string.Empty));
         }
 
@@ -275,20 +363,32 @@ namespace YAHW.Hardware
         /// </summary>
         private void SetFanSpeed()
         {
-            if (this.FanSensor != null && this.SelectedMainboardTemperatureSensor != null)
+            if (!String.IsNullOrEmpty(this.FanSensorName) && this.SelectedTemperatureSensor != null)
             {
                 try
                 {
-                    // Get value
-                    var values = this.smoothedPoints.Where(p => p.X > this.SelectedMainboardTemperatureSensor.Value.Value && p.X < (this.SelectedMainboardTemperatureSensor.Value.Value + 0.5));
+                    // Get value for current temperature
+                    //var values = this.smoothedPoints.Where(p => p.X > this.SelectedTemperatureSensorCurrentValue && p.X < (this.SelectedTemperatureSensorCurrentValue + 0.5));
+
+                    IList<DataPoint> values = new List<DataPoint>();
+                    var tempValue = this.SelectedTemperatureSensorCurrentValue;
+
+                    foreach (var d in this.smoothedPoints)
+                    {
+                        if (d.X > tempValue && d.X < (tempValue + 0.5))
+                            values.Add(d);
+                    }
 
                     if (values != null && values.Count() > 0)
                     {
                         var newValue = values.Max(p => p.Y);
+                        
                         // Set value
-                        this.FanSensor.Control.SetSoftware((float)newValue);
-                        // Accept
-                        DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
+                        this.SetFanSensorValue((float)newValue);
+
+                        OnPropertyChanged(() => this.CurrentFanSpeedValue);
+                        OnPropertyChanged(() => this.MinFanSpeedValue);
+                        OnPropertyChanged(() => this.MaxFanSpeedValue);
                     }
                 }
                 catch (Exception ex)
@@ -311,14 +411,16 @@ namespace YAHW.Hardware
         /// <param name="newValue">The new value</param>
         private void SetFanSpeed(float newValue)
         {
-            if (this.FanSensor != null && this.SelectedMainboardTemperatureSensor != null)
+            if (!String.IsNullOrEmpty(this.FanSensorName) && this.SelectedTemperatureSensor != null)
             {
                 try
                 {
-                    // Set value
-                    this.FanSensor.Control.SetSoftware(newValue);
-                    // Accept
-                    DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
+                    // Set new value
+                    this.SetFanSensorValue(newValue);
+
+                    OnPropertyChanged(() => this.CurrentFanSpeedValue);
+                    OnPropertyChanged(() => this.MinFanSpeedValue);
+                    OnPropertyChanged(() => this.MaxFanSpeedValue);
                 }
                 catch (Exception ex)
                 {
@@ -355,21 +457,21 @@ namespace YAHW.Hardware
 
         #region Properties
 
-        private ISensor fanSensor;
+        private string fanSensorName;
 
         /// <summary>
         /// The fan sensor
         /// </summary>
-        public ISensor FanSensor
+        public string FanSensorName
         {
-            get { return fanSensor; }
-            private set { this.SetProperty<ISensor>(ref this.fanSensor, value); }
+            get { return fanSensorName; }
+            private set { this.SetProperty<string>(ref this.fanSensorName, value); }
         }
 
         /// <summary>
         /// Reference to the fan controller service
         /// </summary>
-        public FanControllerService FanControllerService
+        public IFanControllerService FanControllerService
         {
             get
             {
@@ -377,24 +479,46 @@ namespace YAHW.Hardware
             }
         }
 
-        private ISensor selectedMainboardTemperatureSensor;
+        private ISensor selectedTemperatureSensor;
 
         /// <summary>
         /// The selected mainboard temperature sensor
         /// </summary>
-        public ISensor SelectedMainboardTemperatureSensor
+        public ISensor SelectedTemperatureSensor
         {
-            get { return selectedMainboardTemperatureSensor; }
+            get { return selectedTemperatureSensor; }
             set
             {
-                if (this.SetProperty<ISensor>(ref this.selectedMainboardTemperatureSensor, value))
+                if (this.SetProperty<ISensor>(ref this.selectedTemperatureSensor, value))
                 {
                     if (value != null)
                     {
                         // Write settings to config
-                        this.WriteFanControllerSettings("TemperatureSensor", this.SelectedMainboardTemperatureSensor.Name);
+                        this.WriteFanControllerSettings("TemperatureSensor", this.SelectedTemperatureSensor.Name);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Get current temperature sensor value
+        /// </summary>
+        /// <returns></returns>
+        public float SelectedTemperatureSensorCurrentValue
+        {
+            get
+            {
+                if (this.SelectedTemperatureSensor != null)
+                {
+                    var tempSensor = this.ohmManagementService.MainboardTemperatureSensors.Where(s => s.Name.Equals(this.SelectedTemperatureSensor.Name)).FirstOrDefault();
+
+                    if (tempSensor != null && tempSensor.Value != null)
+                    {
+                        return tempSensor.Value.Value;
+                    }
+                }
+
+                return default(float);
             }
         }
 
@@ -436,14 +560,13 @@ namespace YAHW.Hardware
                     if (value)
                     {
                         // Clear chart
-                        if (this.MainboardFanUserControl != null && this.MainboardFanUserControl is MainboardFanController)
+                        if (this.FanControllerUserControl != null && this.FanControllerUserControl is MainboardFanControllerUserControl)
                         {
-                            ((MainboardFanController)this.MainboardFanUserControl).ClearChart();
+                            ((MainboardFanControllerUserControl)this.FanControllerUserControl).ClearChart();
                         }
 
                         // Set controller default mode
-                        this.FanSensor.Control.SetDefault();
-                        DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
+                        this.SetFanSensorDefaultValue();
 
                         // Disable advanced mode
                         this.IsAdvancedModeEnabled = false;
@@ -481,15 +604,16 @@ namespace YAHW.Hardware
                     else
                     {
                         // Clear chart
-                        if (this.MainboardFanUserControl != null && this.MainboardFanUserControl is MainboardFanController)
+                        if (this.FanControllerUserControl != null && this.FanControllerUserControl is MainboardFanControllerUserControl)
                         {
-                            ((MainboardFanController)this.MainboardFanUserControl).ClearChart();
+                            ((MainboardFanControllerUserControl)this.FanControllerUserControl).ClearChart();
                         }
 
                         // Enable slider
                         if (!IsDefaultModeEnabled)
                         {
                             this.CanSetFanSpeed = true;
+
                             // Set fan speed to last selected value
                             this.SetFanSpeed(this.SelectedFanSpeedValue);
                         }
@@ -513,47 +637,46 @@ namespace YAHW.Hardware
             {
                 if (this.SetProperty<float>(ref this.selectedFanSpeedValue, value))
                 {
-                    // Set new value
-                    this.FanSensor.Control.SetSoftware(value);
-                    // Accept
-                    DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService).AcceptNewSettings();
-                    // Write to Config-File
-                    this.WriteFanControllerSettings("SelectedFanSpeedValue", value);
+                    if (!this.IsDefaultModeEnabled && !this.IsAdvancedModeEnabled)
+                    {
+                        // Set new value
+                        this.SetFanSensorValue(value);
+                        // Write to Config-File
+                        this.WriteFanControllerSettings("SelectedFanSpeedValue", value);
+                    }
+
+                    this.OnPropertyChanged(() => this.CurrentFanSpeedValue);
+                    this.OnPropertyChanged(() => this.MinFanSpeedValue);
+                    this.OnPropertyChanged(() => this.MaxFanSpeedValue);
                 }
             }
         }
-
-        private float currentFanSpeedValue;
 
         /// <summary>
         /// Current fan speed value
         /// </summary>
         public float CurrentFanSpeedValue
         {
-            get { return currentFanSpeedValue; }
-            set { this.SetProperty<float>(ref this.currentFanSpeedValue, value); }
+            get
+            {
+                return this.GetFanSensorValue();
+            }
         }
-
-        private float minFanSpeedValue;
 
         /// <summary>
         /// Min fan speed value
         /// </summary>
         public float MinFanSpeedValue
         {
-            get { return minFanSpeedValue; }
-            set { this.SetProperty<float>(ref this.minFanSpeedValue, value); }
+            get { return this.GetFanSensorMinValue(); }
         }
-
-        private float maxFanSpeedValue;
 
         /// <summary>
         /// Max fan speed value
         /// </summary>
         public float MaxFanSpeedValue
         {
-            get { return maxFanSpeedValue; }
-            set { this.SetProperty<float>(ref this.maxFanSpeedValue, value); }
+            get { return this.GetFanSensorMaxValue(); }
         }
 
         private bool canSetFanSpeed;
@@ -572,7 +695,7 @@ namespace YAHW.Hardware
         /// <summary>
         /// The UserControl for the UI
         /// </summary>
-        public UserControl MainboardFanUserControl
+        public UserControl FanControllerUserControl
         {
             get { return mainboardFanUserControl; }
             private set { this.SetProperty<UserControl>(ref this.mainboardFanUserControl, value); }

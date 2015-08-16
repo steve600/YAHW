@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using YAHW.Constants;
 
 namespace YAHW.Pages.Settings
 {
@@ -51,6 +53,21 @@ namespace YAHW.Pages.Settings
         public Directories()
         {
             InitializeComponent();
+
+            this.linkApplicationSettings.NavigateUri = new Uri(DirectoryConstants.ApplicationDataFolder);
+            this.linkApplicationSettings.Inlines.Add(DirectoryConstants.ApplicationDataFolder);
+
+            this.linkLoggingSettings.NavigateUri = new Uri(DirectoryConstants.LogFileFolder);
+            this.linkLoggingSettings.Inlines.Add(DirectoryConstants.LogFileFolder);
+
+            this.linkBasicSettings.NavigateUri = new Uri(System.IO.Path.GetDirectoryName(DirectoryConstants.FanControllerTemplatesConfig));
+            this.linkBasicSettings.Inlines.Add(System.IO.Path.GetDirectoryName(DirectoryConstants.FanControllerTemplatesConfig));
+        }
+
+        private void link_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

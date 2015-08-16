@@ -112,10 +112,34 @@
     <Compile Include="CommonControls\DialogDisabledControl.xaml.cs">
       <DependentUpon>DialogDisabledControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Configuration\TileViewConfigurationFile.cs" />
     <Compile Include="Converter\ConfigurableBooleanToVisibilityConverter.cs" />
-    <Compile Include="Hardware\FanController.cs" />
+    <Compile Include="EventAggregator\BackgroundEventSubscription.cs" />
+    <Compile Include="EventAggregator\DataEventArgs.cs" />
+    <Compile Include="EventAggregator\DelegateReference.cs" />
+    <Compile Include="EventAggregator\DispatcherEventSubscription.cs" />
+    <Compile Include="EventAggregator\EventAggregator.cs" />
+    <Compile Include="EventAggregator\EventBase.cs" />
+    <Compile Include="EventAggregator\EventSubscription.cs" />
+    <Compile Include="EventAggregator\IDelegateReference.cs" />
+    <Compile Include="EventAggregator\IEventAggregator.cs" />
+    <Compile Include="EventAggregator\IEventSubscription.cs" />
+    <Compile Include="EventAggregator\PubSubEvent.cs" />
+    <Compile Include="EventAggregator\SubscriptionToken.cs" />
+    <Compile Include="EventAggregator\ThreadOption.cs" />
+    <Compile Include="Events\OpenHardwareMonitorManagementServiceTimerTickEvent.cs" />
+    <Compile Include="Events\OpenHardwareMonitorManagementServiceTimerTickEventArgs.cs" />
+    <Compile Include="Events\SensorTileAddedEvent.cs" />
+    <Compile Include="Events\SensorTileAddedEventArgs.cs" />
+    <Compile Include="Events\SensorTilePositionChangedEvent.cs" />
+    <Compile Include="Events\SensorTilePositionChangedEventArgs.cs" />
+    <Compile Include="Hardware\MainboardFanController.cs" />
+    <Compile Include="Helper\UIHelper.cs" />
+    <Compile Include="Interfaces\IFanController.cs" />
     <Compile Include="Manager\ServiceManager.cs" />
     <Compile Include="Model\AutoRunEntry.cs" />
+    <Compile Include="Model\AutoRunGroup.cs" />
+    <Compile Include="Model\SensorTileConfigurationEntry.cs" />
     <Compile Include="Model\WindowsService.cs" />
     <Compile Include="MVVMBase\DelegateCommand.cs" />
     <Compile Include="MVVMBase\DelegateCommandBase.cs" />
@@ -142,17 +166,14 @@
     <Compile Include="Model\HDDPartition.cs" />
     <Compile Include="Model\PerformanceInfoData.cs" />
     <Compile Include="Model\RAMInformation.cs" />
+    <Compile Include="Pages\AddTilePopup.xaml.cs">
+      <DependentUpon>AddTilePopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AutoRuns.xaml.cs">
       <DependentUpon>AutoRuns.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AutoRunPages\AutoRunsLogon.xaml.cs">
       <DependentUpon>AutoRunsLogon.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\GPUCoreTemperatures.xaml.cs">
-      <DependentUpon>GPUCoreTemperatures.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\GPUCoreWorkloads.xaml.cs">
-      <DependentUpon>GPUCoreWorkloads.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\GPUInformation.xaml.cs">
       <DependentUpon>GPUInformation.xaml</DependentUpon>
@@ -181,8 +202,12 @@
     <Compile Include="Hardware\Simulated\SimulatedIOHardware.cs" />
     <Compile Include="Hardware\Simulated\SimulatedGPU.cs" />
     <Compile Include="Hardware\Simulated\SimulatedSensor.cs" />
+    <Compile Include="Pages\TilePage.xaml.cs">
+      <DependentUpon>TilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\ExceptionReporterService.cs" />
-    <Compile Include="Services\FanControllerService.cs" />
+    <Compile Include="Services\MainboardFanControllerService.cs" />
+    <Compile Include="Interfaces\IFanControllerService.cs" />
     <Compile Include="Services\LocalizerService.cs" />
     <Compile Include="Services\LoggingServiceNLog.cs" />
     <Compile Include="Services\OpenHardwareMonitorManagementServiceDebug.cs" />
@@ -221,15 +246,25 @@
     </Compile>
     <Compile Include="Services\WmiHardwareInfoService.cs" />
     <Compile Include="Services\UpdateVisitor.cs" />
-    <Compile Include="UserControls\MainboardFanController.xaml.cs">
-      <DependentUpon>MainboardFanController.xaml</DependentUpon>
+    <Compile Include="UserControls\MainboardFanControllerUserControl.xaml.cs">
+      <DependentUpon>MainboardFanControllerUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SensorTile.xaml.cs">
+      <DependentUpon>SensorTile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TileViewDropTarget.xaml.cs">
+      <DependentUpon>TileViewDropTarget.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AddTilePopupViewModel.cs" />
     <Compile Include="ViewModels\AutoRunsViewModel.cs" />
     <Compile Include="ViewModels\ServiceManagementViewModel.cs" />
-    <Compile Include="ViewModels\GPUCoreTemperaturesViewModel.cs" />
-    <Compile Include="ViewModels\GPUCoreWorkloadsViewModel.cs" />
-    <Compile Include="XmlConfigurationFile.cs" />
+    <Compile Include="ViewModels\TilePageViewModel.cs" />
+    <Compile Include="Configuration\XmlConfigurationFile.cs" />
     <Page Include="CommonControls\DialogDisabledControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddTilePopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -240,14 +275,6 @@
     <Page Include="Pages\AutoRunPages\AutoRunsLogon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\GPUCoreTemperatures.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\GPUCoreWorkloads.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\GPUInformation.xaml">
       <SubType>Designer</SubType>
@@ -274,6 +301,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Settings\License.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -317,9 +348,6 @@
     </Compile>
     <Compile Include="UserControls\GPUInformationUserControl.xaml.cs">
       <DependentUpon>GPUInformationUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\MainboardFanControl.xaml.cs">
-      <DependentUpon>MainboardFanControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\MainboardInformationUserControl.xaml.cs">
       <DependentUpon>MainboardInformationUserControl.xaml</DependentUpon>
@@ -411,11 +439,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\MainboardFanControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\MainboardFanController.xaml">
+    <Page Include="UserControls\MainboardFanControllerUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -428,6 +452,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\RAMInformationUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SensorTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\TileViewDropTarget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

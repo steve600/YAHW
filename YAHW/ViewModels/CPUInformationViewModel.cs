@@ -39,6 +39,8 @@ using OxyPlot.Series;
 using OxyPlot.Axes;
 using OpenHardwareMonitor.Hardware;
 using YAHW.Services;
+using YAHW.EventAggregator;
+using YAHW.Events;
 
 namespace YAHW.ViewModels
 {
@@ -63,11 +65,7 @@ namespace YAHW.ViewModels
     {
         #region Members and Constants
 
-        private DispatcherTimer timer = null;
-        private PerformanceCounter cpuCounter = null;
-
         private DateTime time;
-
         private IOpenHardwareMonitorManagementService openHardwareManagementService = null;
 
         #endregion Members and Constants
@@ -79,21 +77,15 @@ namespace YAHW.ViewModels
         /// </summary>
         public CPUInformationViewModel()
         {
+            // Setup CPU-Plot
             this.SetupCpuPlot();
 
-            this.timer = new DispatcherTimer();
-
-            this.cpuCounter = new PerformanceCounter();
-            cpuCounter.CategoryName = "Processor";
-            cpuCounter.CounterName = "% Processor Time";
-            cpuCounter.InstanceName = "_Total";
-
+            // Get services
             this.openHardwareManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
             this.CPUInformation = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetProcessorInformation();
 
-            timer.Interval = TimeSpan.FromMilliseconds(1000);
-            timer.Tick += timer_Tick;
-            timer.Start();
+            // Register for events
+            DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<OpenHardwareMonitorManagementServiceTimerTickEvent>().Subscribe(this.OpenHardwareMonitorManagementServiceTimerTickEventHandler, ThreadOption.UIThread);
         }
 
         #endregion CTOR
@@ -156,7 +148,11 @@ namespace YAHW.ViewModels
 
         #region EventHandler
 
-        void timer_Tick(object sender, EventArgs e)
+        /// <summary>
+        /// Timer-Tick-Event of the OHM-Service
+        /// </summary>
+        /// <param name="args"></param>
+        private void OpenHardwareMonitorManagementServiceTimerTickEventHandler(OpenHardwareMonitorManagementServiceTimerTickEventArgs args)
         {
             var areaSeries = (LineSeries)this.CPUPlot.Series[0];
 
@@ -183,7 +179,9 @@ namespace YAHW.ViewModels
 
             // Update-Plot
             //double x = areaSeries.Points.Count > 0 ? areaSeries.Points[areaSeries.Points.Count - 1].X + 1 : 0;
-            double percentage = (this.openHardwareManagementService.CPUWorkloadSensor.Value != null) ? (double)this.openHardwareManagementService.CPUWorkloadSensor.Value : default(double);
+            double percentage = default(double);
+            if (this.openHardwareManagementService.CPUWorkloadSensor.Value != null && this.openHardwareManagementService.CPUWorkloadSensor.Value.HasValue)
+                percentage = (double)this.openHardwareManagementService.CPUWorkloadSensor.Value;
 
             areaSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(this.time), percentage));
             time = time.AddSeconds(1);

@@ -50,26 +50,9 @@ namespace YAHW
     /// <para>Author: Steffen Steinbrecher</para>
     /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public class DependencyFactory
+    public static class DependencyFactory
     {
         private static IUnityContainer _container;
-
-        /// <summary>
-        /// Public reference to the unity container which will 
-        /// allow the ability to register instrances or take 
-        /// other actions on the container.
-        /// </summary>
-        public static IUnityContainer Container
-        {
-            get
-            {
-                return _container;
-            }
-            private set
-            {
-                _container = value;
-            }
-        }
 
         /// <summary>
         /// Static constructor for DependencyFactory which will 
@@ -77,13 +60,13 @@ namespace YAHW
         /// </summary>
         static DependencyFactory()
         {
-            Container = new UnityContainer();
+            _container = new UnityContainer();
 
             var section = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
 
             if (section != null)
             {
-                section.Configure(Container);
+                section.Configure(_container);
             }
         }
 
@@ -97,7 +80,7 @@ namespace YAHW
         {
             if (!String.IsNullOrEmpty(name) && instance != null)
             {
-                Container.RegisterInstance<TInterface>(name, instance, new ContainerControlledLifetimeManager());
+                _container.RegisterInstance<TInterface>(name, instance, new ContainerControlledLifetimeManager());
             }
         }
 
@@ -110,7 +93,7 @@ namespace YAHW
         public static void RegisterInstance(Type type, string name, object instance)
         {
             if (type != null && !String.IsNullOrEmpty(name) && instance != null)
-                Container.RegisterInstance(type, name, instance, new ContainerControlledLifetimeManager());
+                _container.RegisterInstance(type, name, instance, new ContainerControlledLifetimeManager());
         }
 
         /// <summary>
@@ -121,9 +104,9 @@ namespace YAHW
         {
             T ret = default(T);
 
-            if (Container.IsRegistered(typeof(T)))
+            if (_container.IsRegistered(typeof(T)))
             {
-                ret = Container.Resolve<T>();
+                ret = _container.Resolve<T>();
             }
 
             return ret;
@@ -135,7 +118,7 @@ namespace YAHW
         /// <typeparam name="T">Type of object to return</typeparam>
         public static T Resolve<T>(string name)
         {
-            return Container.Resolve<T>(name);
+            return _container.Resolve<T>(name);
         }
     }
 }

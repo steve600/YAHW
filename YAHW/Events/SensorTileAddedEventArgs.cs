@@ -26,13 +26,19 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-using System.Windows.Controls;
+using OpenHardwareMonitor.Hardware;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using YAHW.ViewModels;
 
-namespace YAHW.Pages
+namespace YAHW.Events
 {
     /// <summary>
     /// <para>
-    /// Interaction logic for CPUCoreTemperatures.xaml
+    /// Event-Args for new sensor tile added
     /// </para>
     /// 
     /// <para>
@@ -45,14 +51,17 @@ namespace YAHW.Pages
     /// </para>
     /// 
     /// <para>Author: Steffen Steinbrecher</para>
-    /// <para>Date: 12.07.2015</para>
+    /// <para>Date: 14.08.2015</para>
     /// </summary>
-    public partial class GPUCoreTemperatures : UserControl
+    public class SensorTileAddedEventArgs : EventArgs
     {
-        public GPUCoreTemperatures()
+        public SensorTileAddedEventArgs(SensorCategories sensorCategory, ISensor sensor)
         {
-            InitializeComponent();
-            this.DataContext = new ViewModels.GPUCoreTemperaturesViewModel();
+            this.SensorCategory = sensorCategory;
+            this.Sensor = sensor;
         }
+
+        public SensorCategories SensorCategory { get; set; }
+        public ISensor Sensor { get; set; }
     }
 }

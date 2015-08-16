@@ -1,0 +1,172 @@
+﻿<mui:ModernWindow x:Class="YAHW.Pages.AddTilePopup"
+                  x:Name="AddTilePopupWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                  xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                  xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+                  xmlns:Providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+                  xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+                  xmlns:local="clr-namespace:YAHW.ViewModels"
+                  Engine:LocalizeDictionary.DesignCulture="de-DE"
+                  Providers:ResxLocalizationProvider.DefaultAssembly="YAHW"
+                  Providers:ResxLocalizationProvider.DefaultDictionary="Resources"
+                  WindowStartupLocation="CenterOwner"
+                  ShowInTaskbar="False"
+                  ResizeMode="NoResize"
+                  IsTitleVisible="True"
+                  mc:Ignorable="d" 
+                  Width="370"
+                  Height="200"
+                  d:DesignHeight="200" d:DesignWidth="400"
+                  Title="{lex:Loc Key=AddTilePopupWindowTitle}"
+                  Style="{StaticResource BlankWindow}">
+
+    <mui:ModernWindow.Resources>
+        <ObjectDataProvider x:Key="HardwareSensorTypes"
+                            MethodName="GetValues"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:SensorCategories" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+    </mui:ModernWindow.Resources>
+    
+    <ScrollViewer>
+        <StackPanel>
+            <!-- Header -->
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal">
+
+                <Rectangle Width="24" Height="24">
+                    <Rectangle.Fill>
+                        <VisualBrush Visual="{StaticResource appbar_tiles_add}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+
+                <TextBlock Text="{lex:Loc YAHW:Resources:AddTilePopupWindowTitle}" 
+                           Margin="3,0,0,0"
+                           Style="{StaticResource Heading2}" 
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left" />
+
+            </StackPanel>
+
+            <mui:BBCodeBlock Margin="0,10,0,0" BBCode="{lex:Loc Key=AddTilePopupDescription}" />
+
+            <Grid Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="3" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <!-- Sensor-Type -->
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{lex:Loc Key=AddTilePopupSensorCategory}" />
+                
+                <ComboBox Grid.Row="0"
+                          Grid.Column="2"
+                          HorizontalAlignment="Left"
+                          Width="180" 
+                          ItemsSource="{Binding Source={StaticResource HardwareSensorTypes}}" 
+                          SelectedItem="{Binding Path=SelectedSensorCategory, UpdateSourceTrigger=PropertyChanged}" />
+
+                <!-- Sensors -->
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Text="{lex:Loc Key=AddTilePopupSensors}" />
+
+                <ComboBox Grid.Row="2"
+                          Grid.Column="2"
+                          HorizontalAlignment="Left"
+                          ItemsSource="{Binding Path=Sensors, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding Path=SelectedSensor, UpdateSourceTrigger=PropertyChanged}"
+                          Width="180">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="5" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="2" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" />
+                                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Name}" />
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Type:" />
+                                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SensorType}" />
+                                
+                            </Grid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+            </Grid>
+
+            <StackPanel Margin="0,10,10,0"
+                Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                <!-- Button-Bar -->
+                <Button x:Name="btnCancel"
+                        HorizontalAlignment="Right"
+                        Click="btnCancel_Click" 
+                        Width="120" 
+                        Height="28">
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Rectangle Width="16" Height="16" VerticalAlignment="Center">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_cancel}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <TextBlock Text="{lex:Loc Key=AddTilePopupCancelButton}" Margin="5,0,0,0" VerticalAlignment="Center" />
+
+                    </StackPanel>
+
+                </Button>
+
+                <Button Margin="10,0,0,0"
+                        HorizontalAlignment="Right"
+                        Command="{Binding Path=AddNewTileCommand}" 
+                        CommandParameter="{Binding ElementName=AddTilePopupWindow}"
+                        Width="120" 
+                        Height="28">
+
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Rectangle Width="16" Height="16" VerticalAlignment="Center">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_check}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <TextBlock Text="{lex:Loc Key=AddTilePopupAcceptButton}" Margin="5,0,0,0" VerticalAlignment="Center" />
+
+                    </StackPanel>
+
+                </Button>
+
+            </StackPanel>
+            
+        </StackPanel>
+    </ScrollViewer>
+</mui:ModernWindow>

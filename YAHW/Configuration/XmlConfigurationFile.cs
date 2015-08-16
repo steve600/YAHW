@@ -37,7 +37,7 @@ using System.Xml.Linq;
 using XAHW.Interfaces;
 using YAHW.Model;
 
-namespace YAHW
+namespace YAHW.Configuration
 {
 	/// <summary>
 	/// <para>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="YAHW.UserControls.MainboardFanController"
+﻿<UserControl x:Class="YAHW.UserControls.MainboardFanControllerUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -13,8 +13,8 @@
              Engine:LocalizeDictionary.DesignCulture="de-DE"
              Providers:ResxLocalizationProvider.DefaultAssembly="YAHW"
              Providers:ResxLocalizationProvider.DefaultDictionary="Resources"
-             x:Name="layoutRoot"
              mc:Ignorable="d" 
+             x:Name="layoutRoot"
              d:DesignHeight="450" d:DesignWidth="600">
     <UserControl.Resources>
         <swc:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
@@ -35,7 +35,7 @@
             <TextBlock Margin="5,0,0,0"
                        VerticalAlignment="Center"
                        Style="{StaticResource Heading2}"
-                       Text="{Binding Path=FanController.FanSensor.Name, UpdateSourceTrigger=PropertyChanged}" />
+                       Text="{Binding Path=FanController.FanSensorName}" />
         </StackPanel>
 
         <Grid Margin="0,5,0,0">
@@ -118,7 +118,7 @@
                 <TextBlock Grid.Row="8"
                            Grid.Column="2"
                            HorizontalAlignment="Right"
-                           Text="{Binding Path=FanController.MaxFanSpeedValue, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F2}}" />
+                           Text="{Binding Path=FanController.MaxFanSpeedValue, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat={}{0:F2}}" />
 
             </Grid>
 
@@ -158,9 +158,9 @@
                           HorizontalAlignment="Left"
                           Width="180" 
                           IsEnabled="{Binding Path=FanController.IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FanController.FanControllerService.MainboardTemperatureSensors, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Path=FanController.FanControllerService.TemperatureSensors, UpdateSourceTrigger=PropertyChanged}"
                           DisplayMemberPath="Name" 
-                          SelectedValue="{Binding Path=FanController.SelectedMainboardTemperatureSensor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                          SelectedValue="{Binding Path=FanController.SelectedTemperatureSensor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <!-- Controller-Settings -->
                 <TextBlock Grid.Row="4"

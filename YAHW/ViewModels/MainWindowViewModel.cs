@@ -32,7 +32,9 @@ using System.Reflection;
 using System.Windows.Input;
 using XAHW.Interfaces;
 using YAHW.BaseClasses;
+using YAHW.Configuration;
 using YAHW.Constants;
+using YAHW.EventAggregator;
 using YAHW.Interfaces;
 using YAHW.MVVMBase;
 using YAHW.Services;
@@ -69,6 +71,8 @@ namespace YAHW.ViewModels
             // Read config file
             IConfigurationFile configFile = this.LoadApplicationConfigFile();
 
+            // Register EventAggregator
+            DependencyFactory.RegisterInstance<IEventAggregator>(GeneralConstants.EventAggregator, new EventAggregator.EventAggregator());
             // Register services
             DependencyFactory.RegisterInstance<ILocalizerService>(ServiceNames.LocalizerService, new LocalizerService("de-DE"));
             //TODO: Add debug mode. When enabled register OHW Debug Service, otherwise OHW Service as normal
@@ -76,11 +80,10 @@ namespace YAHW.ViewModels
             DependencyFactory.RegisterInstance<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService, new WmiHardwareInfoService());
             DependencyFactory.RegisterInstance<IExceptionReporterService>(ServiceNames.ExceptionReporterService, new ExceptionReporterService());
             DependencyFactory.RegisterInstance<ILoggingService>(ServiceNames.LoggingService, new LoggingServiceNLog());
-            DependencyFactory.RegisterInstance<FanControllerService>(ServiceNames.FanControllerService, new FanControllerService());
-            //DependencyFactory.RegisterInstance(typeof(FanControllerService), ServiceNames.FanControllerService, new FanControllerService());
-
+            DependencyFactory.RegisterInstance<IFanControllerService>(ServiceNames.MainboardFanControllerService, new MainboardFanControllerService());
+            
             // Start Fan-Controller-Service
-            DependencyFactory.Resolve<FanControllerService>(ServiceNames.FanControllerService).Start();
+            DependencyFactory.Resolve<IFanControllerService>(ServiceNames.MainboardFanControllerService).Start();
 
             // Application title
             string appVersion = DependencyFactory.Resolve<ILocalizerService>(ServiceNames.LocalizerService).GetLocalizedString("MainWindowTitle");

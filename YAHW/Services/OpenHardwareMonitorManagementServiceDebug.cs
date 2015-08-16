@@ -98,6 +98,11 @@ namespace YAHW.Services
             this.mainboard.Update();
         }
 
+        public ISensor GetSensor(string sensorCategory, string sensorName, string sensorType)
+        {
+            return null;
+        }
+
         /// <summary>
         /// Get mainboard sensor
         /// </summary>
@@ -127,30 +132,19 @@ namespace YAHW.Services
             }
         }
 
-        /// <inheritdoc />
-        public ISensor Mainboard3VCC
+        public IList<ISensor> MainboardVoltageSensors
         {
             get
             {
-                return this.GetMainboardSensor(SensorType.Voltage, "3VCC");
+                return null;
             }
         }
 
-        /// <inheritdoc />
-        public ISensor Mainboard3VSB
+        public IList<ISensor> MainboardVoltageSensorsWithName
         {
             get
             {
-                return this.GetMainboardSensor(SensorType.Voltage, "3VSB");
-            }
-        }
-
-        /// <inheritdoc />
-        public ISensor MainboardAVCC
-        {
-            get
-            {
-                return this.GetMainboardSensor(SensorType.Voltage, "AVCC");
+                return null;
             }
         }
 
@@ -201,6 +195,7 @@ namespace YAHW.Services
                 return result;
             }
         }
+
         /// <inheritdoc />
         public IList<ISensor> MainboardTemperatureSensors
         {
@@ -220,23 +215,7 @@ namespace YAHW.Services
             }
         }
 
-        /// <inheritdoc />
-        public ISensor MainboardVBAT
-        {
-            get
-            {
-                return this.GetMainboardSensor(SensorType.Voltage, "VBAT");
-            }
-        }
 
-        /// <inheritdoc />
-        public ISensor MainboardVTT
-        {
-            get
-            {
-                return this.GetMainboardSensor(SensorType.Voltage, "VTT");
-            }
-        }
         #endregion Mainboard-Properties
 
         #region CPU-Properties
@@ -410,6 +389,15 @@ namespace YAHW.Services
         }
 
         /// <inheritdoc />
+        public ISensor GPUCoreClockSpeedSensor
+        {
+            get
+            {
+                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Equals("GPU Core")).FirstOrDefault();
+            }
+        }
+
+        /// <inheritdoc />
         public ObservableCollection<ISensor> GPUCoreWorkloadSensors
         {
             get
@@ -421,6 +409,15 @@ namespace YAHW.Services
                 }
 
                 return new ObservableCollection<ISensor>();
+            }
+        }
+
+        /// <inheritdoc />
+        public ISensor GPUMemoryClockSpeedSensor
+        {
+            get
+            {
+                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Equals("GPU Memory")).FirstOrDefault();
             }
         }
 
@@ -475,7 +472,7 @@ namespace YAHW.Services
         }
 
         /// <inheritdoc />
-        public ISensor GPUTemperatureSensor
+        public ISensor GPUCoreTemperatureSensor
         {
             get
             {
@@ -484,7 +481,7 @@ namespace YAHW.Services
         }
 
         /// <inheritdoc />
-        public ISensor GPUWorkloadSensor
+        public ISensor GPUCoreWorkloadSensor
         {
             get
             {

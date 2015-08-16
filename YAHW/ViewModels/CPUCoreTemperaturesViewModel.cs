@@ -32,6 +32,8 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using YAHW.BaseClasses;
 using YAHW.Constants;
+using YAHW.EventAggregator;
+using YAHW.Events;
 using YAHW.Interfaces;
 using YAHW.Services;
 using YAHW.UserControls;
@@ -59,7 +61,6 @@ namespace YAHW.ViewModels
     {
         #region Members and Constants
 
-        private DispatcherTimer timer = null;
         private IOpenHardwareMonitorManagementService openHardwareManagementService = null;
 
         #endregion Members and Constants
@@ -71,13 +72,10 @@ namespace YAHW.ViewModels
         /// </summary>
         public CPUCoreTemperaturesViewModel()
         {
-            this.timer = new DispatcherTimer();
-
             this.openHardwareManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
 
-            timer.Interval = TimeSpan.FromMilliseconds(1000);
-            timer.Tick += timer_Tick;
-            timer.Start();
+            // Register for events
+            DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<OpenHardwareMonitorManagementServiceTimerTickEvent>().Subscribe(this.OpenHardwareMonitorManagementServiceTimerTickEventHandler, ThreadOption.UIThread);
         }
 
         #endregion CTOR
@@ -85,17 +83,13 @@ namespace YAHW.ViewModels
         #region Event-Handler
 
         /// <summary>
-        /// Timer-Tick Event-Handler
+        /// Timer-Tick-Event of the OHM-Service
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void timer_Tick(object sender, EventArgs e)
+        /// <param name="args"></param>
+        private void OpenHardwareMonitorManagementServiceTimerTickEventHandler(OpenHardwareMonitorManagementServiceTimerTickEventArgs args)
         {
             if (this.openHardwareManagementService.CPU != null)
             {
-                // Update hardware item
-                this.openHardwareManagementService.CPU.Update();
-
                 // Get core workload
                 foreach (var sensor in this.openHardwareManagementService.CPUCoreTemperatureSensors)
                 {

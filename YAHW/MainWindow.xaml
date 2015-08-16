@@ -40,6 +40,7 @@
         <mui:LinkGroup DisplayName="{lex:Loc YAHW:Resources:MainWindowOverview}">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowHome}" Source="/Pages/Home.xaml" />
+                <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowTileView}" Source="/Pages/TilePage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <!-- Mainboard -->
@@ -61,8 +62,6 @@
         <mui:LinkGroup DisplayName="{lex:Loc YAHW:Resources:MainWindowGPU}">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowGPUInformation}" Source="/Pages/GPUInformation.xaml" />
-                <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowGPUCoreWorkload}" Source="/Pages/GPUCoreWorkloads.xaml" />
-                <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowGPUCoreTemperatures}" Source="/Pages/GPUCoreTemperatures.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <!-- RAM -->

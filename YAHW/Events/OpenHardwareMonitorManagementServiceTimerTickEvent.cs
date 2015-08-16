@@ -26,13 +26,18 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-using System.Windows.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using YAHW.EventAggregator;
 
-namespace YAHW.Pages
+namespace YAHW.Events
 {
     /// <summary>
     /// <para>
-    /// Interaction logic for GPUCoreWorkloads.xaml
+    /// Custom Event-Class for the TimerTick-Event of the OpenHardwareMonitorManagementService
     /// </para>
     /// 
     /// <para>
@@ -45,14 +50,9 @@ namespace YAHW.Pages
     /// </para>
     /// 
     /// <para>Author: Steffen Steinbrecher</para>
-    /// <para>Date: 12.07.2015</para>
+    /// <para>Date: 15.08.2015</para>
     /// </summary>
-    public partial class GPUCoreWorkloads : UserControl
+    public class OpenHardwareMonitorManagementServiceTimerTickEvent : PubSubEvent<OpenHardwareMonitorManagementServiceTimerTickEventArgs>
     {
-        public GPUCoreWorkloads()
-        {
-            InitializeComponent();
-            this.DataContext = new ViewModels.GPUCoreWorkloadsViewModel();
-        }
     }
 }

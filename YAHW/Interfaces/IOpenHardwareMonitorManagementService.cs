@@ -77,16 +77,6 @@ namespace YAHW.Interfaces
         IHardware GPU { get; }
 
         /// <summary>
-        /// GPU-Core Clock Speed
-        /// </summary>
-        double GPUCoreClockSpeed { get; }
-
-        /// <summary>
-        /// GPU-Core ClockSpeed-Sensors
-        /// </summary>
-        ObservableCollection<ISensor> GPUCoreClockSpeedSensors { get; }
-
-        /// <summary>
         /// The GPU-Core Power-Consumption Sensor
         /// </summary>
         ISensor GPUCorePowerConsumptionSensor { get; }
@@ -112,24 +102,24 @@ namespace YAHW.Interfaces
         string GPUManufactorName { get; }
 
         /// <summary>
-        /// GPU-Memory Clock Speed
+        /// GPU-Core clock speed sensor
         /// </summary>
-        double GPUMemoryClockSpeed { get; }
-
-        /// <summary>
-        /// GPU-Memory ClockSpeed-Sensors
-        /// </summary>
-        ObservableCollection<ISensor> GPUMemoryClockSpeedSensors { get; }
+        ISensor GPUCoreClockSpeedSensor { get; }
 
         /// <summary>
         /// The GPU Temperature-Sensor
         /// </summary>
-        ISensor GPUTemperatureSensor { get; }
+        ISensor GPUCoreTemperatureSensor { get; }
 
         /// <summary>
         /// GPU-Workload Sensor (TOTAL)
         /// </summary>
-        ISensor GPUWorkloadSensor { get; }
+        ISensor GPUCoreWorkloadSensor { get; }
+
+        /// <summary>
+        /// GPU-Memory clock speed sensor
+        /// </summary>
+        ISensor GPUMemoryClockSpeedSensor { get; }
 
         /// <summary>
         /// Mainboard IO-Hardware
@@ -137,29 +127,14 @@ namespace YAHW.Interfaces
         IHardware Mainboard { get; }
 
         /// <summary>
-        /// Mainboard 3VCC
+        /// Mainboard voltage sensors
         /// </summary>
-        ISensor Mainboard3VCC { get; }
+        IList<ISensor> MainboardVoltageSensors { get; }
 
         /// <summary>
-        /// Mainboard 3VSB
+        /// Mainboard voltages sensors with name (e.g. 3VCC)
         /// </summary>
-        ISensor Mainboard3VSB { get; }
-
-        /// <summary>
-        /// Mainboard AVCC
-        /// </summary>
-        ISensor MainboardAVCC { get; }
-
-        /// <summary>
-        /// Mainboard CPU-Core Temperature
-        /// </summary>
-        ISensor MainboardCPUCoreTemperature { get; }
-
-        /// <summary>
-        /// The CPU-VCore
-        /// </summary>
-        ISensor MainboardCPUVCore { get; }
+        IList<ISensor> MainboardVoltageSensorsWithName { get; }
 
         /// <summary>
         /// Fan control sensors
@@ -176,25 +151,29 @@ namespace YAHW.Interfaces
         /// </summary>
         IList<ISensor> MainboardTemperatureSensors { get; }
 
-        /// <summary>
-        /// Mainboard VBAT
-        /// </summary>
-        ISensor MainboardVBAT { get; }
-
-        /// <summary>
-        /// Mainboard VTT
-        /// </summary>
-        ISensor MainboardVTT { get; }
 
         #endregion Properties
 
         #region Methods
 
+        /// <summary>
+        /// Accept settings, e.g. for the Fan-Controller
+        /// </summary>
         void AcceptNewSettings();
 
-        void Close();
+        /// <summary>
+        /// Get a sensor
+        /// </summary>
+        /// <param name="sensorCategory">The sensor category, e.g. CPU</param>
+        /// <param name="sensorName">The sensor name, e.g. CPU Package</param>
+        /// <param name="sensorType">The sensor type, e.g. Load</param>
+        /// <returns></returns>
+        ISensor GetSensor(string sensorCategory, string sensorName, string sensorType);
 
-        void UpdateMainboardSensors();
+        /// <summary>
+        /// Close the observed computer
+        /// </summary>
+        void Close();
 
         #endregion Methods
     }

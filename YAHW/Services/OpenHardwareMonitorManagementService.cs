@@ -30,6 +30,10 @@ using OpenHardwareMonitor.Hardware;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Timers;
+using YAHW.Constants;
+using YAHW.EventAggregator;
+using YAHW.Events;
 using YAHW.Interfaces;
 
 namespace YAHW.Services
@@ -56,8 +60,9 @@ namespace YAHW.Services
         #region Members and Constants
 
         private Computer observedComputer = null;
-
         private UpdateVisitor updateVisitor = new UpdateVisitor();
+
+        private Timer timer = null;
 
         #endregion Members and Constants
 
@@ -72,35 +77,64 @@ namespace YAHW.Services
             this.observedComputer.FanControllerEnabled = true;
             this.observedComputer.CPUEnabled = true;
             this.observedComputer.MainboardEnabled = true;
-            this.observedComputer.RAMEnabled = true;
             this.observedComputer.GPUEnabled = true;
             this.observedComputer.HDDEnabled = true;
 
             this.observedComputer.Open();
+
+            this.UpdateMainboardSensors();
+
+            // Create timer
+            this.timer = new Timer(1000);
+            this.timer.Elapsed += Timer_Elapsed;
+            this.timer.Enabled = true;
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            // Update sensors
+            if (this.CPU != null)
+                this.CPU.Update();
+            if (this.GPU != null)
+                this.GPU.Update();
+
+            this.UpdateMainboardSensors();
+
+            // Fire event
+            DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<OpenHardwareMonitorManagementServiceTimerTickEvent>().Publish(null);
         }
 
         #endregion Constructors
 
         #region Methods
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Accept new settings for controllers, e.g. Fan-Controller
+        /// </summary>
         public void AcceptNewSettings()
         {
-            this.observedComputer.Accept(this.updateVisitor);
+            if (this.observedComputer != null)
+                this.observedComputer.Accept(this.updateVisitor);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Close the observed computer
+        /// </summary>
         public void Close()
         {
             if (this.observedComputer != null)
                 this.observedComputer.Close();
         }
-        /// <inheritdoc />
-        public void UpdateMainboardSensors()
+
+        /// <summary>
+        /// Update mainboard sensors
+        /// </summary>
+        private void UpdateMainboardSensors()
         {
             if (this.Mainboard != null)
             {
                 this.Mainboard.Update();
+
                 foreach (var h in this.Mainboard.SubHardware)
                     h.Update();
             }
@@ -122,6 +156,86 @@ namespace YAHW.Services
             return null;
         }
 
+        /// <summary>
+        /// Get a sensor
+        /// </summary>
+        /// <param name="sensorCategory">The sensor category, e.g. CPU</param>
+        /// <param name="sensorName">The sensor name, e.g. CPU Package</param>
+        /// <param name="sensorType">The sensor type, e.g. Load</param>
+        /// <returns></returns>
+        public ISensor GetSensor(string sensorCategory, string sensorName, string sensorType)
+        {
+            switch (sensorCategory)
+            {
+                case "CPU":
+                    return this.GetCPUSensor(sensorName, sensorType);
+                case "GPU":
+                    return this.GetGPUSensor(sensorName, sensorType);
+            }
+
+            return null;
+        }
+
+        private SensorType GetSensorTypeByName(string sensorType)
+        {
+            switch (sensorType)
+            {
+                case "Load":
+                    return SensorType.Load;
+                case "Temperature":
+                    return SensorType.Temperature;
+                case "Clock":
+                    return SensorType.Clock;
+                case "Power":
+                    return SensorType.Power;
+
+            }
+
+            return SensorType.Load;
+        }
+
+        /// <summary>
+        /// Get CPU-Sensor
+        /// </summary>
+        /// <param name="sensorName">The sensor name</param>
+        /// <param name="sensorType">The sensor type</param>
+        /// <returns></returns>
+        private ISensor GetCPUSensor(string sensorName, string sensorType)
+        {
+            ISensor result = null;
+
+            if (this.CPU != null)
+            {
+                if (CPU.Sensors != null)
+                {
+                    result = this.CPU.Sensors.Where(s => s.Name.Equals(sensorName) && s.SensorType == this.GetSensorTypeByName(sensorType)).FirstOrDefault();
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get GPU-Sensor
+        /// </summary>
+        /// <param name="sensorName">The sensor name</param>
+        /// <param name="sensorType">The sensor type</param>
+        /// <returns></returns>
+        private ISensor GetGPUSensor(string sensorName, string sensorType)
+        {
+            ISensor result = null;
+
+            if (this.GPU != null)
+            {
+                if (GPU.Sensors != null)
+                {
+                    result = this.GPU.Sensors.Where(s => s.Name.Equals(sensorName) && s.SensorType == this.GetSensorTypeByName(sensorType)).FirstOrDefault();
+                }
+            }
+
+            return result;
+        }
+
         #endregion Methods
 
         #region Mainboard-Properties
@@ -135,48 +249,45 @@ namespace YAHW.Services
             }
         }
 
-        /// <inheritdoc />
-        public ISensor Mainboard3VCC
+        /// <summary>
+        /// Mainboard voltage sensors (ALL)
+        /// </summary>
+        public IList<ISensor> MainboardVoltageSensors
         {
             get
             {
-                return this.GetMainboardSensor(SensorType.Voltage, "3VCC");
+                if (this.Mainboard != null && this.Mainboard.SubHardware != null)
+                {
+                    var io = this.Mainboard.SubHardware.Where(i => i.HardwareType == HardwareType.SuperIO).FirstOrDefault();
+
+                    if (io != null)
+                    {
+                        return io.Sensors.Where(s => s.SensorType == SensorType.Voltage).ToList();
+                    }
+                }
+
+                return null;
             }
         }
 
-        /// <inheritdoc />
-        public ISensor Mainboard3VSB
+        /// <summary>
+        /// Mainboard voltage sensors (ALL)
+        /// </summary>
+        public IList<ISensor> MainboardVoltageSensorsWithName
         {
             get
             {
-                return this.GetMainboardSensor(SensorType.Voltage, "3VSB");
-            }
-        }
+                if (this.Mainboard != null && this.Mainboard.SubHardware != null)
+                {
+                    var io = this.Mainboard.SubHardware.Where(i => i.HardwareType == HardwareType.SuperIO).FirstOrDefault();
 
-        /// <inheritdoc />
-        public ISensor MainboardAVCC
-        {
-            get
-            {
-                return this.GetMainboardSensor(SensorType.Voltage, "AVCC");
-            }
-        }
+                    if (io != null)
+                    {
+                        return io.Sensors.Where(s => s.SensorType == SensorType.Voltage && !s.Name.Contains("#")).ToList();
+                    }
+                }
 
-        /// <inheritdoc />
-        public ISensor MainboardCPUCoreTemperature
-        {
-            get
-            {
-                return this.GetMainboardSensor(SensorType.Temperature, "CPU Core");
-            }
-        }
-
-        /// <inheritdoc />
-        public ISensor MainboardCPUVCore
-        {
-            get
-            {
-                return this.GetMainboardSensor(SensorType.Voltage, "CPU VCore");
+                return null;
             }
         }
 
@@ -220,7 +331,6 @@ namespace YAHW.Services
 
                     if (io != null)
                     {
-                        io.Update();
                         return io.Sensors.Where(s => s.SensorType == SensorType.Temperature).ToList();
                     }
                 }
@@ -229,23 +339,6 @@ namespace YAHW.Services
             }
         }
 
-        /// <inheritdoc />
-        public ISensor MainboardVBAT
-        {
-            get
-            {
-                return this.GetMainboardSensor(SensorType.Voltage, "VBAT");
-            }
-        }
-
-        /// <inheritdoc />
-        public ISensor MainboardVTT
-        {
-            get
-            {
-                return this.GetMainboardSensor(SensorType.Voltage, "VTT");
-            }
-        }
         #endregion Mainboard-Properties
 
         #region CPU-Properties
@@ -354,7 +447,9 @@ namespace YAHW.Services
 
         #region GPU-Properties
 
-        /// <inheritdoc />
+        /// <summary>
+        /// The installed GPU
+        /// </summary>
         public IHardware GPU
         {
             get
@@ -363,33 +458,9 @@ namespace YAHW.Services
             }
         }
 
-        /// <inheritdoc />
-        public double GPUCoreClockSpeed
-        {
-            get
-            {
-                var clockSpeed = this.GPUCoreClockSpeedSensors.Max(s => s.Value);
-
-                return (clockSpeed != null) ? (double)clockSpeed : default(double);
-            }
-        }
-
-        /// <inheritdoc />
-        public ObservableCollection<ISensor> GPUCoreClockSpeedSensors
-        {
-            get
-            {
-                var sensors = this.GPU.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Contains("Core"));
-                if (sensors != null)
-                {
-                    return new ObservableCollection<ISensor>(sensors);
-                }
-
-                return new ObservableCollection<ISensor>();
-            }
-        }
-
-        /// <inheritdoc />
+        /// <summary>
+        /// 
+        /// </summary>
         public ISensor GPUCorePowerConsumptionSensor
         {
             get
@@ -403,7 +474,7 @@ namespace YAHW.Services
         {
             get
             {
-                var sensors = this.GPU.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Contains("Core"));
+                var sensors = this.GPU.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Contains("GPU Cores"));
                 if (sensors != null)
                 {
                     return new ObservableCollection<ISensor>(sensors);
@@ -452,14 +523,27 @@ namespace YAHW.Services
                    (this.GPU.GetType().Equals(HardwareType.GpuAti)) ? "AMD" : (this.GPU.GetType().Equals(HardwareType.GpuNvidia) ? "Nvidia" : "");
             }
         }
-        /// <inheritdoc />
-        public double GPUMemoryClockSpeed
+
+        /// <summary>
+        /// GPU-Core ClocSpeed
+        /// </summary>
+        public ISensor GPUCoreClockSpeedSensor
         {
             get
             {
-                var clockSpeed = this.GPUMemoryClockSpeedSensors.Max(s => s.Value);
+                if (this.GPU != null && this.GPU.Sensors != null)
+                    return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Equals("GPU Core")).FirstOrDefault();
 
-                return (clockSpeed != null) ? (double)clockSpeed : default(double);
+                return null;
+            }
+        }
+
+        /// <inheritdoc />
+        public ISensor GPUMemoryClockSpeedSensor
+        {
+            get
+            {
+                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Clock && s.Name.Equals("GPU Memory")).FirstOrDefault();
             }
         }
 
@@ -478,23 +562,28 @@ namespace YAHW.Services
             }
         }
 
-        /// <inheritdoc />
-        public ISensor GPUTemperatureSensor
+        /// <summary>
+        /// GPU-Core Temperature sensor
+        /// </summary>
+        public ISensor GPUCoreTemperatureSensor
         {
             get
             {
-                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Equals("GPU Package")).FirstOrDefault();
+                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Equals("GPU Core")).FirstOrDefault();
             }
         }
 
-        /// <inheritdoc />
-        public ISensor GPUWorkloadSensor
+        /// <summary>
+        /// GPU-Core-Worklaod sensor
+        /// </summary>
+        public ISensor GPUCoreWorkloadSensor
         {
             get
             {
-                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Load && s.Name.Equals("GPU Total")).FirstOrDefault();
+                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Load && s.Name.Equals("GPU Core")).FirstOrDefault();
             }
         }
+
         #endregion GPU-Properties
     }
 }

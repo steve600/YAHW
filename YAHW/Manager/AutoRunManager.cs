@@ -60,7 +60,9 @@ namespace YAHW.Manager
     {
         #region Members and Constants
 
-        const string runKey = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
+        private const string runKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+
+        private const string runKey64 = @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run";
 
         #endregion Members and Constants
 
@@ -75,14 +77,25 @@ namespace YAHW.Manager
 
         #endregion CTOR
 
-        public void DetectRunKeyEntries(bool userSpecific = false)
+        /// <summary>
+        /// Detect run key entries (via Registry)
+        /// </summary>
+        /// <param name="userSpecific">Flag if the user specific autorun entries should be selected</param>
+        /// <returns></returns>
+        public IList<AutoRunGroup> DetectRunKeyEntries()
         {
-            RegistryKey baseKey = null;
+            List<AutoRunGroup> result = new List<AutoRunGroup>();
 
-            if (userSpecific)
-                baseKey = Registry.CurrentUser;
-            else
-                baseKey = Registry.LocalMachine;
+            result.Add(GetRegistryAutorunKey(Registry.CurrentUser, runKey));
+            result.Add(GetRegistryAutorunKey(Registry.LocalMachine, runKey));
+            result.Add(GetRegistryAutorunKey(Registry.LocalMachine, runKey64));
+            
+            return result;
+        }
+
+        private AutoRunGroup GetRegistryAutorunKey(RegistryKey baseKey, string runKey)
+        {
+            AutoRunGroup result = new AutoRunGroup();
 
             using (RegistryKey startupKey = baseKey.OpenSubKey(runKey))
             {
@@ -90,14 +103,22 @@ namespace YAHW.Manager
                 {
                     var valueNames = startupKey.GetValueNames();
 
+                    result.GlobalPath = startupKey.ToString();
+
                     // Name => File path
-                    Dictionary<string, string> appInfos = valueNames
-                        .Where(valueName => startupKey.GetValueKind(valueName) == RegistryValueKind.String)
-                        .ToDictionary(valueName => valueName, valueName => startupKey.GetValue(valueName).ToString());
+                    result.AutoRunEntries = (from ar in valueNames
+                                             where startupKey.GetValueKind(ar) == RegistryValueKind.String
+                                             select new AutoRunEntry() { Name = ar, Location = startupKey.GetValue(ar).ToString(), IsActive = true }).ToList();
                 }
             }
+
+            return result;
         }
 
+        /// <summary>
+        /// Detect autorun entries with WMI
+        /// </summary>
+        /// <returns></returns>
         public IList<AutoRunEntry> DetectRunKeyEntriesWithWMI()
         {
             List<AutoRunEntry> result = new List<AutoRunEntry>();

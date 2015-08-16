@@ -47,6 +47,8 @@ namespace YAHW.Constants
     /// </summary>
     public static class GeneralConstants
     {
+        public static readonly string EventAggregator = "EventAggregator";
+
         public static readonly string ThemeDark = "dark";
         public static readonly string ThemeLight = "light";
 

@@ -158,6 +158,7 @@ For the implementation of the following software components were used:
  - Modern UI for WPF (MUI) - [url=https://github.com/firstfloorsoftware/mui]https://github.com/firstfloorsoftware/mui[/url]
  - Modern UI (Metro) Charts - [url=https://modernuicharts.codeplex.com]https://modernuicharts.codeplex.com[/url]
  - OxyPlot - [url=http://oxyplot.org]http://oxyplot.org[/url]
+  - PRISM (in parts - MVVM-Base, EventAggregator) - [url=https://github.com/PrismLibrary/Prism]https://github.com/PrismLibrary/Prism[/url]
  - Modern UI Icons - [url=http://modernuiicons.com]http://modernuiicons.com[/url]
  
 YAHW - Yet Another Hardware Monitor
@@ -479,5 +480,62 @@ There are no controllers found for the fan control!</value>
   </data>
   <data name="MainWindowGPUCoreWorkload" xml:space="preserve">
     <value>GPU-Core Auslastung (%)</value>
+  </data>
+  <data name="DirectoriesPageDescription" xml:space="preserve">
+    <value>The application manages the application settings in different XML files. The following dialgue gives an overview of directories and files that are used:</value>
+  </data>
+  <data name="DirectoriesPageApplicationSettings" xml:space="preserve">
+    <value>Application-Settings</value>
+  </data>
+  <data name="DirectoriesPageApplicationSettingsDescription" xml:space="preserve">
+    <value>This directory contains user-specific settings  (for example global application settings)</value>
+  </data>
+  <data name="DirectoriesPageLoggingSettings" xml:space="preserve">
+    <value>Logging</value>
+  </data>
+  <data name="DirectoriesPageLoggingSettingsDescription" xml:space="preserve">
+    <value>This directory contains the Log-Files</value>
+  </data>
+  <data name="DirectoriesPageBasicSettings" xml:space="preserve">
+    <value>Basic-Settings (not user specific)</value>
+  </data>
+  <data name="DirectoriesPageBasicSettingsDescription" xml:space="preserve">
+    <value>In addition to the user-specific application settings the application needs some basis settings (master data) (for example templates for fan controller). These files can be found in the following directory:</value>
+  </data>
+  <data name="GPUInformationGPU" xml:space="preserve">
+    <value>GPU</value>
+  </data>
+  <data name="GPUInformationMemoryClockSpeed" xml:space="preserve">
+    <value>Memory-Clockspeed</value>
+  </data>
+  <data name="GPUInformationGpuClockSpeed" xml:space="preserve">
+    <value>GPU-Clockspeed</value>
+  </data>
+  <data name="MainWindowTileView" xml:space="preserve">
+    <value>Tiles</value>
+  </data>
+  <data name="TilePageHeader" xml:space="preserve">
+    <value>Tile-View</value>
+  </data>
+  <data name="TilePageAddButton" xml:space="preserve">
+    <value>Add tile</value>
+  </data>
+  <data name="AddTilePopupWindowTitle" xml:space="preserve">
+    <value>Add tile</value>
+  </data>
+  <data name="AddTilePopupDescription" xml:space="preserve">
+    <value>With this dialog you can add the detected hardware sensors to the tile view.</value>
+  </data>
+  <data name="AddTilePopupSensors" xml:space="preserve">
+    <value>Sensors</value>
+  </data>
+  <data name="AddTilePopupAcceptButton" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AddTilePopupCancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="AddTilePopupSensorCategory" xml:space="preserve">
+    <value>Sensor-Category</value>
   </data>
 </root>

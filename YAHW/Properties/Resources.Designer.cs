@@ -61,6 +61,60 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @AddTilePopupAcceptButton ähnelt.
+        /// </summary>
+        internal static string AddTilePopupAcceptButton {
+            get {
+                return ResourceManager.GetString("AddTilePopupAcceptButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @AddTilePopupCancelButton ähnelt.
+        /// </summary>
+        internal static string AddTilePopupCancelButton {
+            get {
+                return ResourceManager.GetString("AddTilePopupCancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @AddTilePopupDescription ähnelt.
+        /// </summary>
+        internal static string AddTilePopupDescription {
+            get {
+                return ResourceManager.GetString("AddTilePopupDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @AddTilePopupSensorCategory ähnelt.
+        /// </summary>
+        internal static string AddTilePopupSensorCategory {
+            get {
+                return ResourceManager.GetString("AddTilePopupSensorCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @AddTilePopupSensors ähnelt.
+        /// </summary>
+        internal static string AddTilePopupSensors {
+            get {
+                return ResourceManager.GetString("AddTilePopupSensors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @AddTilePopupWindowTitle ähnelt.
+        /// </summary>
+        internal static string AddTilePopupWindowTitle {
+            get {
+                return ResourceManager.GetString("AddTilePopupWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @AppearancePageFontSize ähnelt.
         /// </summary>
         internal static string AppearancePageFontSize {
@@ -214,6 +268,69 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @DirectoriesPageApplicationSettings ähnelt.
+        /// </summary>
+        internal static string DirectoriesPageApplicationSettings {
+            get {
+                return ResourceManager.GetString("DirectoriesPageApplicationSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @DirectoriesPageApplicationSettingsDescription ähnelt.
+        /// </summary>
+        internal static string DirectoriesPageApplicationSettingsDescription {
+            get {
+                return ResourceManager.GetString("DirectoriesPageApplicationSettingsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @DirectoriesPageBasicSettings ähnelt.
+        /// </summary>
+        internal static string DirectoriesPageBasicSettings {
+            get {
+                return ResourceManager.GetString("DirectoriesPageBasicSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @DirectoriesPageBasicSettingsDescription ähnelt.
+        /// </summary>
+        internal static string DirectoriesPageBasicSettingsDescription {
+            get {
+                return ResourceManager.GetString("DirectoriesPageBasicSettingsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @DirectoriesPageDescription ähnelt.
+        /// </summary>
+        internal static string DirectoriesPageDescription {
+            get {
+                return ResourceManager.GetString("DirectoriesPageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @DirectoriesPageLoggingSettings ähnelt.
+        /// </summary>
+        internal static string DirectoriesPageLoggingSettings {
+            get {
+                return ResourceManager.GetString("DirectoriesPageLoggingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @DirectoriesPageLoggingSettingsDescription ähnelt.
+        /// </summary>
+        internal static string DirectoriesPageLoggingSettingsDescription {
+            get {
+                return ResourceManager.GetString("DirectoriesPageLoggingSettingsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @DirectoriesPageTitle ähnelt.
         /// </summary>
         internal static string DirectoriesPageTitle {
@@ -255,6 +372,33 @@ namespace YAHW.Properties {
         internal static string GPUInformationDriverVersion {
             get {
                 return ResourceManager.GetString("GPUInformationDriverVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @GPUInformationGPU ähnelt.
+        /// </summary>
+        internal static string GPUInformationGPU {
+            get {
+                return ResourceManager.GetString("GPUInformationGPU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @GPUInformationGpuClockSpeed ähnelt.
+        /// </summary>
+        internal static string GPUInformationGpuClockSpeed {
+            get {
+                return ResourceManager.GetString("GPUInformationGpuClockSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @GPUInformationMemoryClockSpeed ähnelt.
+        /// </summary>
+        internal static string GPUInformationMemoryClockSpeed {
+            get {
+                return ResourceManager.GetString("GPUInformationMemoryClockSpeed", resourceCulture);
             }
         }
         
@@ -601,6 +745,24 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowGPUCoreTemperatures ähnelt.
+        /// </summary>
+        internal static string MainWindowGPUCoreTemperatures {
+            get {
+                return ResourceManager.GetString("MainWindowGPUCoreTemperatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowGPUCoreWorkload ähnelt.
+        /// </summary>
+        internal static string MainWindowGPUCoreWorkload {
+            get {
+                return ResourceManager.GetString("MainWindowGPUCoreWorkload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowGPUInformation ähnelt.
         /// </summary>
         internal static string MainWindowGPUInformation {
@@ -736,6 +898,15 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowTileView ähnelt.
+        /// </summary>
+        internal static string MainWindowTileView {
+            get {
+                return ResourceManager.GetString("MainWindowTileView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @MainWindowTitle ähnelt.
         /// </summary>
         internal static string MainWindowTitle {
@@ -867,6 +1038,24 @@ namespace YAHW.Properties {
         internal static string SettingsPageLicense {
             get {
                 return ResourceManager.GetString("SettingsPageLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @TilePageAddButton ähnelt.
+        /// </summary>
+        internal static string TilePageAddButton {
+            get {
+                return ResourceManager.GetString("TilePageAddButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @TilePageHeader ähnelt.
+        /// </summary>
+        internal static string TilePageHeader {
+            get {
+                return ResourceManager.GetString("TilePageHeader", resourceCulture);
             }
         }
         

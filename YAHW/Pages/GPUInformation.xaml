@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:chart="http://oxyplot.org/wpf"
              xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
              xmlns:Providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
              xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
@@ -16,8 +17,260 @@
     
     <Grid Style="{StaticResource ContentRoot}">
 
-        <userControls:GPUInformationUserControl GPUInformations="{Binding Path=GPUInformation, UpdateSourceTrigger=PropertyChanged}"
-                                     ShowDetailsButton="False" />
-    
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <!--<userControls:GPUInformationUserControl GPUInformations="{Binding Path=GPUInformation, UpdateSourceTrigger=PropertyChanged}"
+             ShowDetailsButton="False" />-->
+
+        <Grid Grid.Row="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Icon + Description -->
+            <StackPanel Grid.Column="0"
+                        Grid.Row="0"
+                        Margin="35,0,0,0">
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Rectangle Width="32" Height="32">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_monitor}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <TextBlock Text="{lex:Loc YAHW:Resources:GPUInformationGPU}"
+                               Margin="3,0,0,0"
+                               Style="{StaticResource ChartTitle1}" 
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center" />
+
+                </StackPanel>
+
+                <TextBlock Text="{lex:Loc YAHW:Resources:CPUInformationPercentUsage}" 
+                           Style="{StaticResource ChartDescription1}" 
+                           HorizontalAlignment="Left" />
+
+            </StackPanel>
+            
+            <!-- Details -->
+            <Grid Grid.Row="0"
+                  Grid.Column="1"
+                  Margin="25,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="2" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="2" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Style="{StaticResource ChartDescription1Bold}"
+                           Text="{lex:Loc YAHW:Resources:GPUInformationCurrentHorizontalResolution}" />
+                <TextBlock Grid.Row="0"
+                           Grid.Column="2"
+                           Style="{StaticResource ChartDescription1}"
+                           VerticalAlignment="Center"
+                           Text="{Binding Path=GPUInformations.CurrentHorizontalResolution, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Style="{StaticResource ChartDescription1Bold}"
+                           Text="{lex:Loc YAHW:Resources:GPUInformationCurrentVerticalResolution}" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="2"
+                           Style="{StaticResource ChartDescription1}"
+                           VerticalAlignment="Center"
+                           Text="{Binding Path=GPUInformations.CurrentVerticalResolution, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Grid.Row="4"
+                           Grid.Column="0"
+                           Style="{StaticResource ChartDescription1Bold}"
+                           Text="{lex:Loc YAHW:Resources:GPUInformationCurrentRefreshRate}" />
+                <TextBlock Grid.Row="4"
+                           Grid.Column="2"
+                           Style="{StaticResource ChartDescription1}"
+                           VerticalAlignment="Center"
+                           Text="{Binding Path=GPUInformations.CurrentRefreshRate, UpdateSourceTrigger=PropertyChanged}" />
+
+            </Grid>
+
+            <TextBlock Grid.Column="2" 
+                       Grid.Row="0"
+                       Margin="0,0,10,0"
+                       Text="{Binding Path=GPUInformations.Name, UpdateSourceTrigger=PropertyChanged}" 
+                       Style="{StaticResource ChartTitle3}"
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Bottom" />           
+
+        </Grid>
+
+        <!-- Workload -->
+        <chart:PlotView Grid.Row="2" Model="{Binding Path=GPUCoreWorkloadPlot, UpdateSourceTrigger=PropertyChanged}" />        
+
+        <!-- Temperature -->
+        <chart:PlotView Grid.Row="4" 
+                        Margin="4,0,0,0"
+                        Model="{Binding Path=GPUCoreTemperaturePlot, UpdateSourceTrigger=PropertyChanged}" />
+
+        <!-- Details -->
+        <Grid Grid.Row="6"
+              Margin="35,0,0,0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="35" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="35" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="35" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Workload -->
+            <StackPanel Grid.Column="0"
+                        Grid.Row="0"
+                        Orientation="Vertical">
+
+                <TextBlock Text="{lex:Loc YAHW:Resources:CPUInformationCPUTotalWorkload}" 
+                           VerticalAlignment="Center"
+                           Style="{StaticResource ChartDescription1}" 
+                           HorizontalAlignment="Left" />
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Rectangle Width="24" Height="24">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_graph_line}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <TextBlock Text="{Binding Path=GPUCoreWorkload.Value, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} %}" 
+                               Margin="5,0,0,0"
+                               Style="{StaticResource ChartTitle2}" 
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left" />
+
+                </StackPanel>
+
+                <!--<TextBlock Text="{lex:Loc YAHW:Resources:CPUInformationCPUCoreWorkloads}" 
+                           Style="{StaticResource ChartDescription1}" 
+                           HorizontalAlignment="Left" />-->
+
+            </StackPanel>
+
+            <!-- Temperature -->
+            <StackPanel Grid.Column="2"
+                        Grid.Row="0">
+
+                <TextBlock Text="{lex:Loc YAHW:Resources:CPUInformationCpuTemperature}" 
+                           Style="{StaticResource ChartDescription1}" 
+                           HorizontalAlignment="Left" />
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Rectangle Width="24" Height="24">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_thermometer_celcius}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <TextBlock Text="{Binding Path=GPUCoreTemperature.Value, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:F1} °C}" 
+                               Margin="5,0,0,0"
+                               Style="{StaticResource ChartTitle2}" 
+                               HorizontalAlignment="Left" />
+
+                </StackPanel>
+
+                <!--<TextBlock Text="{lex:Loc YAHW:Resources:CPUInformationCpuCoreTemperatures}" 
+                           Style="{StaticResource ChartDescription1}" 
+                           HorizontalAlignment="Left" />-->
+
+            </StackPanel>
+
+            <!-- Clock speeds Core -->
+            <StackPanel Grid.Column="4"
+                        Grid.Row="0">
+
+                <TextBlock Text="{lex:Loc YAHW:Resources:GPUInformationGpuClockSpeed}" 
+                           Style="{StaticResource ChartDescription1}" 
+                           HorizontalAlignment="Left" />
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Rectangle Width="24" Height="24">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource speedometer}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <TextBlock Text="{Binding Path=GPUCoreClockSpeed.Value, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} MHz}" 
+                               Margin="5,0,0,0"
+                               Style="{StaticResource ChartTitle2}" 
+                               HorizontalAlignment="Left" />
+
+                </StackPanel>
+
+                <!--<TextBlock Text="{lex:Loc YAHW:Resources:CPUInformationCpuCoreClockSpeeds}" 
+                           Style="{StaticResource ChartDescription1}" 
+                           HorizontalAlignment="Left" />-->
+
+            </StackPanel>
+
+            <!-- Memory clock speed -->
+            <StackPanel Grid.Column="6"
+                        Grid.Row="0">
+
+                <TextBlock Text="{lex:Loc YAHW:Resources:GPUInformationMemoryClockSpeed}" 
+                           Style="{StaticResource ChartDescription1}" 
+                           HorizontalAlignment="Left" />
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Rectangle Width="24" Height="24">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource speedometer}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+
+                    <TextBlock Text="{Binding Path=GPUMemoryClockSpeed.Value, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} MHz}" 
+                               Margin="5,0,0,0"
+                               Style="{StaticResource ChartTitle2}" 
+                               HorizontalAlignment="Left" />
+
+                </StackPanel>
+
+                <!--<TextBlock Text="{lex:Loc YAHW:Resources:CPUInformationCpuCoreClockSpeeds}" 
+                           Style="{StaticResource ChartDescription1}" 
+                           HorizontalAlignment="Left" />-->
+
+            </StackPanel>
+
+        </Grid>
+
     </Grid>
 </UserControl>

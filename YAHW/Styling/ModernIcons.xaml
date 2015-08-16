@@ -107,4 +107,36 @@
         <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource ButtonText}" Data="F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 19,38C 19,27.5066 27.5066,19 38,19 Z M 33.25,33.25L 33.25,36.4167L 36.4166,36.4167L 36.4166,47.5L 33.25,47.5L 33.25,50.6667L 44.3333,50.6667L 44.3333,47.5L 41.1666,47.5L 41.1666,36.4167L 41.1666,33.25L 33.25,33.25 Z M 38.7917,25.3333C 37.48,25.3333 36.4167,26.3967 36.4167,27.7083C 36.4167,29.02 37.48,30.0833 38.7917,30.0833C 40.1033,30.0833 41.1667,29.02 41.1667,27.7083C 41.1667,26.3967 40.1033,25.3333 38.7917,25.3333 Z " />
     </Canvas>
 
+    <Canvas x:Key="appbar_tiles_four" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource ButtonText}" Data="F1 M 19,19L 36,19L 36,36L 19,36L 19,19 Z M 19,40L 36,40L 36,57L 19,57L 19,40 Z M 40,57L 40,40L 57,40L 57,57L 40,57 Z M 40,36L 40,19L 57,19L 57,36L 40,36 Z " />
+    </Canvas>
+
+    <Canvas x:Key="appbar_tiles_minus" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource ButtonText}" Data="F1 M 18,40L 36,40L 36,58L 18,58L 18,40 Z M 40,58L 40,40L 58,40L 58,58L 40,58 Z M 40,36L 40,18L 58,18L 58,36L 40,36 Z M 18,29L 18,25L 36,25L 36,29L 18,29 Z " />
+    </Canvas>
+
+    <Canvas x:Key="appbar_tiles_nine" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource ButtonText}" Data="F1 M 33,33L 43,33L 43,43L 33,43L 33,33 Z M 33,20L 43,20L 43,30L 33,30L 33,20 Z M 20,20L 30,20L 30,30L 20,30L 20,20 Z M 20,33L 30,33L 30,43L 20,43L 20,33 Z M 46,33L 56,33L 56,43L 46,43L 46,33 Z M 46,20L 56,20L 56,30L 46,30L 46,20 Z M 20,46L 30,46L 30,56L 20,56L 20,46 Z M 33,46L 43,46L 43,56L 33,56L 33,46 Z M 46,46L 56,46L 56,56L 46,56L 46,46 Z " />
+    </Canvas>
+
+    <Canvas x:Key="appbar_tiles_add" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource ButtonText}" Data="F1 M 18,40L 36,40L 36,58L 18,58L 18,40 Z M 40,58L 40,40L 58,40L 58,58L 40,58 Z M 40,36L 40,18L 58,18L 58,36L 40,36 Z M 29,36L 25,36L 25,29L 18,29L 18,25L 25,25L 25,18L 29,18L 29,25L 36,25L 36,29L 29,29L 29,36 Z " />
+    </Canvas>
+
+    <Canvas x:Key="appbar_tiles_sixteen" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource ButtonText}" Data="F1 M 20,20L 26,20L 26,26L 20,26L 20,20 Z M 30,20.0001L 36,20.0001L 36,26.0001L 30,26.0001L 30,20.0001 Z M 49.9999,20.0001L 55.9999,20.0001L 55.9999,26.0001L 49.9999,26.0001L 49.9999,20.0001 Z M 40,20.0001L 45.9999,20.0001L 45.9999,26.0001L 40,26.0001L 40,20.0001 Z M 20,30.0001L 26,30.0001L 26,36L 20,36L 20,30.0001 Z M 20,40L 26,40L 26,46L 20,46L 20,40 Z M 20,50L 26,50L 26,56L 20,56L 20,50 Z M 30,30L 36,30L 36,36L 30,36L 30,30 Z M 50,30L 56,30L 56,36L 50,36L 50,30 Z M 40,30L 46,30L 46,36L 40,36L 40,30 Z M 30,40L 36,40L 36,46L 30,46L 30,40 Z M 50,40L 56,40L 56,46L 50,46L 50,40 Z M 40,40L 46,40L 46,46L 40,46L 40,40 Z M 30,50L 36,50L 36,56L 30,56L 30,50 Z M 50,50L 56,50L 56,56L 50,56L 50,50 Z M 40,50L 46,50L 46,56L 40,56L 40,50 Z " />
+    </Canvas>
+
+    <Canvas x:Key="appbar_cancel" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource ButtonText}" Data="F1 M 38,19C 48.4934,19 57,27.5066 57,38C 57,48.4934 48.4934,57 38,57C 27.5066,57 19,48.4934 19,38C 19,27.5066 27.5066,19 38,19 Z M 38,23.75C 35.2116,23.75 32.6102,24.5509 30.4134,25.9352L 50.0648,45.5866C 51.4491,43.3898 52.25,40.7884 52.25,38C 52.25,30.13 45.87,23.75 38,23.75 Z M 23.75,38C 23.75,45.8701 30.1299,52.25 38,52.25C 40.7884,52.25 43.3897,51.4491 45.5865,50.0649L 25.9351,30.4136C 24.5509,32.6103 23.75,35.2117 23.75,38 Z " />
+    </Canvas>
+
+    <Canvas x:Key="appbar_check" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource ButtonText}" Data="F1 M 23.7501,33.25L 34.8334,44.3333L 52.2499,22.1668L 56.9999,26.9168L 34.8334,53.8333L 19.0001,38L 23.7501,33.25 Z " />
+    </Canvas>
+    
+    <!--<Canvas x:Key="appbar_tiles_four" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="38" Height="38" Canvas.Left="19" Canvas.Top="19" Stretch="Fill" Fill="{DynamicResource ButtonText}" Data=" " />
+    </Canvas>-->
+
 </ResourceDictionary>

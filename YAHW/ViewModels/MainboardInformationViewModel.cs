@@ -33,6 +33,9 @@ using YAHW.Constants;
 using OpenHardwareMonitor.Hardware;
 using YAHW.Model;
 using YAHW.Interfaces;
+using YAHW.UserControls;
+using YAHW.EventAggregator;
+using YAHW.Events;
 
 namespace YAHW.ViewModels
 {
@@ -71,10 +74,52 @@ namespace YAHW.ViewModels
             this.MainboardInformation = DependencyFactory.Resolve<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService).GetMainboardInformation();
 
             this.openHardwareMonitorManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
-            this.openHardwareMonitorManagementService.UpdateMainboardSensors();
+
+            if (this.openHardwareMonitorManagementService != null)
+            {
+                if (this.openHardwareMonitorManagementService.MainboardVoltageSensorsWithName != null)
+                {
+                    foreach (var vs in this.openHardwareMonitorManagementService.MainboardVoltageSensorsWithName)
+                    {
+                        SensorTile st = new SensorTile();
+                        st.HardwareSensor = vs;
+                        this.MainboardVoltageSensors.Add(st);
+                    }
+                }
+
+                if (this.openHardwareMonitorManagementService.MainboardTemperatureSensors != null)
+                {
+                    foreach (var ts in this.openHardwareMonitorManagementService.MainboardTemperatureSensors)
+                    {
+                        SensorTile st = new SensorTile();
+                        st.HardwareSensor = ts;
+                        this.MainboardTemperatureSensors.Add(st);
+                    }
+                }
+            }
+
+            // Register for events
+            DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<OpenHardwareMonitorManagementServiceTimerTickEvent>().Subscribe(this.OpenHardwareMonitorManagementServiceTimerTickEventHandler, ThreadOption.UIThread);
         }
 
         #endregion CTOR
+
+        #region EventHandler
+
+        /// <summary>
+        /// Timer-Tick-Event of the OHM-Service
+        /// </summary>
+        /// <param name="args"></param>
+        private void OpenHardwareMonitorManagementServiceTimerTickEventHandler(OpenHardwareMonitorManagementServiceTimerTickEventArgs args)
+        {
+            foreach (var st in this.MainboardVoltageSensors)
+                st.UpdateValues();
+
+            foreach (var st in this.MainboardTemperatureSensors)
+                st.UpdateValues();
+        }
+
+        #endregion EventHandler
 
         #region Properties
 
@@ -100,80 +145,29 @@ namespace YAHW.ViewModels
             }
         }
 
-        /// <summary>
-        /// CPU-VCore
-        /// </summary>
-        public ISensor MainboardCPUVCore
-        {
-            get
-            {
-                return this.openHardwareMonitorManagementService.MainboardCPUVCore;
-            }
-        }
-
-        /// <summary>
-        /// Mainboard AVCC
-        /// </summary>
-        public ISensor MainboardAVCC
-        {
-            get
-            {
-                return this.openHardwareMonitorManagementService.MainboardAVCC;
-            }
-        }
-
-        /// <summary>
-        /// Mainboard 3VCC
-        /// </summary>
-        public ISensor Mainboard3VCC
-        {
-            get
-            {
-                return this.openHardwareMonitorManagementService.Mainboard3VCC;
-            }
-        }
-
-        /// <summary>
-        /// Mainboard 3VSB
-        /// </summary>
-        public ISensor Mainboard3VSB
-        {
-            get
-            {
-                return this.openHardwareMonitorManagementService.Mainboard3VSB;
-            }
-        }
-
-        /// <summary>
-        /// Mainboard VBAT
-        /// </summary>
-        public ISensor MainboardVBAT
-        {
-            get
-            {
-                return this.openHardwareMonitorManagementService.MainboardVBAT;
-            }
-        }
-
-        /// <summary>
-        /// Mainboard VTT
-        /// </summary>
-        public ISensor MainboardVTT
-        {
-            get
-            {
-                return this.openHardwareMonitorManagementService.MainboardVTT;
-            }
-        }
+        private IList<SensorTile> mainboardTemperatureSensors = new List<SensorTile>();
 
         /// <summary>
         /// List with mainboard temperature sensors
         /// </summary>
-        public IList<ISensor> MainboardTemperatureSensors
+        public IList<SensorTile> MainboardTemperatureSensors
         {
             get
             {
-                return this.openHardwareMonitorManagementService.MainboardTemperatureSensors;
+                return this.mainboardTemperatureSensors;
+            }
+        }
+
+        private IList<SensorTile> mainboardVoltagedSensors = new List<SensorTile>();
+
+        /// <summary>
+        /// List with mainobard voltage sensors
+        /// </summary>
+        public IList<SensorTile> MainboardVoltageSensors
+        {
+            get
+            {
+                return mainboardVoltagedSensors;
             }
         }
 

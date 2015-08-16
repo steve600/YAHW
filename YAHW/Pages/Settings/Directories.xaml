@@ -15,7 +15,30 @@
     <ScrollViewer>
         <StackPanel MinWidth="200">
             <TextBlock Text="{lex:Loc YAHW:Resources:DirectoriesPageTitle}" Style="{StaticResource Heading2}" />
-            <TextBlock Text="Content goes here" />
+            <mui:BBCodeBlock BBCode="{lex:Loc YAHW:Resources:DirectoriesPageDescription}" />
+            
+            <!-- Application-Settings -->
+            <TextBlock Margin="0,10,0,0" Text="{lex:Loc YAHW:Resources:DirectoriesPageApplicationSettings}" Style="{StaticResource ChartTitle3}" />
+            <mui:BBCodeBlock Margin="0,3,0,0" Text="{lex:Loc YAHW:Resources:DirectoriesPageApplicationSettingsDescription}" />
+            <TextBlock Margin="0,3,0,0">
+                <Hyperlink x:Name="linkApplicationSettings" RequestNavigate="link_RequestNavigate" />
+            </TextBlock>
+
+            <!-- Logging -->
+            <TextBlock Margin="0,10,0,0" Text="{lex:Loc YAHW:Resources:DirectoriesPageLoggingSettings}" Style="{StaticResource ChartTitle3}" />
+            <mui:BBCodeBlock Margin="0,3,0,0" Text="{lex:Loc YAHW:Resources:DirectoriesPageLoggingSettingsDescription}" />
+            <TextBlock Margin="0,3,0,0">
+                <Hyperlink x:Name="linkLoggingSettings" RequestNavigate="link_RequestNavigate" />
+            </TextBlock>
+
+            <!-- Basis-Einstellungen -->
+            <TextBlock Margin="0,10,0,0" Text="{lex:Loc YAHW:Resources:DirectoriesPageBasicSettings}" Style="{StaticResource ChartTitle3}" />
+            <mui:BBCodeBlock Margin="0,3,0,0" Text="{lex:Loc YAHW:Resources:DirectoriesPageBasicSettingsDescription}" />
+            <TextBlock Margin="0,3,0,0">
+                <Hyperlink x:Name="linkBasicSettings" RequestNavigate="link_RequestNavigate" />
+            </TextBlock>
+
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>

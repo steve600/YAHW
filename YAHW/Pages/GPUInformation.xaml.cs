@@ -32,7 +32,7 @@ namespace YAHW.Pages
 {
     /// <summary>
     /// <para>
-    /// Interaction logic for GPUInformation.xaml
+    /// Interaction logic for GPUInformations.xaml
     /// </para>
     /// 
     /// <para>

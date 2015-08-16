@@ -34,18 +34,21 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
 using YAHW.Constants;
 using YAHW.Hardware;
 using YAHW.Interfaces;
 using YAHW.Model;
+using YAHW.MVVMBase;
+using YAHW.UserControls;
 
 namespace YAHW.Services
 {
     /// <summary>
     /// <para>
-    /// Class for managing the fan controllers
+    /// Class for managing the mainboard fan controllers
     /// </para>
     /// 
     /// <para>
@@ -60,21 +63,28 @@ namespace YAHW.Services
     /// <para>Author: Steffen Steinbrecher</para>
     /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public class FanControllerService
+    public class MainboardFanControllerService : BindableBase, IFanControllerService
     {
         #region Members and Constants
 
-        OpenHardwareMonitorManagementService openHardwareMonitorManagementService = null;
+        IOpenHardwareMonitorManagementService openHardwareMonitorManagementService = null;
+
+        DispatcherTimer timer = null;
 
         #endregion Members and Constants
 
         /// <summary>
         /// Standard CTOR
         /// </summary>
-        public FanControllerService()
+        public MainboardFanControllerService()
         {
+            // Create timer
+            this.timer = new DispatcherTimer();
+            this.timer.Interval = TimeSpan.FromSeconds(2);
+            this.timer.Tick += Timer_Tick;
+
             // Get OHW-Management-Service
-            this.openHardwareMonitorManagementService = DependencyFactory.Resolve<OpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
+            this.openHardwareMonitorManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
 
             // Read the fan controller templates (Standard, Silent, ...)
             this.ReadFanControllerTemplates();
@@ -84,6 +94,26 @@ namespace YAHW.Services
             {
                 // Create the settings file
                 this.CreateSettingsFile();
+            }
+        }
+
+        /// <summary>
+        /// Timer Tick-Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            foreach (var fc in this.FanControllers.Where(f => f.IsAdvancedModeEnabled))
+            {
+                if (fc.FanControllerUserControl != null &&
+                    fc.FanControllerUserControl is MainboardFanControllerUserControl)
+                {
+                    // Update values
+                    fc.UpdateValues();
+                    // Update control
+                    ((MainboardFanControllerUserControl)fc.FanControllerUserControl).UpdateChart();
+                }
             }
         }
 
@@ -101,7 +131,15 @@ namespace YAHW.Services
                 {
                     foreach (var s in this.openHardwareMonitorManagementService.MainboardFanControlSensors)
                     {
-                        this.FanControllers.Add(new FanController(s));
+                        var sensor = s;
+
+                        if (!String.IsNullOrEmpty(s.Name))
+                        {
+                            var fc = new MainboardFanController(s.Name);
+                            fc.PropertyChanged += Fc_PropertyChanged;
+                            fc.UpdateValues();
+                            this.FanControllers.Add(fc);
+                        }                       
                     }
                 }
                 else
@@ -109,6 +147,36 @@ namespace YAHW.Services
                     this.IsDisabled = true;
                 }
             }
+
+            this.CeckTimer();
+        }
+
+        /// <summary>
+        /// Property changed EventHandler for the Fan-Controller
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Fc_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("IsAdvancedModeEnabled"))
+            {
+                this.CeckTimer();
+            }
+        }
+
+        /// <summary>
+        /// Check Timer -> Start if at least one Fan-Controller is in advanced mode
+        /// </summary>
+        private void CeckTimer()
+        {
+            var fc = this.FanControllers.Where(f => f.IsAdvancedModeEnabled);
+
+            if (fc != null && fc.Count() > 0)
+            {
+                this.timer.Start();
+            }
+            else
+                this.timer.Stop();
         }
 
         /// <summary>
@@ -193,17 +261,17 @@ namespace YAHW.Services
         /// <summary>
         /// List with mainboard temperature sensors
         /// </summary>
-        public IList<ISensor> MainboardTemperatureSensors
+        public IList<ISensor> TemperatureSensors
         {
             get { return this.openHardwareMonitorManagementService.MainboardTemperatureSensors; }
         }
 
-        private IList<FanController> fanControllers = new List<FanController>();
+        private IList<IFanController> fanControllers = new List<IFanController>();
 
         /// <summary>
         /// List with fan controllers
         /// </summary>
-        public IList<FanController> FanControllers
+        public IList<IFanController> FanControllers
         {
             get { return fanControllers; }
             set { fanControllers = value; }

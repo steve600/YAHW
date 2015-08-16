@@ -124,5 +124,17 @@ namespace YAHW.Model
             get { return userSID; }
             set { this.SetProperty<string>(ref this.userSID, value); }
         }
+
+        private bool isActive;
+
+        /// <summary>
+        /// Flag if entry is active
+        /// </summary>
+        public bool IsActive
+        {
+            get { return isActive; }
+            set { this.SetProperty<bool>(ref this.isActive, value); }
+        }
+
     }
 }

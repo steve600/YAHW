@@ -167,6 +167,7 @@ Für die Umsetzung wurden die folgenden Softwarekomponenten verwendet:
  - Modern UI for WPF (MUI) - [url=https://github.com/firstfloorsoftware/mui]https://github.com/firstfloorsoftware/mui[/url]
  - Modern UI (Metro) Charts - [url=https://modernuicharts.codeplex.com]https://modernuicharts.codeplex.com[/url]
  - OxyPlot - [url=http://oxyplot.org]http://oxyplot.org[/url]
+ - PRISM (in Teilen - MVVM-Base, EventAggregator) - [url=https://github.com/PrismLibrary/Prism]https://github.com/PrismLibrary/Prism[/url]
  - Modern UI Icons - [url=http://modernuiicons.com]http://modernuiicons.com[/url]
  
 YAHW - Yet Another Hardware Monitor
@@ -479,5 +480,62 @@ Es wurden keine Controller für die Lüftersteuerung gefunden!</value>
   </data>
   <data name="MainWindowGPUCoreWorkload" xml:space="preserve">
     <value>GPU-Core Auslastung (%)</value>
+  </data>
+  <data name="DirectoriesPageDescription" xml:space="preserve">
+    <value>Die Applikation verwaltet die Anwendungseinstellungen in verschiedenen XML-Dateien. Nachfolgend ein Überblick über die verwendeten Verzeichnisse und Dateien:</value>
+  </data>
+  <data name="DirectoriesPageApplicationSettings" xml:space="preserve">
+    <value>Anwendungseinstellungen</value>
+  </data>
+  <data name="DirectoriesPageApplicationSettingsDescription" xml:space="preserve">
+    <value>In diesem Verzeichnis werden benutzerspezifische Einstellungen abgelegt (z.B. globale Anwendungseinstellungen oder Einstellungen zur Lüftersteuerung)</value>
+  </data>
+  <data name="DirectoriesPageLoggingSettings" xml:space="preserve">
+    <value>Logging</value>
+  </data>
+  <data name="DirectoriesPageLoggingSettingsDescription" xml:space="preserve">
+    <value>In diesem Verzeichnis werden die Log-Dateien abgelegt</value>
+  </data>
+  <data name="DirectoriesPageBasicSettings" xml:space="preserve">
+    <value>Basis-Einstellungen (nicht benutzerspezifisch)</value>
+  </data>
+  <data name="DirectoriesPageBasicSettingsDescription" xml:space="preserve">
+    <value>Neben den benutzerspezifischen Anwendungseinstellungen werden mit der Anwendung diverse Grundeinstellungen (Stammdaten) ausgeliefert (z.B. Templates für Lüftersterung). Diese Dateien sind in folgendem Verzeichnis zu finden:</value>
+  </data>
+  <data name="GPUInformationGPU" xml:space="preserve">
+    <value>GPU</value>
+  </data>
+  <data name="GPUInformationMemoryClockSpeed" xml:space="preserve">
+    <value>Speicher-Taktfrequenz</value>
+  </data>
+  <data name="GPUInformationGpuClockSpeed" xml:space="preserve">
+    <value>GPU-Taktfrequenz</value>
+  </data>
+  <data name="MainWindowTileView" xml:space="preserve">
+    <value>Kacheln</value>
+  </data>
+  <data name="TilePageHeader" xml:space="preserve">
+    <value>Kachelansicht</value>
+  </data>
+  <data name="TilePageAddButton" xml:space="preserve">
+    <value>Kachel hinzufügen</value>
+  </data>
+  <data name="AddTilePopupWindowTitle" xml:space="preserve">
+    <value>Kachel hinzufügen</value>
+  </data>
+  <data name="AddTilePopupSensorCategory" xml:space="preserve">
+    <value>Sensor-Kategorie</value>
+  </data>
+  <data name="AddTilePopupDescription" xml:space="preserve">
+    <value>Über diesen Dialog können der Kachelansicht die erkannten Hardwaresensoren hinzugefügt werden</value>
+  </data>
+  <data name="AddTilePopupSensors" xml:space="preserve">
+    <value>Sensoren</value>
+  </data>
+  <data name="AddTilePopupAcceptButton" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="AddTilePopupCancelButton" xml:space="preserve">
+    <value>Abbrechen</value>
   </data>
 </root>

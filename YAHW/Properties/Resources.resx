@@ -450,4 +450,67 @@
   <data name="MainboardFanControlDialogDisabledText" xml:space="preserve">
     <value>@MainboardFanControlDialogDisabledText</value>
   </data>
+  <data name="DirectoriesPageDescription" xml:space="preserve">
+    <value>@DirectoriesPageDescription</value>
+  </data>
+  <data name="DirectoriesPageApplicationSettings" xml:space="preserve">
+    <value>@DirectoriesPageApplicationSettings</value>
+  </data>
+  <data name="DirectoriesPageApplicationSettingsDescription" xml:space="preserve">
+    <value>@DirectoriesPageApplicationSettingsDescription</value>
+  </data>
+  <data name="DirectoriesPageLoggingSettings" xml:space="preserve">
+    <value>@DirectoriesPageLoggingSettings</value>
+  </data>
+  <data name="DirectoriesPageLoggingSettingsDescription" xml:space="preserve">
+    <value>@DirectoriesPageLoggingSettingsDescription</value>
+  </data>
+  <data name="DirectoriesPageBasicSettings" xml:space="preserve">
+    <value>@DirectoriesPageBasicSettings</value>
+  </data>
+  <data name="DirectoriesPageBasicSettingsDescription" xml:space="preserve">
+    <value>@DirectoriesPageBasicSettingsDescription</value>
+  </data>
+  <data name="GPUInformationGPU" xml:space="preserve">
+    <value>@GPUInformationGPU</value>
+  </data>
+  <data name="GPUInformationMemoryClockSpeed" xml:space="preserve">
+    <value>@GPUInformationMemoryClockSpeed</value>
+  </data>
+  <data name="GPUInformationGpuClockSpeed" xml:space="preserve">
+    <value>@GPUInformationGpuClockSpeed</value>
+  </data>
+  <data name="MainWindowTileView" xml:space="preserve">
+    <value>@MainWindowTileView</value>
+  </data>
+  <data name="TilePageHeader" xml:space="preserve">
+    <value>@TilePageHeader</value>
+  </data>
+  <data name="TilePageAddButton" xml:space="preserve">
+    <value>@TilePageAddButton</value>
+  </data>
+  <data name="MainWindowGPUCoreWorkload" xml:space="preserve">
+    <value>@MainWindowGPUCoreWorkload</value>
+  </data>
+  <data name="MainWindowGPUCoreTemperatures" xml:space="preserve">
+    <value>@MainWindowGPUCoreTemperatures</value>
+  </data>
+  <data name="AddTilePopupWindowTitle" xml:space="preserve">
+    <value>@AddTilePopupWindowTitle</value>
+  </data>
+  <data name="AddTilePopupDescription" xml:space="preserve">
+    <value>@AddTilePopupDescription</value>
+  </data>
+  <data name="AddTilePopupSensorCategory" xml:space="preserve">
+    <value>@AddTilePopupSensorCategory</value>
+  </data>
+  <data name="AddTilePopupSensors" xml:space="preserve">
+    <value>@AddTilePopupSensors</value>
+  </data>
+  <data name="AddTilePopupAcceptButton" xml:space="preserve">
+    <value>@AddTilePopupAcceptButton</value>
+  </data>
+  <data name="AddTilePopupCancelButton" xml:space="preserve">
+    <value>@AddTilePopupCancelButton</value>
+  </data>
 </root>

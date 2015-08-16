@@ -20,15 +20,16 @@ using YAHW.Services;
 namespace YAHW.UserControls
 {
     /// <summary>
-    /// Interaktionslogik für MainboardFanController.xaml
+    /// Interaktionslogik für MainboardFanControllerUserControl.xaml
     /// </summary>
-    public partial class MainboardFanController : UserControl
+    public partial class MainboardFanControllerUserControl : UserControl
     {
-        public MainboardFanController()
+        public MainboardFanControllerUserControl(IFanController fanController)
         {
+            // Set fan controller
+            this.FanController = fanController;
+            // Initialize components
             InitializeComponent();
-
-            // Set ComboBoxes
         }
         
         /// <summary>
@@ -60,21 +61,8 @@ namespace YAHW.UserControls
             // Create new annotation
             var p = new OxyPlot.Wpf.PointAnnotation();
 
-            if (this.FanController.SelectedMainboardTemperatureSensor != null)
-            {
-                if (this.FanController.SelectedMainboardTemperatureSensor.Value != null)
-                {
-                    p.X = this.FanController.SelectedMainboardTemperatureSensor.Value.Value;
-                }
-            }
-
-            if (this.FanController.FanSensor != null)
-            {
-                if (this.FanController.FanSensor.Value != null)
-                {
-                    p.Y = this.FanController.FanSensor.Value.Value;
-                }
-            }
+            p.X = this.FanController.SelectedTemperatureSensorCurrentValue;
+            p.Y = this.FanController.CurrentFanSpeedValue;
 
             // Annotation description
             p.Text = String.Format(DependencyFactory.Resolve<ILocalizerService>(ServiceNames.LocalizerService).GetLocalizedString("MainboardFanControlActualValueAnnotation"),
@@ -83,20 +71,20 @@ namespace YAHW.UserControls
 
             this.fanSpeedChart.Annotations.Add(p);
 
-            this.fanSpeedChart.InvalidatePlot(true);
+            this.fanSpeedChart.InvalidatePlot(false);
         }
 
         /// <summary>
         /// The associated fan controller
         /// </summary>
-        public FanController FanController
+        public IFanController FanController
         {
-            get { return (FanController)GetValue(FanControllerProperty); }
+            get { return (IFanController)GetValue(FanControllerProperty); }
             set { SetValue(FanControllerProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for FanController.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for MainboardFanControllerUserControl.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FanControllerProperty =
-            DependencyProperty.Register("FanController", typeof(FanController), typeof(MainboardFanController), new PropertyMetadata(null));
+            DependencyProperty.Register("MainboardFanControllerUserControl", typeof(IFanController), typeof(MainboardFanControllerUserControl), new PropertyMetadata(null));
     }
 }

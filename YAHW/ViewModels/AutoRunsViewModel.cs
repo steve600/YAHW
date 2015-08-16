@@ -71,22 +71,22 @@ namespace YAHW.ViewModels
         {
             this.autoRunManager = new AutoRunManager();
 
-            this.AutoRunEntries = autoRunManager.DetectRunKeyEntriesWithWMI();
+            this.AutoRunGroups = this.autoRunManager.DetectRunKeyEntries();
         }
 
         #endregion CTOR
 
         #region Properties
 
-        private IList<AutoRunEntry> autoRunEntries;
+        private IList<AutoRunGroup> autoRunGroups = new List<AutoRunGroup>();
 
         /// <summary>
         /// List with AutoRun-Entries
         /// </summary>
-        public IList<AutoRunEntry> AutoRunEntries
+        public IList<AutoRunGroup> AutoRunGroups
         {
-            get { return autoRunEntries; }
-            set { this.SetProperty<IList<AutoRunEntry>>(ref this.autoRunEntries, value); }
+            get { return autoRunGroups; }
+            set { this.SetProperty<IList<AutoRunGroup>>(ref this.autoRunGroups, value); }
         }
 
         #endregion Properties

@@ -65,6 +65,17 @@ namespace YAHW.Constants
         }
 
         /// <summary>
+        /// Folder with the log files
+        /// </summary>
+        public static string LogFileFolder
+        {
+            get
+            {
+                return System.IO.Path.Combine(ApplicationDataFolder, "Logs");
+            }
+        }
+
+        /// <summary>
         /// The file with the fan controller templates
         /// </summary>
         public static string FanControllerTemplatesConfig
@@ -86,6 +97,20 @@ namespace YAHW.Constants
             }
         }
 
+        /// <summary>
+        /// The file with the tile view settings
+        /// </summary>
+        public static string TileViewSettingsConfig
+        {
+            get
+            {
+                return System.IO.Path.Combine(ApplicationDataFolder, "TileViewSettings.xml");
+            }
+        }
+
+        /// <summary>
+        /// The License-File
+        /// </summary>
         public static string LicenseFile
         {
             get
