@@ -246,7 +246,7 @@ namespace YAHW.ViewModels
                     backgroundColor = ColorHelper.GetColorFromString(this.applicationConfigFile.Sections["TileSettings"].Settings["GpuTilesColor"].Value);
                     break;
                 case "Mainboard":
-                    backgroundColor = ColorHelper.GetColorFromString(this.applicationConfigFile.Sections["TileSettings"].Settings["GpuTilesColor"].Value);
+                    backgroundColor = ColorHelper.GetColorFromString(this.applicationConfigFile.Sections["TileSettings"].Settings["MainboardTilesColor"].Value);
                     break;
             }            
 
