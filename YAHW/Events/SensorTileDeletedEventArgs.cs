@@ -26,43 +26,40 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-using FirstFloor.ModernUI.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YAHW.Constants;
-using FirstFloor.ModernUI.Windows.Navigation;
+using YAHW.UserControls;
 
-namespace YAHW.Pages.Settings
+namespace YAHW.Events
 {
     /// <summary>
-    /// Interaktionslogik für License.xaml
+    /// <para>
+    /// Event-Args for the sensor tile deleted event
+    /// </para>
+    /// 
+    /// <para>
+    /// Class history:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <description>1.0: First release, working (Steffen Steinbrecher).</description>
+    ///     </item>
+    /// </list>
+    /// </para>
+    /// 
+    /// <para>Author: Steffen Steinbrecher</para>
+    /// <para>Date: 14.08.2015</para>
     /// </summary>
-    public partial class License : UserControl
+    public class SensorTileDeletedEventArgs : EventArgs
     {
-        public License()
+        public SensorTileDeletedEventArgs(SensorTile deletedSensorTile)
         {
-            InitializeComponent();
-
-            if (System.IO.File.Exists(DirectoryConstants.LicenseFile))
-            {
-                this.txtLicense.Text = System.IO.File.ReadAllText(DirectoryConstants.LicenseFile);
-            }
-            else
-            {
-                this.txtLicense.Text = "n.a.";
-            }
+            this.DeletedSensorTile = deletedSensorTile;
         }
+
+        public SensorTile DeletedSensorTile { get; set; }
+
     }
 }

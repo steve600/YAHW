@@ -16,9 +16,8 @@
         <mui:ModernTab Layout="List" SelectedSource="/Pages/Settings/Appearance.xaml">
             <mui:ModernTab.Links>
                 <mui:Link DisplayName="{lex:Loc YAHW:Resources:SettingsPageAppearance}" Source="/Pages/Settings/Appearance.xaml" />
+                <mui:Link DisplayName="{lex:Loc YAHW:Resources:SettingsPageTileSettings}" Source="/Pages/Settings/TileSettings.xaml" />
                 <mui:Link DisplayName="{lex:Loc YAHW:Resources:SettingsPageDirectories}" Source="/Pages/Settings/Directories.xaml" />
-                <mui:Link DisplayName="{lex:Loc YAHW:Resources:SettingsPageAbout}" Source="/Pages/Settings/About.xaml" />
-                <mui:Link DisplayName="{lex:Loc YAHW:Resources:SettingsPageLicense}" Source="/Pages/Settings/License.xaml" />
             </mui:ModernTab.Links>
         </mui:ModernTab>
     </Grid>

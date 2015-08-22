@@ -146,14 +146,21 @@ namespace YAHW.Services
         /// <param name="sensorType">The sensor type</param>
         /// <param name="sensorName">The sensor name</param>
         /// <returns></returns>
-        private ISensor GetMainboardSensor(SensorType sensorType, string sensorName)
+        private ISensor GetMainboardSensor(string sensorName, string sensorType)
         {
-            if (this.MainboardIOHardware != null)
+            ISensor result = null;
+
+            if (this.Mainboard != null)
             {
-                return this.MainboardIOHardware.Sensors.Where(s => s.SensorType == sensorType && s.Name.Equals(sensorName)).FirstOrDefault();
+                var io = this.Mainboard.SubHardware.Where(sh => sh.HardwareType == HardwareType.SuperIO).FirstOrDefault();
+
+                if (io.Sensors != null)
+                {
+                    result = io.Sensors.Where(s => s.Name.Equals(sensorName) && s.SensorType == this.GetSensorTypeByName(sensorType)).FirstOrDefault();
+                }
             }
 
-            return null;
+            return result;
         }
 
         /// <summary>
@@ -171,6 +178,8 @@ namespace YAHW.Services
                     return this.GetCPUSensor(sensorName, sensorType);
                 case "GPU":
                     return this.GetGPUSensor(sensorName, sensorType);
+                case "Mainboard":
+                    return this.GetMainboardSensor(sensorName, sensorType);
             }
 
             return null;
@@ -188,7 +197,8 @@ namespace YAHW.Services
                     return SensorType.Clock;
                 case "Power":
                     return SensorType.Power;
-
+                case "Voltage":
+                    return SensorType.Voltage;
             }
 
             return SensorType.Load;
@@ -320,6 +330,7 @@ namespace YAHW.Services
                 return result;
             }
         }
+
         /// <inheritdoc />
         public IList<ISensor> MainboardTemperatureSensors
         {
@@ -332,6 +343,27 @@ namespace YAHW.Services
                     if (io != null)
                     {
                         return io.Sensors.Where(s => s.SensorType == SensorType.Temperature).ToList();
+                    }
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Mainboard sensors
+        /// </summary>
+        public IList<ISensor> MainboardSensors
+        {
+            get
+            {
+                if (this.Mainboard != null && this.Mainboard.SubHardware != null)
+                {
+                    var io = this.Mainboard.SubHardware.Where(i => i.HardwareType == HardwareType.SuperIO).FirstOrDefault();
+
+                    if (io != null)
+                    {
+                        return io.Sensors.ToList();
                     }
                 }
 
@@ -569,7 +601,10 @@ namespace YAHW.Services
         {
             get
             {
-                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Equals("GPU Core")).FirstOrDefault();
+                if (this.GPU != null && this.GPU.Sensors != null)
+                    return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Temperature && s.Name.Equals("GPU Core")).FirstOrDefault();
+
+                return null;
             }
         }
 
@@ -580,7 +615,10 @@ namespace YAHW.Services
         {
             get
             {
-                return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Load && s.Name.Equals("GPU Core")).FirstOrDefault();
+                if (this.GPU != null && this.GPU.Sensors != null)
+                    return this.GPU.Sensors.Where(s => s.SensorType == SensorType.Load && s.Name.Equals("GPU Core")).FirstOrDefault();
+
+                return null;
             }
         }
 

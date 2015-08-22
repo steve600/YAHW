@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using YAHW.Constants;
+using YAHW.EventAggregator;
+using YAHW.Events;
 using YAHW.Helper;
 
 namespace YAHW.UserControls
@@ -54,6 +57,21 @@ namespace YAHW.UserControls
         }
 
         #endregion Drag&Drop
+
+        #region Event-Handler
+
+        /// <summary>
+        /// Delete sensor tile event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mnuDeleteSensorTile_Click(object sender, RoutedEventArgs e)
+        {
+            SensorTileDeletedEventArgs args = new SensorTileDeletedEventArgs(this);
+            DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<SensorTileDeletedEvent>().Publish(args);
+        }
+
+        #endregion Event-Handler
 
         #region Callbacks
 
@@ -174,6 +192,33 @@ namespace YAHW.UserControls
         }
 
         #endregion Callbacks
+
+        /// <summary>
+        /// Flag if context menu is enabled
+        /// </summary>
+        public bool IsContextMenuEnabled
+        {
+            get { return (bool)GetValue(IsContextMenuEnabledProperty); }
+            set { SetValue(IsContextMenuEnabledProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsContextMenuEnabled.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsContextMenuEnabledProperty =
+            DependencyProperty.Register("IsContextMenuEnabled", typeof(bool), typeof(SensorTile), new PropertyMetadata(true));
+
+
+        /// <summary>
+        /// Background color of the tile
+        /// </summary>
+        public SolidColorBrush TileBackground
+        {
+            get { return (SolidColorBrush)GetValue(TileBackgroundProperty); }
+            set { SetValue(TileBackgroundProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for TileBackground.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TileBackgroundProperty =
+            DependencyProperty.Register("TileBackground", typeof(SolidColorBrush), typeof(SensorTile), new PropertyMetadata(new SolidColorBrush(Colors.White)));
 
         /// <summary>
         /// The hardware sensor

@@ -127,6 +127,11 @@ namespace YAHW.Interfaces
         IHardware Mainboard { get; }
 
         /// <summary>
+        /// Mainboard sensors
+        /// </summary>
+        IList<ISensor> MainboardSensors { get; }
+
+        /// <summary>
         /// Mainboard voltage sensors
         /// </summary>
         IList<ISensor> MainboardVoltageSensors { get; }

@@ -513,4 +513,19 @@
   <data name="AddTilePopupCancelButton" xml:space="preserve">
     <value>@AddTilePopupCancelButton</value>
   </data>
+  <data name="SettingsPageTileSettings" xml:space="preserve">
+    <value>@SettingsPageTileSettings</value>
+  </data>
+  <data name="TileSettingsColorForCpuTiles" xml:space="preserve">
+    <value>@TileSettingsColorForCpuTiles</value>
+  </data>
+  <data name="TileSettingsColorForGpuTiles" xml:space="preserve">
+    <value>@TileSettingsColorForGpuTiles</value>
+  </data>
+  <data name="TileSettingsColorForMainboardTiles" xml:space="preserve">
+    <value>@TileSettingsColorForMainboardTiles</value>
+  </data>
+  <data name="TileSettingsHeader" xml:space="preserve">
+    <value>@TileSettingsHeader</value>
+  </data>
 </root>

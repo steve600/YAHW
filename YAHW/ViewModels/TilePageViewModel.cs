@@ -35,12 +35,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
+using XAHW.Interfaces;
 using YAHW.BaseClasses;
 using YAHW.Configuration;
 using YAHW.Constants;
 using YAHW.EventAggregator;
 using YAHW.Events;
+using YAHW.Helper;
 using YAHW.Interfaces;
 using YAHW.MVVMBase;
 using YAHW.UserControls;
@@ -70,6 +73,7 @@ namespace YAHW.ViewModels
 
         private IOpenHardwareMonitorManagementService openHardwareManagementService = null;
         private TileViewConfigurationFile configurationFile = null;
+        private IConfigurationFile applicationConfigFile = null;
         private int numberOfRows = 5;
         private int numberOfColumns = 5;
 
@@ -89,6 +93,7 @@ namespace YAHW.ViewModels
             this.CreateMainGrid(this.numberOfColumns, 150, this.numberOfRows, 110);
 
             this.openHardwareManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
+            this.applicationConfigFile = DependencyFactory.Resolve<IConfigurationFile>(ConfigFileNames.ApplicationConfig);
 
             for (int r = 0; r < this.numberOfRows; r++)
             {
@@ -101,7 +106,7 @@ namespace YAHW.ViewModels
                         var sensor = this.openHardwareManagementService.GetSensor(tile.SensorCategory, tile.SensorName, tile.SensorType);
 
                         if (sensor != null)
-                            this.AddSensorTile(sensor, tile.GridRow, tile.GridColumn);
+                            this.AddSensorTile(sensor, tile.GridRow, tile.GridColumn, tile.SensorCategory);
                     }
                     else
                     {
@@ -117,9 +122,10 @@ namespace YAHW.ViewModels
             DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<OpenHardwareMonitorManagementServiceTimerTickEvent>().Subscribe(this.OpenHardwareMonitorManagementServiceTimerTickEventHandler, ThreadOption.UIThread);
             DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<SensorTilePositionChangedEvent>().Subscribe(this.SensorTilePositionChangedEventHandler, ThreadOption.UIThread);
             DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<SensorTileAddedEvent>().Subscribe(this.SensorTileAddedEventHandler, ThreadOption.UIThread);
+            DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<SensorTileDeletedEvent>().Subscribe(this.SensorTileDeletedEventHandler, ThreadOption.UIThread);
         }
 
-        #region Even-Handler
+        #region Event-Handler
 
         /// <summary>
         /// Timer-Tick-Event of the OHM-Service
@@ -162,11 +168,34 @@ namespace YAHW.ViewModels
                 int gridColumn = Convert.ToInt32(dt.GetValue(Grid.ColumnProperty));
 
                 // Add to dialog
-                this.AddSensorTile(args.Sensor, gridRow, gridColumn);
+                this.AddSensorTile(args.Sensor, gridRow, gridColumn, args.SensorCategory.ToString());
 
                 // Add to config
                 this.configurationFile.InsertTileConfig(args.SensorCategory.ToString(), args.Sensor.Name, args.Sensor.SensorType.ToString(), gridRow, gridColumn);
             }            
+        }
+
+        /// <summary>
+        /// Sensor-Tile position changed
+        /// </summary>
+        /// <param name="args"></param>
+        private void SensorTileDeletedEventHandler(SensorTileDeletedEventArgs args)
+        {
+            if (args.DeletedSensorTile != null)
+            {
+                int gridRow = Convert.ToInt32(args.DeletedSensorTile.GetValue(Grid.RowProperty));
+                int gridColumn = Convert.ToInt32(args.DeletedSensorTile.GetValue(Grid.ColumnProperty));
+
+                this.MainGrid.Children.Remove(args.DeletedSensorTile);
+
+                // Create new drop target
+                TileViewDropTarget dropTarget = new TileViewDropTarget();
+                dropTarget.SetValue(Grid.RowProperty, gridRow);
+                dropTarget.SetValue(Grid.ColumnProperty, gridColumn);
+                this.MainGrid.Children.Add(dropTarget);
+
+                this.configurationFile.DeleteSensorTile(args.DeletedSensorTile.HardwareSensor.Name, gridRow, gridColumn);
+            }
         }
 
         #endregion Event-Handler
@@ -203,10 +232,26 @@ namespace YAHW.ViewModels
         /// </summary>
         /// <param name="gridRow"></param>
         /// <param name="gridCol"></param>
-        private void AddSensorTile(ISensor sensor, int gridRow, int gridCol)
+        private void AddSensorTile(ISensor sensor, int gridRow, int gridCol, string sensorCategory)
         {
             var s = new SensorTile();
+            Color backgroundColor = Colors.White;
+
+            switch (sensorCategory)
+            {
+                case "CPU":
+                    backgroundColor = ColorHelper.GetColorFromString(this.applicationConfigFile.Sections["TileSettings"].Settings["CpuTilesColor"].Value);
+                    break;
+                case "GPU":
+                    backgroundColor = ColorHelper.GetColorFromString(this.applicationConfigFile.Sections["TileSettings"].Settings["GpuTilesColor"].Value);
+                    break;
+                case "Mainboard":
+                    backgroundColor = ColorHelper.GetColorFromString(this.applicationConfigFile.Sections["TileSettings"].Settings["GpuTilesColor"].Value);
+                    break;
+            }            
+
             s.HardwareSensor = sensor;
+            s.TileBackground = new SolidColorBrush(backgroundColor);
             s.SetValue(Grid.RowProperty, gridRow);
             s.SetValue(Grid.ColumnProperty, gridCol);
 

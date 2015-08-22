@@ -168,6 +168,8 @@ Für die Umsetzung wurden die folgenden Softwarekomponenten verwendet:
  - Modern UI (Metro) Charts - [url=https://modernuicharts.codeplex.com]https://modernuicharts.codeplex.com[/url]
  - OxyPlot - [url=http://oxyplot.org]http://oxyplot.org[/url]
  - PRISM (in Teilen - MVVM-Base, EventAggregator) - [url=https://github.com/PrismLibrary/Prism]https://github.com/PrismLibrary/Prism[/url]
+ - WPFLocalizationExtension - [url=https://github.com/SeriousM/WPFLocalizationExtension]https://github.com/SeriousM/WPFLocalizationExtension[/url]
+ - Extended WPF Toolkit™ Community Edition - [url=https://wpftoolkit.codeplex.com/]https://wpftoolkit.codeplex.com/[/url]
  - Modern UI Icons - [url=http://modernuiicons.com]http://modernuiicons.com[/url]
  
 YAHW - Yet Another Hardware Monitor
@@ -537,5 +539,20 @@ Es wurden keine Controller für die Lüftersteuerung gefunden!</value>
   </data>
   <data name="AddTilePopupCancelButton" xml:space="preserve">
     <value>Abbrechen</value>
+  </data>
+  <data name="SettingsPageTileSettings" xml:space="preserve">
+    <value>Kacheln</value>
+  </data>
+  <data name="TileSettingsColorForCpuTiles" xml:space="preserve">
+    <value>Farbe für CPU-Kacheln</value>
+  </data>
+  <data name="TileSettingsColorForGpuTiles" xml:space="preserve">
+    <value>Farbe für GPU-Kacheln</value>
+  </data>
+  <data name="TileSettingsColorForMainboardTiles" xml:space="preserve">
+    <value>Farbe für Mainboard-Kacheln</value>
+  </data>
+  <data name="TileSettingsHeader" xml:space="preserve">
+    <value>Kachel-Einstellungen</value>
   </data>
 </root>

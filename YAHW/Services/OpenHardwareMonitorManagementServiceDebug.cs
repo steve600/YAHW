@@ -60,6 +60,7 @@ namespace YAHW.Services
         private IHardware cpu;
         private IHardware gpu;
         private IHardware mainboard;
+
         #endregion Members and Constants
 
         #region Constructors
@@ -129,6 +130,14 @@ namespace YAHW.Services
             get
             {
                 return this.mainboard;
+            }
+        }
+
+        public IList<ISensor> MainboardSensors
+        {
+            get
+            {
+                return null;
             }
         }
 

@@ -1042,6 +1042,15 @@ namespace YAHW.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @SettingsPageTileSettings ähnelt.
+        /// </summary>
+        internal static string SettingsPageTileSettings {
+            get {
+                return ResourceManager.GetString("SettingsPageTileSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die @TilePageAddButton ähnelt.
         /// </summary>
         internal static string TilePageAddButton {
@@ -1056,6 +1065,42 @@ namespace YAHW.Properties {
         internal static string TilePageHeader {
             get {
                 return ResourceManager.GetString("TilePageHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @TileSettingsColorForCpuTiles ähnelt.
+        /// </summary>
+        internal static string TileSettingsColorForCpuTiles {
+            get {
+                return ResourceManager.GetString("TileSettingsColorForCpuTiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @TileSettingsColorForGpuTiles ähnelt.
+        /// </summary>
+        internal static string TileSettingsColorForGpuTiles {
+            get {
+                return ResourceManager.GetString("TileSettingsColorForGpuTiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @TileSettingsColorForMainboardTiles ähnelt.
+        /// </summary>
+        internal static string TileSettingsColorForMainboardTiles {
+            get {
+                return ResourceManager.GetString("TileSettingsColorForMainboardTiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die @TileSettingsHeader ähnelt.
+        /// </summary>
+        internal static string TileSettingsHeader {
+            get {
+                return ResourceManager.GetString("TileSettingsHeader", resourceCulture);
             }
         }
         

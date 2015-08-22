@@ -76,6 +76,7 @@ namespace YAHW.ViewModels
             // Register services
             DependencyFactory.RegisterInstance<ILocalizerService>(ServiceNames.LocalizerService, new LocalizerService("de-DE"));
             //TODO: Add debug mode. When enabled register OHW Debug Service, otherwise OHW Service as normal
+            DependencyFactory.RegisterInstance<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementDebugService, new OpenHardwareMonitorManagementServiceDebug());
             DependencyFactory.RegisterInstance<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService, new OpenHardwareMonitorManagementService());
             DependencyFactory.RegisterInstance<IHardwareInformationService>(ServiceNames.WmiHardwareInformationService, new WmiHardwareInfoService());
             DependencyFactory.RegisterInstance<IExceptionReporterService>(ServiceNames.ExceptionReporterService, new ExceptionReporterService());
@@ -106,6 +107,17 @@ namespace YAHW.ViewModels
             {
                 // Add section GeneralSettings
                 configFile.Sections.Add("GeneralSettings");
+                this.CheckGeneralSettings(configFile);
+                // Add tile settings
+                configFile.Sections.Add("TileSettings");
+                this.CheckTileSettings(configFile);
+            }
+            else
+            {
+                // Check general settings
+                this.CheckGeneralSettings(configFile);
+                // Check tile settings
+                this.CheckTileSettings(configFile);
             }
 
             // Save config file
@@ -115,6 +127,55 @@ namespace YAHW.ViewModels
             DependencyFactory.RegisterInstance<IConfigurationFile>(ConfigFileNames.ApplicationConfig, configFile);
 
             return configFile;
+        }
+
+        /// <summary>
+        /// Check general settings
+        /// </summary>
+        /// <param name="configFile"></param>
+        private void CheckGeneralSettings(IConfigurationFile configFile)
+        {
+            // Check if section exists
+            if (configFile.Sections["GeneralSettings"] == null)
+                configFile.Sections.Add("GeneralSettings");
+
+            // Check settings
+            if (configFile.Sections["GeneralSettings"].Settings["Theme"] == null)
+                configFile.Sections["GeneralSettings"].Settings.Add("Theme", "light", "light", typeof(System.String));
+            if (configFile.Sections["GeneralSettings"].Settings["FontSize"] == null)
+                configFile.Sections["GeneralSettings"].Settings.Add("FontSize", "large", "large", typeof(System.String));
+            if (configFile.Sections["GeneralSettings"].Settings["Language"] == null)
+                configFile.Sections["GeneralSettings"].Settings.Add("Language", "de-DE", "de-DE", typeof(System.String));
+            if (configFile.Sections["GeneralSettings"].Settings["AccentColor"] == null)
+                configFile.Sections["GeneralSettings"].Settings.Add("AccentColor", "#FF1BA1E2", "#FF1BA1E2", typeof(System.String));
+        }
+
+        /// <summary>
+        /// Check tile settings
+        /// </summary>
+        /// <param name="configFile"></param>
+        private void CheckTileSettings(IConfigurationFile configFile)
+        {
+            // Check if section exists
+            if (configFile.Sections["TileSettings"] == null)
+                configFile.Sections.Add("TileSettings");
+
+            // Check settings
+            if (configFile.Sections["TileSettings"].Settings["CpuTilesColor"] == null)
+                configFile.Sections["TileSettings"].Settings.Add("CpuTilesColor", "#FFFFFFFF", "#FFFFFFFF", typeof(System.String));
+            if (configFile.Sections["TileSettings"].Settings["GpuTilesColor"] == null)
+                configFile.Sections["TileSettings"].Settings.Add("GpuTilesColor", "#FFFFFFFF", "#FFFFFFFF", typeof(System.String));
+            if (configFile.Sections["TileSettings"].Settings["MainboardTilesColor"] == null)
+                configFile.Sections["TileSettings"].Settings.Add("MainboardTilesColor", "#FFFFFFFF", "#FFFFFFFF", typeof(System.String));
+
+            //foreach (var s in Enum.GetValues(typeof(OpenHardwareMonitor.Hardware.SensorType)))
+            //{
+            //    if (configFile.Sections["TileSettings"].Settings[s.ToString()] == null)
+            //    {
+            //        configFile.Sections["TileSettings"].Settings.Add(s.ToString(), "#FFFFFFFF", "#FFFFFFFF", typeof(System.String));
+            //    }
+            //}
+
         }
 
         /// <summary>

@@ -203,7 +203,7 @@ namespace YAHW.ViewModels
                     case SensorCategories.GPU:
                         return this.openHardwareMonitorManagementService.GPU.Sensors.ToList();
                     case SensorCategories.Mainboard:
-                        return this.openHardwareMonitorManagementService.Mainboard.Sensors.ToList();
+                        return this.openHardwareMonitorManagementService.MainboardSensors;                        
                 }
 
                 return null;

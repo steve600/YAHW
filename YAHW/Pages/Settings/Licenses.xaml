@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="YAHW.Pages.Settings.Licenses"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Style="{StaticResource ContentRoot}">
+        <mui:ModernTab Layout="List" SelectedSource="/Pages/Settings/License.xaml">
+            <mui:ModernTab.Links>
+                <mui:Link DisplayName="YAHW" Source="/Pages/Settings/License.xaml" />
+                <mui:Link DisplayName="Open Hardware Monitor" Source="/Pages/Settings/License_OpenHardwareMonitor.xaml" />
+                <mui:Link DisplayName="Modern UI for WPF (MUI)" Source="/Pages/Settings/License_MUI.xaml" />
+                <mui:Link DisplayName="OxyPlot" Source="/Pages/Settings/License_OxyPlot.xaml" />
+                <mui:Link DisplayName="PRISM" Source="/Pages/Settings/License_PRISM.xaml" />
+                <mui:Link DisplayName="WPF Localization Extension" Source="/Pages/Settings/License_WPFLocalizationExtension.xaml" />
+                <mui:Link DisplayName="Extended WPF Toolkit" Source="/Pages/Settings/License_ExtendedWPFToolkit.xaml" />
+                
+            </mui:ModernTab.Links>
+        </mui:ModernTab>
+    </Grid>
+</UserControl>

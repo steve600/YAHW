@@ -199,6 +199,37 @@ namespace YAHW.Configuration
             }
         }
 
+        /// <summary>
+        /// Delete tile sensor
+        /// </summary>
+        /// <param name="sensorName">The sensor name</param>
+        /// <param name="gridRow">The grid row</param>
+        /// <param name="gridColumn">The grid column</param>
+        public void DeleteSensorTile(string sensorName, int gridRow, int gridColumn)
+        {
+            try
+            {
+                XDocument xmlDoc = XDocument.Load(this.configFile);
+
+                var tileConfig = xmlDoc.Element("SensorTiles").Elements().Where(tc => tc.Attribute("SensorName").Value.Equals(sensorName) &&
+                                                                                      tc.Attribute("GridRow").Value.Equals(XmlConvert.ToString(gridRow)) &&
+                                                                                      tc.Attribute("GridColumn").Value.Equals(XmlConvert.ToString(gridColumn))).FirstOrDefault();
+
+                if (tileConfig != null)
+                    tileConfig.Remove();
+
+                xmlDoc.Save(this.configFile);
+            }
+            catch (Exception ex)
+            {
+                var msg = DependencyFactory.Resolve<ILocalizerService>(ServiceNames.LocalizerService).GetLocalizedString("MainboardFanControlErrorReadingFanControllerTemplates");
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException(msg, ex);
+                // Show exception
+                DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(ex);
+            }
+        }
+
         private IList<SensorTileConfigurationEntry> tiles = new List<SensorTileConfigurationEntry>();
 
         public IList<SensorTileConfigurationEntry> Tiles

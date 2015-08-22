@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="YAHW.Pages.Settings.TileSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:converter="clr-namespace:YAHW.Converter"
+             xmlns:userControls="clr-namespace:YAHW.UserControls"
+             xmlns:Engine="clr-namespace:WPFLocalizeExtension.Engine;assembly=WPFLocalizeExtension"
+             xmlns:Providers="clr-namespace:WPFLocalizeExtension.Providers;assembly=WPFLocalizeExtension"
+             xmlns:lex="clr-namespace:WPFLocalizeExtension.Extensions;assembly=WPFLocalizeExtension"
+             Engine:LocalizeDictionary.DesignCulture="de-DE"
+             Providers:ResxLocalizationProvider.DefaultAssembly="YAHW"
+             Providers:ResxLocalizationProvider.DefaultDictionary="Resources"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converter:ColorToSolidColorBrushConverter x:Key="colorToSolidColorBrushConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <ScrollViewer>
+            <StackPanel MinWidth="200">
+                <TextBlock Text="{lex:Loc Key=TileSettingsHeader}" Style="{StaticResource Heading2}" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="5" />
+                    </Grid.RowDefinitions>
+
+                    <!-- CPU-Tiles -->
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{lex:Loc Key=TileSettingsColorForCpuTiles}" />
+
+                    <xctk:ColorPicker x:Name="cpCPUSensorTile" 
+                                      Grid.Row="0"
+                                      Grid.Column="2"
+                                      Height="22"
+                                      SelectedColor="{Binding Path=SelectedColorForCpuTiles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <userControls:SensorTile Grid.Column="4" 
+                                             HardwareSensor="{Binding Path=CPUTemperatureSensor, UpdateSourceTrigger=PropertyChanged}"
+                                             IsContextMenuEnabled="False"
+                                             TileBackground="{Binding ElementName=cpCPUSensorTile, Path=SelectedColor, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource colorToSolidColorBrushConverter}}" />
+
+                    <!-- GPU-Tiles -->
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{lex:Loc Key=TileSettingsColorForGpuTiles}" />
+
+                    <xctk:ColorPicker x:Name="cpGPUSensorTile" 
+                                      Grid.Row="2"
+                                      Grid.Column="2"
+                                      Height="22"
+                                      SelectedColor="{Binding Path=SelectedColorForGpuTiles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <userControls:SensorTile Grid.Row="2"
+                                             Grid.Column="4" 
+                                             HardwareSensor="{Binding Path=CPUTemperatureSensor, UpdateSourceTrigger=PropertyChanged}"
+                                             IsContextMenuEnabled="False"
+                                             TileBackground="{Binding ElementName=cpGPUSensorTile, Path=SelectedColor, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource colorToSolidColorBrushConverter}}" />
+
+                    <!-- GPU-Tiles -->
+                    <TextBlock Grid.Row="4"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Text="{lex:Loc Key=TileSettingsColorForMainboardTiles}" />
+
+                    <xctk:ColorPicker x:Name="cpMainboardSensorTile" 
+                                      Grid.Row="4"
+                                      Grid.Column="2"
+                                      Height="22"
+                                      SelectedColor="{Binding Path=SelectedColorForMainboardTiles, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <userControls:SensorTile Grid.Row="4"
+                                             Grid.Column="4" 
+                                             HardwareSensor="{Binding Path=CPUTemperatureSensor, UpdateSourceTrigger=PropertyChanged}"
+                                             IsContextMenuEnabled="False"
+                                             TileBackground="{Binding ElementName=cpMainboardSensorTile, Path=SelectedColor, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource colorToSolidColorBrushConverter}}" />
+                </Grid>
+                
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

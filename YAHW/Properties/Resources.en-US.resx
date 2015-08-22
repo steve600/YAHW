@@ -158,7 +158,9 @@ For the implementation of the following software components were used:
  - Modern UI for WPF (MUI) - [url=https://github.com/firstfloorsoftware/mui]https://github.com/firstfloorsoftware/mui[/url]
  - Modern UI (Metro) Charts - [url=https://modernuicharts.codeplex.com]https://modernuicharts.codeplex.com[/url]
  - OxyPlot - [url=http://oxyplot.org]http://oxyplot.org[/url]
-  - PRISM (in parts - MVVM-Base, EventAggregator) - [url=https://github.com/PrismLibrary/Prism]https://github.com/PrismLibrary/Prism[/url]
+ - PRISM (in Teilen - MVVM-Base, EventAggregator) - [url=https://github.com/PrismLibrary/Prism]https://github.com/PrismLibrary/Prism[/url]
+ - WPFLocalizationExtension - [url=https://github.com/SeriousM/WPFLocalizationExtension]https://github.com/SeriousM/WPFLocalizationExtension[/url]
+ - Extended WPF Toolkit™ Community Edition - [url=https://wpftoolkit.codeplex.com/]https://wpftoolkit.codeplex.com/[/url]
  - Modern UI Icons - [url=http://modernuiicons.com]http://modernuiicons.com[/url]
  
 YAHW - Yet Another Hardware Monitor
@@ -537,5 +539,20 @@ There are no controllers found for the fan control!</value>
   </data>
   <data name="AddTilePopupSensorCategory" xml:space="preserve">
     <value>Sensor-Category</value>
+  </data>
+  <data name="SettingsPageTileSettings" xml:space="preserve">
+    <value>Tiles</value>
+  </data>
+  <data name="TileSettingsColorForCpuTiles" xml:space="preserve">
+    <value>Color for CPU-Tiles</value>
+  </data>
+  <data name="TileSettingsColorForGpuTiles" xml:space="preserve">
+    <value>Color for GPU-Tiles</value>
+  </data>
+  <data name="TileSettingsColorForMainboardTiles" xml:space="preserve">
+    <value>Color for Mainboard-Tiles</value>
+  </data>
+  <data name="TileSettingsHeader" xml:space="preserve">
+    <value>Tile settings</value>
   </data>
 </root>

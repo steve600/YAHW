@@ -60,6 +60,14 @@ namespace YAHW.Model
 
         }
 
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        /// <param name="sensorName">The sensor name</param>
+        /// <param name="sensorCategory">The sensor category</param>
+        /// <param name="sensorType">The sensor type</param>
+        /// <param name="gridRow">Grid row</param>
+        /// <param name="gridColumn">Grid column</param>
         public SensorTileConfigurationEntry(string sensorName, string sensorCategory, string sensorType, int gridRow, int gridColumn)
         {
             this.SensorName = sensorName;

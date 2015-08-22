@@ -96,6 +96,30 @@
     <Reference Include="XAMLMarkupExtensions">
       <HintPath>..\packages\XAMLMarkupExtensions.1.2.1.3\lib\net40\XAMLMarkupExtensions.dll</HintPath>
     </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -113,6 +137,7 @@
       <DependentUpon>DialogDisabledControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Configuration\TileViewConfigurationFile.cs" />
+    <Compile Include="Converter\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="Converter\ConfigurableBooleanToVisibilityConverter.cs" />
     <Compile Include="EventAggregator\BackgroundEventSubscription.cs" />
     <Compile Include="EventAggregator\DataEventArgs.cs" />
@@ -131,9 +156,12 @@
     <Compile Include="Events\OpenHardwareMonitorManagementServiceTimerTickEventArgs.cs" />
     <Compile Include="Events\SensorTileAddedEvent.cs" />
     <Compile Include="Events\SensorTileAddedEventArgs.cs" />
+    <Compile Include="Events\SensorTileDeletedEvent.cs" />
+    <Compile Include="Events\SensorTileDeletedEventArgs.cs" />
     <Compile Include="Events\SensorTilePositionChangedEvent.cs" />
     <Compile Include="Events\SensorTilePositionChangedEventArgs.cs" />
     <Compile Include="Hardware\MainboardFanController.cs" />
+    <Compile Include="Helper\ColorHelper.cs" />
     <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="Interfaces\IFanController.cs" />
     <Compile Include="Manager\ServiceManager.cs" />
@@ -190,6 +218,15 @@
     <Compile Include="Pages\ServiceManagement.xaml.cs">
       <DependentUpon>ServiceManagement.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Settings\License_ExtendedWPFToolkit.xaml.cs">
+      <DependentUpon>License_ExtendedWPFToolkit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\License_MUI.xaml.cs">
+      <DependentUpon>License_MUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\License_OpenHardwareMonitor.xaml.cs">
+      <DependentUpon>License_OpenHardwareMonitor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Settings\Directories.xaml.cs">
       <DependentUpon>Directories.xaml</DependentUpon>
     </Compile>
@@ -202,6 +239,21 @@
     <Compile Include="Hardware\Simulated\SimulatedIOHardware.cs" />
     <Compile Include="Hardware\Simulated\SimulatedGPU.cs" />
     <Compile Include="Hardware\Simulated\SimulatedSensor.cs" />
+    <Compile Include="Pages\Settings\Licenses.xaml.cs">
+      <DependentUpon>Licenses.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\License_OxyPlot.xaml.cs">
+      <DependentUpon>License_OxyPlot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\License_PRISM.xaml.cs">
+      <DependentUpon>License_PRISM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\License_WPFLocalizationExtension.xaml.cs">
+      <DependentUpon>License_WPFLocalizationExtension.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings\TileSettings.xaml.cs">
+      <DependentUpon>TileSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\TilePage.xaml.cs">
       <DependentUpon>TilePage.xaml</DependentUpon>
     </Compile>
@@ -260,6 +312,7 @@
     <Compile Include="ViewModels\ServiceManagementViewModel.cs" />
     <Compile Include="ViewModels\TilePageViewModel.cs" />
     <Compile Include="Configuration\XmlConfigurationFile.cs" />
+    <Compile Include="ViewModels\TileSettingsViewModel.cs" />
     <Page Include="CommonControls\DialogDisabledControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -296,11 +349,43 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Settings\License_ExtendedWPFToolkit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\License_MUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\License_OpenHardwareMonitor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Settings\Directories.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Settings\License.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\Licenses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\License_OxyPlot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\License_PRISM.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\License_WPFLocalizationExtension.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Settings\TileSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -477,6 +562,12 @@
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Licenses\ExtendedWPFToolkit.txt" />
+    <Content Include="Licenses\MUI.txt" />
+    <Content Include="Licenses\OpenHardwareMonitor.txt" />
+    <Content Include="Licenses\OxyPlot.txt" />
+    <Content Include="Licenses\PRISM.txt" />
+    <Content Include="Licenses\WPFLocalizationExtension.txt" />
     <Resource Include="Styling\BitmapGraphics\Icons\32x32\delete.png" />
     <Resource Include="Styling\BitmapGraphics\Icons\16x16\delete.png" />
     <Resource Include="Styling\BitmapGraphics\Logo.ico" />
@@ -494,7 +585,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)ConfigFiles\FanControllerTemplates.xml" "$(TargetDir)ConfigFiles\FanControllerTemplates.xml*" /y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)ConfigFiles\FanControllerTemplates.xml" "$(TargetDir)ConfigFiles\FanControllerTemplates.xml*" /y
+xcopy "$(ProjectDir)Licenses" "$(TargetDir)Licenses" /y /i /S
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

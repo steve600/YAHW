@@ -151,6 +151,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
+            
             <!-- Workload -->
             <StackPanel Grid.Column="0"
                         Grid.Row="0"
@@ -176,10 +177,6 @@
                                HorizontalAlignment="Left" />
 
                 </StackPanel>
-
-                <!--<TextBlock Text="{lex:Loc YAHW:Resources:CPUInformationCPUCoreWorkloads}" 
-                           Style="{StaticResource ChartDescription1}" 
-                           HorizontalAlignment="Left" />-->
 
             </StackPanel>
 

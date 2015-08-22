@@ -38,6 +38,7 @@ using XAHW.Interfaces;
 using YAHW.BaseClasses;
 using YAHW.Constants;
 using YAHW.Interfaces;
+using YAHW.Helper;
 
 namespace YAHW.ViewModels
 {
@@ -177,7 +178,7 @@ namespace YAHW.ViewModels
                     var color = this.applicationConfigFile.Sections["GeneralSettings"].Settings["AccentColor"].Value;
                     if (!String.IsNullOrEmpty(color) && color.Length == 9)
                     {
-                        AppearanceManager.Current.AccentColor = this.GetColorFromString(color);
+                        AppearanceManager.Current.AccentColor = ColorHelper.GetColorFromString(color);
                     }
                 }
 
@@ -221,22 +222,6 @@ namespace YAHW.ViewModels
             brush = new SolidColorBrush(Color.FromRgb(R, G, B));
 
             return brush;
-        }
-
-        /// <summary>
-        /// Convert string to color
-        /// </summary>
-        /// <param name="c">Color, e.g. #FF1BA1E2</param>
-        /// <returns>The converter color struct</returns>
-        private Color GetColorFromString(string c)
-        {
-            byte R, G, B;
-
-            R = Convert.ToByte(c.Substring(3, 2), 16);
-            G = Convert.ToByte(c.Substring(5, 2), 16);
-            B = Convert.ToByte(c.Substring(7, 2), 16);
-
-            return Color.FromRgb(R, G, B);
         }
 
         private void SyncThemeAndColor()

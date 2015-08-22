@@ -1,10 +1,4 @@
-﻿// YAHW - Yet Another Hardware Monitor
-// Copyright (c) 2015 Steffen Steinbrecher
-// Contact and Information: http://csharp-blog.de/category/yahw/
-//
-// This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
+﻿// the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
@@ -26,43 +20,51 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-using FirstFloor.ModernUI.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YAHW.Constants;
-using FirstFloor.ModernUI.Windows.Navigation;
 
-namespace YAHW.Pages.Settings
+namespace YAHW.Helper
 {
     /// <summary>
-    /// Interaktionslogik für License.xaml
+    /// <para>
+    /// Class with Color-Helpers
+    /// </para>
+    /// 
+    /// <para>
+    /// Class history:
+    /// <list type="bullet">
+    ///     <item>
+    ///         <description>1.0: First release, working (Steffen Steinbrecher).</description>
+    ///     </item>
+    /// </list>
+    /// </para>
+    /// 
+    /// <para>Author: Steffen Steinbrecher</para>
+    /// <para>Date: 12.07.2015</para>
     /// </summary>
-    public partial class License : UserControl
+    public static class ColorHelper
     {
-        public License()
+        /// <summary>
+        /// Convert string to color
+        /// </summary>
+        /// <param name="c">Color, e.g. #FF1BA1E2</param>
+        /// <returns>The converter color struct</returns>
+        public static Color GetColorFromString(string c)
         {
-            InitializeComponent();
+            byte R=0, G=0, B=0;
 
-            if (System.IO.File.Exists(DirectoryConstants.LicenseFile))
+            if (!String.IsNullOrEmpty(c) && c.Length == 9)
             {
-                this.txtLicense.Text = System.IO.File.ReadAllText(DirectoryConstants.LicenseFile);
+                R = Convert.ToByte(c.Substring(3, 2), 16);
+                G = Convert.ToByte(c.Substring(5, 2), 16);
+                B = Convert.ToByte(c.Substring(7, 2), 16);
             }
-            else
-            {
-                this.txtLicense.Text = "n.a.";
-            }
+
+            return Color.FromRgb(R, G, B);
         }
     }
 }

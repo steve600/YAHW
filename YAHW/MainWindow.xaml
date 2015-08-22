@@ -19,24 +19,24 @@
                   Height="800">
 
     <!--<tb:TaskbarIcon x:Name="myNotifyIcon"
-                    Visibility="Visible"
-                    ToolTipText="YAHW - Yet Another Hardware Monitor"
-                    IconSource="{StaticResource ApplicationIcon}"
-                    MenuActivation="LeftOrRightClick"
-                    PopupActivation="DoubleClick">
-        <tb:TaskbarIcon.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="{lex:Loc YAHW:Resources:MainWindowTaskbarContextMenuClose}"
-                          Command="{Binding Path=CloseApplicationCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="{StaticResource delete_16x16}" />
-                    </MenuItem.Icon>
-                </MenuItem>
-            </ContextMenu>
-        </tb:TaskbarIcon.ContextMenu>
-    </tb:TaskbarIcon>-->
+         Visibility="Visible"
+         ToolTipText="YAHW - Yet Another Hardware Monitor"
+         IconSource="{StaticResource ApplicationIcon}"
+         MenuActivation="LeftOrRightClick"
+         PopupActivation="DoubleClick">
+         <tb:TaskbarIcon.ContextMenu>
+         <ContextMenu>
+         <MenuItem Header="{lex:Loc YAHW:Resources:MainWindowTaskbarContextMenuClose}"
+         Command="{Binding Path=CloseApplicationCommand}">
+         <MenuItem.Icon>
+         <Image Source="{StaticResource delete_16x16}" />
+         </MenuItem.Icon>
+         </MenuItem>
+         </ContextMenu>
+         </tb:TaskbarIcon.ContextMenu>
+         </tb:TaskbarIcon>-->
 
-    <mui:ModernWindow.MenuLinkGroups>        
+    <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="{lex:Loc YAHW:Resources:MainWindowOverview}">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowHome}" Source="/Pages/Home.xaml" />
@@ -87,14 +87,22 @@
         </mui:LinkGroup>
 
         <!-- Settings -->
-        <!--<mui:LinkGroup DisplayName="{lex:Loc YAHW:Resources:MainWindowSettings}" GroupKey="settings">
-             <mui:LinkGroup.Links>
-             <mui:Link DisplayName="software" Source="/Pages/SettingsPage.xaml" />
-             </mui:LinkGroup.Links>
-             </mui:LinkGroup>-->
-        
+        <mui:LinkGroup DisplayName="{lex:Loc YAHW:Resources:MainWindowSettings}" GroupKey="settings">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="software" Source="/Pages/SettingsPage.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+
+        <!-- About -->
+        <mui:LinkGroup DisplayName="{lex:Loc YAHW:Resources:MainWindowAbout}" GroupKey="about">
+            <mui:LinkGroup.Links>
+                <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowAbout}" Source="/Pages/Settings/About.xaml" />
+                <mui:Link DisplayName="{lex:Loc YAHW:Resources:SettingsPageLicense}" Source="/Pages/Settings/Licenses.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+
     </mui:ModernWindow.MenuLinkGroups>
-    
+
     <mui:ModernWindow.TitleLinks>
         <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowHome}" Source="/Pages/Home.xaml" />
         <mui:Link DisplayName="{lex:Loc YAHW:Resources:MainWindowSettings}" Source="/Pages/SettingsPage.xaml" />

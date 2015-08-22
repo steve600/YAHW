@@ -51,6 +51,8 @@ namespace YAHW.Constants
         public static readonly string WmiHardwareInformationService = "WmiHardwareInformationService";
         // Open Hardware Monitoring Service
         public static readonly string OpenHardwareMonitorManagementService = "OpenHardwareMonitorManagementService";
+        // Hardware Debug Service
+        public static readonly string OpenHardwareMonitorManagementDebugService = "OpenHardwareMonitorManagementDebugService";
         // Localizer service
         public static readonly string LocalizerService = "LocalizerService";
         // Exception reporter service

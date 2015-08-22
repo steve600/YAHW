@@ -38,6 +38,8 @@ using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
 using YAHW.Constants;
+using YAHW.EventAggregator;
+using YAHW.Events;
 using YAHW.Hardware;
 using YAHW.Interfaces;
 using YAHW.Model;
@@ -69,8 +71,6 @@ namespace YAHW.Services
 
         IOpenHardwareMonitorManagementService openHardwareMonitorManagementService = null;
 
-        DispatcherTimer timer = null;
-
         #endregion Members and Constants
 
         /// <summary>
@@ -78,11 +78,6 @@ namespace YAHW.Services
         /// </summary>
         public MainboardFanControllerService()
         {
-            // Create timer
-            this.timer = new DispatcherTimer();
-            this.timer.Interval = TimeSpan.FromSeconds(2);
-            this.timer.Tick += Timer_Tick;
-
             // Get OHW-Management-Service
             this.openHardwareMonitorManagementService = DependencyFactory.Resolve<IOpenHardwareMonitorManagementService>(ServiceNames.OpenHardwareMonitorManagementService);
 
@@ -95,14 +90,19 @@ namespace YAHW.Services
                 // Create the settings file
                 this.CreateSettingsFile();
             }
+
+            // Register for events
+            //DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<OpenHardwareMonitorManagementServiceTimerTickEvent>().Subscribe(this.OpenHardwareMonitorManagementServiceTimerTickEventHandler, ThreadOption.UIThread);
         }
 
+
+        #region Event-Handler
+
         /// <summary>
-        /// Timer Tick-Event
+        /// Timer-Tick-Event of the OHM-Service
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Timer_Tick(object sender, EventArgs e)
+        /// <param name="args"></param>
+        private void OpenHardwareMonitorManagementServiceTimerTickEventHandler(OpenHardwareMonitorManagementServiceTimerTickEventArgs args)
         {
             foreach (var fc in this.FanControllers.Where(f => f.IsAdvancedModeEnabled))
             {
@@ -116,6 +116,8 @@ namespace YAHW.Services
                 }
             }
         }
+
+        #endregion Event-Handler
 
         #region Methods
 
@@ -148,6 +150,7 @@ namespace YAHW.Services
                 }
             }
 
+            // Check timer
             this.CeckTimer();
         }
 
@@ -173,10 +176,14 @@ namespace YAHW.Services
 
             if (fc != null && fc.Count() > 0)
             {
-                this.timer.Start();
+                // Register for events
+                DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<OpenHardwareMonitorManagementServiceTimerTickEvent>().Subscribe(this.OpenHardwareMonitorManagementServiceTimerTickEventHandler, ThreadOption.UIThread);
             }
             else
-                this.timer.Stop();
+            {
+                // Unsubscribe for events
+                DependencyFactory.Resolve<IEventAggregator>(GeneralConstants.EventAggregator).GetEvent<OpenHardwareMonitorManagementServiceTimerTickEvent>().Unsubscribe(this.OpenHardwareMonitorManagementServiceTimerTickEventHandler);
+            }
         }
 
         /// <summary>

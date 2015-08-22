@@ -26,43 +26,39 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
-using FirstFloor.ModernUI.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using YAHW.Constants;
-using FirstFloor.ModernUI.Windows.Navigation;
 
-namespace YAHW.Pages.Settings
+namespace YAHW.Converter
 {
-    /// <summary>
-    /// Interaktionslogik für License.xaml
-    /// </summary>
-    public partial class License : UserControl
+    public class ColorToSolidColorBrushConverter : IValueConverter
     {
-        public License()
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            InitializeComponent();
+            if (value == null)
+                return null;
 
-            if (System.IO.File.Exists(DirectoryConstants.LicenseFile))
-            {
-                this.txtLicense.Text = System.IO.File.ReadAllText(DirectoryConstants.LicenseFile);
-            }
-            else
-            {
-                this.txtLicense.Text = "n.a.";
-            }
+            if (value is Color)
+                return new SolidColorBrush((Color)value);
+
+            throw new InvalidOperationException("Unsupported type [" + value.GetType().Name + "], ColorToSolidColorBrushValueConverter.Convert()");
         }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null)
+                return null;
+
+            if (value is SolidColorBrush)
+                return ((SolidColorBrush)value).Color;
+
+            throw new InvalidOperationException("Unsupported type [" + value.GetType().Name + "], ColorToSolidColorBrushValueConverter.ConvertBack()");
+        }
+
     }
 }
