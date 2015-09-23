@@ -28,7 +28,7 @@
 
 using System;
 using System.Collections.ObjectModel;
-using YAHW.MVVMBase;
+using Prism.Mvvm;
 using YAHW.ExtensionMethods;
 using YAHW.Interfaces;
 using YAHW.Constants;

@@ -26,7 +26,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
-using YAHW.MVVMBase;
+using Prism.Mvvm;
 
 namespace YAHW.Model
 {

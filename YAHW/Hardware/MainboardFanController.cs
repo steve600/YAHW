@@ -28,6 +28,7 @@
 
 using OpenHardwareMonitor.Hardware;
 using OxyPlot;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,6 @@ using YAHW.Constants;
 using YAHW.Helper;
 using YAHW.Interfaces;
 using YAHW.Model;
-using YAHW.MVVMBase;
 using YAHW.Services;
 using YAHW.UserControls;
 

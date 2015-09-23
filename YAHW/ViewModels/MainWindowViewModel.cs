@@ -36,8 +36,9 @@ using YAHW.BaseClasses;
 using YAHW.Configuration;
 using YAHW.Constants;
 using YAHW.Interfaces;
-using YAHW.MVVMBase;
+using Prism.Mvvm;
 using YAHW.Services;
+using Prism.Commands;
 
 namespace YAHW.ViewModels
 {

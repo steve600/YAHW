@@ -32,7 +32,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using YAHW.MVVMBase;
+using Prism.Mvvm;
 
 namespace YAHW.Model
 {

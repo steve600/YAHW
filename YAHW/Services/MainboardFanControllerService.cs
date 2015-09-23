@@ -43,7 +43,7 @@ using YAHW.Events;
 using YAHW.Hardware;
 using YAHW.Interfaces;
 using YAHW.Model;
-using YAHW.MVVMBase;
+using Prism.Mvvm;
 using YAHW.UserControls;
 
 namespace YAHW.Services

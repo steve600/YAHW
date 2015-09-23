@@ -36,7 +36,8 @@ using System.Windows.Input;
 using YAHW.BaseClasses;
 using YAHW.Manager;
 using YAHW.Model;
-using YAHW.MVVMBase;
+using Prism.Mvvm;
+using Prism.Commands;
 
 namespace YAHW.ViewModels
 {

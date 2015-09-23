@@ -27,7 +27,7 @@
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
 using System;
-using YAHW.MVVMBase;
+using Prism.Mvvm;
 
 namespace YAHW.Model
 {

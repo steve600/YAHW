@@ -45,8 +45,9 @@ using YAHW.Constants;
 using YAHW.Events;
 using YAHW.Helper;
 using YAHW.Interfaces;
-using YAHW.MVVMBase;
+using Prism.Mvvm;
 using YAHW.UserControls;
+using Prism.Commands;
 
 namespace YAHW.ViewModels
 {
