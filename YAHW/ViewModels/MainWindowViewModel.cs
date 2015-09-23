@@ -27,6 +27,7 @@
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
 using FirstFloor.ModernUI.Presentation;
+using Prism.Events;
 using System;
 using System.Reflection;
 using System.Windows.Input;
@@ -34,7 +35,6 @@ using XAHW.Interfaces;
 using YAHW.BaseClasses;
 using YAHW.Configuration;
 using YAHW.Constants;
-using YAHW.EventAggregator;
 using YAHW.Interfaces;
 using YAHW.MVVMBase;
 using YAHW.Services;
@@ -72,7 +72,7 @@ namespace YAHW.ViewModels
             IConfigurationFile configFile = this.LoadApplicationConfigFile();
 
             // Register EventAggregator
-            DependencyFactory.RegisterInstance<IEventAggregator>(GeneralConstants.EventAggregator, new EventAggregator.EventAggregator());
+            DependencyFactory.RegisterInstance<IEventAggregator>(GeneralConstants.EventAggregator, new EventAggregator());
             // Register services
             DependencyFactory.RegisterInstance<ILocalizerService>(ServiceNames.LocalizerService, new LocalizerService("de-DE"));
             //TODO: Add debug mode. When enabled register OHW Debug Service, otherwise OHW Service as normal

@@ -34,8 +34,8 @@ using OpenHardwareMonitor.Hardware;
 using YAHW.Model;
 using YAHW.Interfaces;
 using YAHW.UserControls;
-using YAHW.EventAggregator;
 using YAHW.Events;
+using Prism.Events;
 
 namespace YAHW.ViewModels
 {

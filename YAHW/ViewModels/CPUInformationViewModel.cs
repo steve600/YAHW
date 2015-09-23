@@ -39,8 +39,8 @@ using OxyPlot.Series;
 using OxyPlot.Axes;
 using OpenHardwareMonitor.Hardware;
 using YAHW.Services;
-using YAHW.EventAggregator;
 using YAHW.Events;
+using Prism.Events;
 
 namespace YAHW.ViewModels
 {

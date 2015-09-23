@@ -26,13 +26,13 @@
 //
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
+using Prism.Events;
 using System;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using YAHW.BaseClasses;
 using YAHW.Constants;
-using YAHW.EventAggregator;
 using YAHW.Events;
 using YAHW.Interfaces;
 using YAHW.Services;

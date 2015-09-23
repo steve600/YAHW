@@ -27,6 +27,7 @@
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
 using OpenHardwareMonitor.Hardware;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,6 @@ using XAHW.Interfaces;
 using YAHW.BaseClasses;
 using YAHW.Configuration;
 using YAHW.Constants;
-using YAHW.EventAggregator;
 using YAHW.Events;
 using YAHW.Helper;
 using YAHW.Interfaces;

@@ -87,7 +87,7 @@ namespace YAHW.Manager
             try
             {
                 ManagementObjectSearcher searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Service");
-                
+
                 foreach (ManagementObject queryObj in searcher.Get())
                 {
                     WindowsService s = new WindowsService();
@@ -102,7 +102,7 @@ namespace YAHW.Manager
                     s.ProcessId = Convert.ToInt32(queryObj["ProcessId"]);
                     s.StartMode = Convert.ToString(queryObj["StartMode"]);
                     s.StartName = Convert.ToString(queryObj["StartName"]);
-                    s.State = Convert.ToString(queryObj["State"]);
+                    s.State = this.ConvertStringToServiceState(Convert.ToString(queryObj["State"]));
 
                     result.Add(s);
                 }
@@ -119,19 +119,54 @@ namespace YAHW.Manager
         }
 
         /// <summary>
-        /// Start a service
+        /// Get service from string
+        /// </summary>
+        /// <param name="state">The service state as string</param>
+        /// <returns></returns>
+        private ServiceControllerStatus ConvertStringToServiceState(string state)
+        {
+            if (String.IsNullOrEmpty(state))
+                return ServiceControllerStatus.Stopped;
+
+            switch (state)
+            {
+                case "Stopped":
+                    return ServiceControllerStatus.Stopped;
+                case "Start Pending":
+                    return ServiceControllerStatus.StartPending;
+                case "Stop Pending":
+                    return ServiceControllerStatus.StopPending;
+                case "Running":
+                    return ServiceControllerStatus.Running;
+                case "Continue Pending":
+                    return ServiceControllerStatus.ContinuePending;
+                case "Pause Pending":
+                    return ServiceControllerStatus.PausePending;
+                case "Paused":
+                    return ServiceControllerStatus.Paused;
+                case "Unknown":
+                    return ServiceControllerStatus.Stopped;
+                default:
+                    return ServiceControllerStatus.Stopped;
+            }
+        }
+
+        /// <summary>
+        /// Stop a service
         /// </summary>
         /// <param name="serviceName"></param>
         /// <returns></returns>
-        public bool StartService(string serviceName)
+        public bool StopService(string serviceName)
         {
             try
             {
+                ServiceController.GetServices();
                 var serviceController = ServiceController.GetServices().Where(s => s.ServiceName.Equals(serviceName)).FirstOrDefault();
-
+                
                 if (serviceController != null)
                 {
-                    serviceController.Start();
+                    serviceController.Stop();
+                    serviceController.WaitForStatus(ServiceControllerStatus.Stopped);
                     return true;
                 }
             }
@@ -151,6 +186,115 @@ namespace YAHW.Manager
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Start a service
+        /// </summary>
+        /// <param name="serviceName"></param>
+        /// <returns></returns>
+        public bool StartService(string serviceName)
+        {
+            try
+            {
+                var serviceController = ServiceController.GetServices().Where(s => s.ServiceName.Equals(serviceName)).FirstOrDefault();
+
+                if (serviceController != null && serviceController.Status == ServiceControllerStatus.Stopped)
+                {
+                    serviceController.Start();
+                    serviceController.WaitForStatus(ServiceControllerStatus.Running);
+                    return true;
+                }
+            }
+            catch (Win32Exception ex1)
+            {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("ServiceManager: Fehler beim Zugriff auf eine System-API", ex1);
+                // Show exception
+                DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(ex1);
+            }
+            catch (InvalidOperationException ex2)
+            {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("ServiceManager: Der Dienst wurde nicht gefunden", ex2);
+                // Show exception
+                DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(ex2);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Restart a service
+        /// </summary>
+        /// <param name="serviceName"></param>
+        /// <returns></returns>
+        public bool RestartService(string serviceName)
+        {
+            try
+            {
+                var serviceController = ServiceController.GetServices().Where(s => s.ServiceName.Equals(serviceName)).FirstOrDefault();
+
+                if (serviceController != null)
+                {
+                    if (serviceController.Status == ServiceControllerStatus.Running && serviceController.CanStop)
+                    {
+                        serviceController.Stop();
+                        serviceController.Start();
+                        return true;
+                    }
+                }
+            }
+            catch (Win32Exception ex1)
+            {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("ServiceManager: Fehler beim Zugriff auf eine System-API", ex1);
+                // Show exception
+                DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(ex1);
+            }
+            catch (InvalidOperationException ex2)
+            {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("ServiceManager: Der Dienst wurde nicht gefunden", ex2);
+                // Show exception
+                DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(ex2);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Get state of the service
+        /// </summary>
+        /// <param name="serviceName"></param>
+        /// <returns></returns>
+        public ServiceControllerStatus GetServiceState(string serviceName)
+        {
+            try
+            {
+                var serviceController = ServiceController.GetServices().Where(s => s.ServiceName.Equals(serviceName)).FirstOrDefault();
+
+                if (serviceController != null)
+                {
+                    return serviceController.Status;
+                }
+            }
+            catch (Win32Exception ex1)
+            {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("ServiceManager: Fehler beim Zugriff auf eine System-API", ex1);
+                // Show exception
+                DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(ex1);
+            }
+            catch (InvalidOperationException ex2)
+            {
+                // Log-Exception
+                DependencyFactory.Resolve<ILoggingService>(ServiceNames.LoggingService).LogException("ServiceManager: Der Dienst wurde nicht gefunden", ex2);
+                // Show exception
+                DependencyFactory.Resolve<IExceptionReporterService>(ServiceNames.ExceptionReporterService).ReportException(ex2);
+            }
+
+            return ServiceControllerStatus.Stopped;
         }
 
         #endregion Methods

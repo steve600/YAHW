@@ -20,9 +20,21 @@
 
         <TextBlock Grid.Row="0" Text="{lex:Loc YAHW:Resources:ServiceManagementTitle}" Style="{StaticResource Heading2}" />
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Path=InstalledServices}" 
+        <DataGrid Grid.Row="1" 
+                  ItemsSource="{Binding Path=InstalledServices}" 
+                  SelectedItem="{Binding Path=SelectedWindowsService, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   ScrollViewer.CanContentScroll="True"
                   AutoGenerateColumns="False">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Start"
+                              Command="{Binding StartServiceCommand}" />
+                    <MenuItem Header="Stop" 
+                              Command="{Binding StopServiceCommand}" />
+                    <MenuItem Header="Restart"
+                              Command="{Binding RestartServiceCommand}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn Width="250" Binding="{Binding Path=DisplayName}" Header="DisplayName" />
                 <DataGridTextColumn Width="100" Binding="{Binding Path=State}" Header="Status" />

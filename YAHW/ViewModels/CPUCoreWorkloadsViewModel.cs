@@ -35,8 +35,8 @@ using System.Windows.Controls;
 using YAHW.UserControls;
 using YAHW.Services;
 using YAHW.Interfaces;
-using YAHW.EventAggregator;
 using YAHW.Events;
+using Prism.Events;
 
 namespace YAHW.ViewModels
 {

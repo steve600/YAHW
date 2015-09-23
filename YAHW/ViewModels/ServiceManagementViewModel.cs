@@ -32,9 +32,11 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using YAHW.BaseClasses;
 using YAHW.Manager;
 using YAHW.Model;
+using YAHW.MVVMBase;
 
 namespace YAHW.ViewModels
 {
@@ -70,11 +72,107 @@ namespace YAHW.ViewModels
         /// </summary>
         public ServiceManagementViewModel()
         {
+            this.InitializeCommands();
+
             this.serviceManager = new ServiceManager();
             this.InstalledServices = this.serviceManager.GetInstalledWindowsServices();
         }
 
         #endregion CTOR
+
+        #region Commands
+
+        /// <summary>
+        /// Initialize commands
+        /// </summary>
+        private void InitializeCommands()
+        {
+            this.StartServiceCommand = new DelegateCommand(this.OnStartServiceCommandExecute, this.OnStartServiceCommandCanExecute);
+            this.StopServiceCommand = new DelegateCommand(this.OnStopServiceCommandExecute, this.OnStopServiceCommandCanExecute);
+            this.RestartServiceCommand = new DelegateCommand(this.OnRestartServiceCommandExecute, this.OnRestartServiceCommandCanExecute);
+        }
+
+        /// <summary>
+        /// Start service command
+        /// </summary>
+        public ICommand StartServiceCommand { private set; get; }
+
+        /// <summary>
+        /// Method when StartServiceCommand is being executed
+        /// </summary>
+        public void OnStartServiceCommandExecute()
+        {
+            if (this.SelectedWindowsService != null)
+            {
+                this.serviceManager.StartService(this.SelectedWindowsService.Name);
+                this.SelectedWindowsService.State = this.serviceManager.GetServiceState(this.SelectedWindowsService.Name);
+            }
+        }
+
+        /// <summary>
+        /// Method that checks if StartServiceCommand can be executed
+        /// </summary>
+        /// <returns></returns>
+        public bool OnStartServiceCommandCanExecute()
+        {
+            return (this.SelectedWindowsService.State == ServiceControllerStatus.Paused ||
+                    this.SelectedWindowsService.State == ServiceControllerStatus.Stopped);
+        }
+
+        /// <summary>
+        /// Stop service command
+        /// </summary>
+        public ICommand StopServiceCommand { private set; get; }
+
+        /// <summary>
+        /// Method when StopServiceCommand is being executed
+        /// </summary>
+        public void OnStopServiceCommandExecute()
+        {
+            if (this.SelectedWindowsService != null)
+            {
+                this.serviceManager.StopService(this.SelectedWindowsService.Name);
+                this.SelectedWindowsService.State = this.serviceManager.GetServiceState(this.SelectedWindowsService.Name);
+            }
+        }
+
+        /// <summary>
+        /// Method that checks if StopServiceCommand can be executed
+        /// </summary>
+        /// <returns></returns>
+        public bool OnStopServiceCommandCanExecute()
+        {
+            return (this.SelectedWindowsService.State == ServiceControllerStatus.Running);
+        }
+
+        /// <summary>
+        /// Restart service command
+        /// </summary>
+        public ICommand RestartServiceCommand { private set; get; }
+
+        /// <summary>
+        /// Method when RestartServiceCommand is being executed
+        /// </summary>
+        public void OnRestartServiceCommandExecute()
+        {
+            if (this.SelectedWindowsService != null)
+            {
+                this.serviceManager.RestartService(this.SelectedWindowsService.Name);
+
+                this.SelectedWindowsService.State = this.serviceManager.GetServiceState(this.SelectedWindowsService.Name);
+            }
+        }
+
+        /// <summary>
+        /// Method that checks if RestartServiceCommand can be executed
+        /// </summary>
+        /// <returns></returns>
+        public bool OnRestartServiceCommandCanExecute()
+        {
+            return (this.SelectedWindowsService.State == ServiceControllerStatus.Running);
+        }
+
+        #endregion Commands
 
         #region Properties
 
@@ -87,6 +185,24 @@ namespace YAHW.ViewModels
         {
             get { return installedServices; }
             private set { this.SetProperty<IList<WindowsService>>(ref this.installedServices, value); }
+        }
+
+        private WindowsService selectedWindowsService;
+
+        /// <summary>
+        /// The selected windows service
+        /// </summary>
+        public WindowsService SelectedWindowsService
+        {
+            get { return selectedWindowsService; }
+            set
+            {
+                if (this.SetProperty<WindowsService>(ref this.selectedWindowsService, value))
+                {
+                    ((DelegateCommand)this.StartServiceCommand).RaiseCanExecuteChanged();
+                    ((DelegateCommand)this.StopServiceCommand).RaiseCanExecuteChanged();
+                }
+            }
         }
 
         #endregion Properties

@@ -73,6 +73,10 @@
     <Reference Include="OxyPlot.Xps">
       <HintPath>..\packages\OxyPlot.Wpf.2014.1.546\lib\net45\OxyPlot.Xps.dll</HintPath>
     </Reference>
+    <Reference Include="Prism, Version=6.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.6.0.1\lib\net45\Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -139,19 +143,6 @@
     <Compile Include="Configuration\TileViewConfigurationFile.cs" />
     <Compile Include="Converter\ColorToSolidColorBrushConverter.cs" />
     <Compile Include="Converter\ConfigurableBooleanToVisibilityConverter.cs" />
-    <Compile Include="EventAggregator\BackgroundEventSubscription.cs" />
-    <Compile Include="EventAggregator\DataEventArgs.cs" />
-    <Compile Include="EventAggregator\DelegateReference.cs" />
-    <Compile Include="EventAggregator\DispatcherEventSubscription.cs" />
-    <Compile Include="EventAggregator\EventAggregator.cs" />
-    <Compile Include="EventAggregator\EventBase.cs" />
-    <Compile Include="EventAggregator\EventSubscription.cs" />
-    <Compile Include="EventAggregator\IDelegateReference.cs" />
-    <Compile Include="EventAggregator\IEventAggregator.cs" />
-    <Compile Include="EventAggregator\IEventSubscription.cs" />
-    <Compile Include="EventAggregator\PubSubEvent.cs" />
-    <Compile Include="EventAggregator\SubscriptionToken.cs" />
-    <Compile Include="EventAggregator\ThreadOption.cs" />
     <Compile Include="Events\OpenHardwareMonitorManagementServiceTimerTickEvent.cs" />
     <Compile Include="Events\OpenHardwareMonitorManagementServiceTimerTickEventArgs.cs" />
     <Compile Include="Events\SensorTileAddedEvent.cs" />

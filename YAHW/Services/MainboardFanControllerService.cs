@@ -28,6 +28,7 @@
 
 using OpenHardwareMonitor.Hardware;
 using OxyPlot;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,7 +39,6 @@ using System.Windows.Threading;
 using System.Xml;
 using System.Xml.Linq;
 using YAHW.Constants;
-using YAHW.EventAggregator;
 using YAHW.Events;
 using YAHW.Hardware;
 using YAHW.Interfaces;

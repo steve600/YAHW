@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using YAHW.MVVMBase;
@@ -127,12 +128,12 @@ namespace YAHW.Model
             set { this.SetProperty<string>(ref this.startName, value); }
         }
         
-        private string state;
+        private ServiceControllerStatus state;
 
-        public string State
+        public ServiceControllerStatus State
         {
             get { return state; }
-            set { this.SetProperty<string>(ref this.state, value); }
+            set { this.SetProperty<ServiceControllerStatus>(ref this.state, value); }
         }
     }
 }

@@ -27,12 +27,12 @@
 // THIS COPYRIGHT NOTICE MAY NOT BE REMOVED FROM THIS FILE
 
 using OpenHardwareMonitor.Hardware;
+using Prism.Events;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
 using YAHW.Constants;
-using YAHW.EventAggregator;
 using YAHW.Events;
 using YAHW.Interfaces;
 
@@ -79,7 +79,7 @@ namespace YAHW.Services
             this.observedComputer.MainboardEnabled = true;
             this.observedComputer.GPUEnabled = true;
             this.observedComputer.HDDEnabled = true;
-
+            
             this.observedComputer.Open();
 
             this.UpdateMainboardSensors();
