@@ -97,44 +97,34 @@ namespace YAHW.ViewModels
         {
             this.time = DateTime.Now;
 
+            // Create instance
             this.CPUPlot = new PlotModel();
 
+            // Add Y-axis
             this.CPUPlot.Axes.Add(new LinearAxis()
-                                            {
-                                                IsZoomEnabled = false,
-                                                Maximum = 102,
-                                                Minimum = 0,
-                                                MajorGridlineStyle = LineStyle.Solid,
-                                                MinorGridlineStyle = LineStyle.Dot,
-                                                Position = AxisPosition.Left
-                                            });
+                                    {
+                                        IsZoomEnabled = false,
+                                        Maximum = 102,
+                                        Minimum = 0,
+                                        MajorGridlineStyle = LineStyle.Solid,
+                                        MinorGridlineStyle = LineStyle.Dot,
+                                        Position = AxisPosition.Left
+                                    });
 
-            //this.CPUPlot.Axes.Add(new LinearAxis()
-            //{
-            //    IsZoomEnabled = false,
-            //    Maximum = 102,
-            //    Minimum = 0,
-            //    MajorGridlineStyle = LineStyle.Solid,
-            //    MinorGridlineStyle = LineStyle.Dot,
-            //    Position = AxisPosition.Right
-            //});
-
+            // Add X-axis
             this.CPUPlot.Axes.Add(new DateTimeAxis()
-                                            {
-                                                IsZoomEnabled = false,
-                                                Position = AxisPosition.Bottom,
-                                                IsAxisVisible = false
-                                            });
+                                    {
+                                        IsZoomEnabled = false,
+                                        Position = AxisPosition.Bottom,
+                                        IsAxisVisible = false
+                                    });
 
-            var areaSeries = new LineSeries()
+            // Create line series to visualize the values
+            var areaSeries = new AreaSeries()
             {
                 StrokeThickness = 1,
                 LineStyle = OxyPlot.LineStyle.Solid,
                 Color = OxyColors.Blue,
-                //Color2 = OxyColors.Transparent,
-                //Fill = OxyColor.FromRgb(214, 231, 242),
-                //DataFieldX2 = "X",
-                //ConstantY2 = 0
             };
 
             // Fill series with initial values
@@ -143,6 +133,7 @@ namespace YAHW.ViewModels
                 areaSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(time.Subtract(new TimeSpan(0, 0, 60 - i))), 0));
             }
 
+            // Add to plot
             this.CPUPlot.Series.Add(areaSeries);
         }
 
@@ -154,7 +145,7 @@ namespace YAHW.ViewModels
         /// <param name="args"></param>
         private void OpenHardwareMonitorManagementServiceTimerTickEventHandler(OpenHardwareMonitorManagementServiceTimerTickEventArgs args)
         {
-            var areaSeries = (LineSeries)this.CPUPlot.Series[0];
+            var areaSeries = (AreaSeries)this.CPUPlot.Series[0];
 
             if (areaSeries.Points.Count > 60)
             {
@@ -184,6 +175,8 @@ namespace YAHW.ViewModels
                 percentage = (double)this.openHardwareManagementService.CPUWorkloadSensor.Value;
 
             areaSeries.Points.Add(new DataPoint(DateTimeAxis.ToDouble(this.time), percentage));
+            areaSeries.Points2.Add(DateTimeAxis.CreateDataPoint(this.time, 0));
+
             time = time.AddSeconds(1);
 
             this.CPUUtilization = percentage / 100;

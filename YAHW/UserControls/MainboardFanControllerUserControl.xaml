@@ -176,37 +176,36 @@
                           DisplayMemberPath="Name"
                           SelectedValue="{Binding Path=FanController.SelectedFanControllerTemplate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
-                <!-- Fan-Speed -->
-                <StackPanel Grid.Row="6"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="3">
-                    <oxyPlot:PlotView x:Name="fanSpeedChart"
-                                      HorizontalAlignment="Left"
-                                      IsEnabled="{Binding Path=FanController.IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged}"
-                                      Width="350"
-                                      Height="250">
-                        <oxyPlot:PlotView.Axes>
-                            <oxyPlot:LinearAxis Name="Percent" 
-                                                IsZoomEnabled="False"
-                                                Title="{lex:Loc YAHW:Resources:UserControlFanFanVoltageInPercent}" 
-                                                Position="Left" 
-                                                IntervalLength="10" 
-                                                MajorGridlineStyle="Solid" 
-                                                Minimum="0" 
-                                                Maximum="100" />
-                            <oxyPlot:LinearAxis Name="Temperature"
-                                                IsZoomEnabled="False" 
-                                                Title="{lex:Loc YAHW:Resources:UserControlFanTemperatureSensorValue}" 
-                                                Position="Bottom" 
-                                                IntervalLength="20" 
-                                                MajorGridlineStyle="Solid" 
-                                                Minimum="0" 
-                                                Maximum="100" />
-                        </oxyPlot:PlotView.Axes>
-                        <oxyPlot:LineSeries ItemsSource="{Binding Path=FanController.SelectedFanControllerTemplate.DataPoints, UpdateSourceTrigger=PropertyChanged}" />
-                    </oxyPlot:PlotView>
-
-                </StackPanel>
+            <!-- Fan-Speed -->
+            <StackPanel Grid.Row="6"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3">
+                <oxyPlot:PlotView x:Name="fanSpeedChart"
+                                    HorizontalAlignment="Left"
+                                    IsEnabled="{Binding Path=FanController.IsAdvancedModeEnabled, UpdateSourceTrigger=PropertyChanged}"
+                                    Width="350"
+                                    Height="250">
+                    <oxyPlot:PlotView.Axes>
+                        <oxyPlot:LinearAxis Name="Percent" 
+                                            IsZoomEnabled="False"
+                                            Title="{lex:Loc YAHW:Resources:UserControlFanFanVoltageInPercent}" 
+                                            Position="Left" 
+                                            IntervalLength="10" 
+                                            MajorGridlineStyle="Solid" 
+                                            Minimum="0" 
+                                            Maximum="100" />
+                        <oxyPlot:LinearAxis Name="Temperature"
+                                            IsZoomEnabled="False" 
+                                            Title="{lex:Loc YAHW:Resources:UserControlFanTemperatureSensorValue}" 
+                                            Position="Bottom" 
+                                            IntervalLength="20" 
+                                            MajorGridlineStyle="Solid" 
+                                            Minimum="0" 
+                                            Maximum="100" />
+                    </oxyPlot:PlotView.Axes>
+                    <oxyPlot:LineSeries ItemsSource="{Binding Path=FanController.SelectedFanControllerTemplate.DataPoints, UpdateSourceTrigger=PropertyChanged}" />
+                </oxyPlot:PlotView>
+            </StackPanel>
 
             </Grid>
 
